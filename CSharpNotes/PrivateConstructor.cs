@@ -39,7 +39,6 @@ public abstract class BaseClass
     {
         MyClass output;
         if(!cache.TryGetValue(data, out output)) cache.Add(data, output = new MyClass());
-
         return output;           
     }
 }
