@@ -1,6 +1,5 @@
 # C++ Stack
-In C++ Stack is a container adaptor.<br>
-C++ Sequential Container Types
+In C++ Stack is a container adaptor. C++ Sequential Container Types:
 <ul>
   <li>vector</li>
   <li>deque</li>
