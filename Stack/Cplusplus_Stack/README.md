@@ -1,7 +1,7 @@
 # C++ Stack
 In C++ Stack is a container adaptor. C++ Sequential Container Types:
 <ul>
-  <li>vector&#09;r</li>
+  <li>vector&emsp;r</li>
   <li>deque</li>
   <li>list</li>
   <li>forward_list</li>
