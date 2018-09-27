@@ -8,4 +8,4 @@ In C++ Stack is a container adaptor. C++ Sequential Container Types:
   <li>array</li>
   <li>string</li>
 </ul>
-The stack adaptor takes an existing sequential container type and makes it act like a stack.
+The stack adaptor takes an existing sequential container type (other than array or forward_list) and makes it act like a stack.
