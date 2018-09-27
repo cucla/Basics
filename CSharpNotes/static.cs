@@ -27,3 +27,26 @@ class MainClass
         Employee4.AddEmployee();       //2
     }
 }
+
+/* 2. STATIC CONSTRUCTOR
+ * useful for initializing any static fields, 
+ * in particular for reading required configuration data into readonly fields
+ * >> does not take access modifiers or have parameters
+ * >> is called automatically before the first instance is created or any static members are referenced
+ * >> cannot be called directly
+ 
+ // 2.1. In a non-static class is called only once:
+ public class Program 
+ { 
+     public static void Main(string[] args) 
+     { 
+         A myClass1WithStaticConstructor = new A();
+         A myClass2WithStaticConstructor = new A();
+     } 
+ } 
+ public class A 
+ { 
+     public A() { Console.WriteLine("default constructor is called."); }
+     static A() { Console.WriteLine("static constructor is called."); } 
+ } 
+ 
