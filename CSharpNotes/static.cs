@@ -34,8 +34,9 @@ class MainClass
  * >> does not take access modifiers or have parameters
  * >> is called automatically before the first instance is created or any static members are referenced
  * >> cannot be called directly
- 
- // 2.1. In a non-static class is called only once:
+ *
+ * 2.1. In a non-static class A (static constructor is called only once):
+ */
  public class Program 
  { 
      public static void Main(string[] args) 
@@ -46,7 +47,37 @@ class MainClass
  } 
  public class A 
  { 
-     public A() { Console.WriteLine("default constructor is called."); }
-     static A() { Console.WriteLine("static constructor is called."); } 
+     static string firstPart= "http://www.example.com/";
+     static string fullUrl;
+     static string urlFragment = "foo/bar";
+     
+     public A() { Console.WriteLine("default constructor"); }
+     static A() { 
+         fullUrl = firstPart + urlFragment;     // no matter fields order
+         Console.WriteLine("static constructor"); 
+     } 
  } 
+
+/* 2.2. In a static class A (static constructor is called only once):
+ */
+public class Program
+{
+	public static void Main(string[] args)
+	{
+		Console.WriteLine(A.fullUrl);
+	}
+}
+public static class A
+{
+	public static string firstPart = "http://www.example.com/";
+	public static string fullUrl;
+	public static string urlFragment = "foo/bar";
+
+	static A()
+	{
+		fullUrl = firstPart + urlFragment;     // no matter fields order
+		Console.WriteLine("static constructor");
+	}
+}
+
  
