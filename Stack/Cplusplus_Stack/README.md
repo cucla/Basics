@@ -8,4 +8,5 @@ In C++ Stack is a container adaptor. C++ Sequential Container Types:
   <li>array&emsp;&emsp;fast random access; cannot add or remove elements</li>
   <li>string&emsp;&emsp;fast random access; inserting/deleting other than at the back may be slow</li>
 </ul>
-<br>The stack adaptor takes an existing sequential container type and makes it act like a stack. Uses deque by default, can be implemented on a list or vector as well.
+<br>The stack adaptor takes an existing sequential container type and makes it act like a stack. Uses deque by default, can be implemented on a list or vector as well.<br>
+C++ std::stack it doesn't expose iterators; it has not been designed for iterating over elements. Use std::vector.
