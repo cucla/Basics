@@ -20,6 +20,24 @@ template<> const char * Max(const char * x, const char * y) {
 	return strcmp(x, y) > 0 ? x : y;
 }
 
+// non-type template arguments with array 
+// not yet -> need to pass array size
+template<typename T>
+T Sum1(T * parr, int size) {
+	T sum{};
+	for (int i = 0; i < size; i++)
+		sum += parr[i];
+	return sum;
+}
+// yes -> no need to pass array size | pass ref to array
+template<typename T, int size>
+T Sum2(T (&parr)[size]) {
+	T sum{};
+	for (int i = 0; i < size; i++)
+		sum += parr[i];
+	return sum;
+}
+
 int main() 
 {
 	// 1. instantiate when calling
@@ -36,6 +54,73 @@ int main()
 	const char * a{ "A" };
 	const char * b{ "B" };
 	auto res = Max(a, b);
+	
+	// non-type template arguments
+	int arr[]{ 3, 1, 9, 7 };	// int(&aref)[4] = arr; is a reference to array
+	int sum1 = Sum1(arr, 4);
+	int sum2 = Sum2(arr);
+}
+
+
+
+// Variardic templates - pass different types & different number of parameters
+// base case
+void Print() { std::cout << std::endl; }
+
+template<typename T, typename...Params>
+void Print(T a, Params... args) {
+	std::cout << sizeof...(args); // (1, 2.5, "4", 44) > 1 is a | 2.5, "4", 44 are args (total 3)
+	std::cout << a;
+	Print(args...);  // stops when reaches Print(); see base case 
+}
+
+int main() 
+{
+	Print(1, 2.5, "4", 44);
+}
+
+
+
+// CLASS TEMPLATES
+// simple Stack class
+class Stack {
+	int _buffer[512];
+	int _top{ -1 };
+public:
+	void Push(int el) { _buffer[++_top] = el; }
+	void Pop() { --_top; }
+	int Top() const { return _buffer[_top]; }
+	bool IsEmpty() { return _top == -1; }
+};
+
+// class template
+template<typename T, int size>
+class Stack {
+	T _buffer[size];
+	int _top{ -1 };
+public:
+	void Push(const T & el) { _buffer[++_top] = el; }
+	void Pop();   			// define method outside the class
+	const T & Top() const { return _buffer[_top]; }
+	bool IsEmpty() { return _top == -1; }
+	
+	// factory function
+	static Stack Create();  // 'Stack' as a short-hand definition
+};
+
+template<typename T, int size>		// define method outside the class
+void Stack<T, size>::Pop() { --_top; }
+
+// factory function defined outside
+template<typename T, int size>
+Stack<T, size> Stack<T, size>::Create() {  // 'Stack<T, size>' full definition
+	return Stack<T, size>();
+}
+
+int main() 
+{
+	Stack<int, 10> s;
+	Stack<int, 10> s = Stack<int, 10>::Create();  // using factory function
 }
 
 
@@ -43,9 +128,9 @@ int main()
  *
  * ================================================
  * template<typename T>
- * void f(ParamType param);	// (ex.   void f(const T& param);   )
+ * void f(ParamType param);		// (ex.   void f(const T& param);   )
  * ------------------------------------------------
- * f(expr);                    	// call f with some expression
+ * f(expr);                    		// call f with some expression
  * ================================================
  * Need to deduce two types: one for T and one for ParamType (includes const, references...)
  * Type of T depends on expr and ParamType, and we have 3 cases:
@@ -66,3 +151,27 @@ int main()
  * f(cx);                  // const int cx = 27;	T is int, param's type is const int&
  * f(rx);                  // const int& rx = 27;	T is int, param's type is const int&
  * ================================================
+ * template<typename T>
+ * void f(T* param);      
+ * ------------------------------------------------
+ * f(&x);                  // int x = 27;		T is int, param's type is int*
+ * f(px);                  // const int *px = &x;	T is const int, param's type is const int*
+ * ================================================
+ *
+ * Case 2: ParamType is a Universal Reference (T&&)
+ *
+ * Array Arguments:
+ * ================================================
+ *				// const char name[] = "J. P. Briggs";
+ * template<typename T>
+ * void f(T param);      	// template with by-value parameter | void f(int param[]); | void f(int * param);
+ * ------------------------------------------------
+ * f(name);			// name is array, but T deduced as const char *
+ * ================================================
+ *** Functions can declare parameters that are references to arrays!
+ * template<typename T>
+ * void f(T& param);      	// template with by-reference parameter
+ * ------------------------------------------------
+ * f(name);			// the type deduced for T is the actual type of the array! 
+ *				// it includes the size of the array, here, T is deduced to be const char [13]
+ *
