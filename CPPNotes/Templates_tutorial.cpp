@@ -124,6 +124,61 @@ int main()
 }
 
 
+
+// EXPLICIT SPECIALIZATION WITH CLASS TEMPLATES
+template<typename T, int col>
+class PrettyPrinter {
+	T * _data;
+public:
+	PrettyPrinter(T * input) : _data(input) {}
+	void Print() { 
+		std::cout << col << std::endl;
+		std::cout << "|" << *_data << "|" << std::endl; }
+	T * GetData() { return _data; }
+};
+
+// PARTIAL SPECIALIZATION for non-type parameter int col
+// EXPLICIT SPECIALIZATION : whole class for char *
+template<>
+class PrettyPrinter<char *, 30> {
+	char * _data;
+public:
+	PrettyPrinter(char * input) : _data(input) {}
+	void Print() { 
+		std::cout << 30 << std::endl;
+		std::cout << "|" << _data << "|" << std::endl; }
+	char * GetData() { return _data; }
+};
+
+// EXPLICIT SPECIALIZATION : only member function for vector
+template<>
+void PrettyPrinter<std::vector<int>, 40>::Print() { 
+	std::cout << 40 << std::endl;
+	for(const auto &x : * _data)
+		std::cout << "|" << x << "|" << " "; 
+	}
+
+int main() 
+{
+	int a = 4;
+	float b = 4.1f;
+	PrettyPrinter<int, 10> p1(&a);
+	PrettyPrinter<float, 20> p2(&b);
+	p1.Print();
+	p2.Print();
+
+	char * c{ "Hello world" };
+	PrettyPrinter<char *, 30> p3(c);
+	p3.Print();
+
+	std::vector<int> d{ 1, 2, 3, 4, 5 };
+	PrettyPrinter<std::vector<int>, 40> p4(&d);
+	p4.Print();
+}
+
+
+
+
 /* Understand template type deduction
  *
  * ================================================
