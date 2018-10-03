@@ -178,7 +178,7 @@ int main()
 
 
 
-
+//https://www.oreilly.com/library/view/effective-modern-c/9781491908419/ch01.html
 /* Understand template type deduction
  *
  * ================================================
