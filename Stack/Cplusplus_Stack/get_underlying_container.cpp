@@ -19,6 +19,8 @@ int main()
 	std::deque<int>::iterator it = s.c.begin();			// can print stack contents
 	while (it != s.c.end())
 		std::cout << ' ' << *it++;
+	
+	std::cout << s.c[1];						// indexing
 
 
 	std::cin.get();
