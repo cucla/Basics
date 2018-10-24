@@ -1,15 +1,25 @@
 /* The underlying container of std::stack is accessible as protected member c. Hence:
  */
-template<class T, class C>
-struct cStack : std::stack<T, C> {
-	typedef std::stack<T, C> Stack;
+template<typename T, typename Container = deque<T>>
+struct myStack : std::stack<T> {
+	typedef std::stack<T> Stack;
 	using Stack::stack;
-	using Stack::c;                   // expose as public
+	using Stack::c;
 };
 
 int main() 
 {
-	cStack<int, std::deque<int>> a;
+	myStack<int, std::deque<int>> s;
+	s.push(1);
+	s.push(2);
+
 	std::deque<int> d;
-	std::cout << (typeid(a.c) == typeid(d)) << '\n';  // 1
+	std::cout << (typeid(s.c) == typeid(d)) << '\n';  		// 1
+
+	std::deque<int>::iterator it = s.c.begin();			// can print stack contents
+	while (it != s.c.end())
+		std::cout << ' ' << *it++;
+
+
+	std::cin.get();
 }
