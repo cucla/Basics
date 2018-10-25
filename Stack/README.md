@@ -5,5 +5,6 @@ Basic operations:
 <ul>
   <li>Push - insert data. If there is not enough room, result in overflow</li>
   <li>Pop - remove data. If stack is empty, result in underflow</li>
-  <li>Stack top - read the top without deleting. If stack is empty, result in underflow</li>
+  <li>Top - read the top without deleting. If stack is empty, result in underflow</li>
 </ul>
+Stack operations are constant time operations.
