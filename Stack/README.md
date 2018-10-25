@@ -7,4 +7,5 @@ Basic operations:
   <li>Pop - remove data. If stack is empty, result in underflow</li>
   <li>Top - read the top without deleting. If stack is empty, result in underflow</li>
 </ul>
+<br>
 Stack operations are constant time operations.
