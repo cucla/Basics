@@ -1,3 +1,5 @@
+// If stack's max size can be calculated
+
 //-----------------------HEADER-----------------------
 #pragma once
 #define CAPACITY 100
