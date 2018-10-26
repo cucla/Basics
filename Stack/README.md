@@ -8,4 +8,5 @@ Basic operations:
   <li>Top - read the top without deleting. If stack is empty, result in underflow</li>
 </ul>
 <br>
-Stack operations are constant time operations.
+Stack operations are constant time operations.<br>
+Four common stack applications are: reversing data, parsing data, postponing data usage, and backtracking steps.
