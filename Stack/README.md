@@ -12,10 +12,10 @@ Stack operations are constant time operations.
 <br>
 <br>
 Four common stack applications are: reversing data, parsing data, postponing data usage, and backtracking steps.<br>
-The idea of reversing can be used to CONVERT DECIMAL TO BINARY:<br>
+Reversing: use stack to CONVERT DECIMAL TO BINARY, as the algorithm produses binary number backward:<br>
 <code>read (number)</code><br>
 <code>loop (number > 0)</code><br>
-<code>  set digit to number modulo 2</code><br>
-<code>  push digit to stack</code><br>
-<code>  set number to quotient of number / 2</code><br>
+<code>&emsp;  set digit to number modulo 2</code><br>
+<code>&emsp;  push digit to stack</code><br>
+<code>&emsp;  set number to quotient of number / 2</code><br>
 <code>end loop</code><br>
