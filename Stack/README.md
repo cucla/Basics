@@ -9,4 +9,5 @@ Basic operations:
 </ul>
 <br>
 Stack operations are constant time operations.<br>
-Four common stack applications are: reversing data, parsing data, postponing data usage, and backtracking steps.
+Four common stack applications are: reversing data, parsing data, postponing data usage, and backtracking steps.<br>
+<code>A piece of computer code</code>
