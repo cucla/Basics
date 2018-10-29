@@ -1,95 +1,120 @@
+//TEMPLATE CLASS with a FRIEND function
+
 // One disadvantage of using an array to implement a stack is the wasted space---most of the time most of the array is unused. 
 // A more elegant and economical implementation of a stack uses a linked list
 
 #include "stdafx.h"
 #include <iostream>
-#include <stdexcept>
 
+
+template<class T>	// forward declaration to enable friend function
+class LlStack;
+
+template<class T>	// forward declaration to enable friend function
+void print(const LlStack<T> & s);
 
 template<class T>
-class LlistStack {
+class LlStack {
 public:
-	LlistStack();
-	~LlistStack() { clear(); }
-	bool push(T data);
+	LlStack();
+	~LlStack() { clear(); }
+	bool push(T el);
 	bool pop();
 	T & top();
-	bool isEmpty() const { return _topOfStack == NULL; }
+	int count() const { return _count; }
+	bool isEmpty() const { return _topNode == NULL; }
 	void clear();
-	int size() const;
+
+	friend void print<T>(const LlStack<T> & s);
 private:
 	struct Node {
 		T _data;
 		Node * _link;
 	};
-	Node * _topOfStack;
+	Node * _topNode;
 	int _count;
 };
 
 template<class T>
-LlistStack<T>::LlistStack() {
-	_topOfStack = NULL;
+LlStack<T>::LlStack() {
+	_topNode = NULL;
 	_count = 0;
 }
 
 template<class T>
-bool LlistStack<T>::push(T data) {
+bool LlStack<T>::push(T el) {
 	Node * newNode = new Node;
-	newNode->_data = data;
-	newNode->_link = _topOfStack;
-
-	_topOfStack = newNode;	
+	newNode->_data = el;
+	newNode->_link = _topNode;
+	_topNode = newNode;
 	++_count;
+
 	return true;
 }
 
 template<class T>
-bool LlistStack<T>::pop() {
+bool LlStack<T>::pop() {
 	if (isEmpty())
 		return false;
-
-	Node * tmp = _topOfStack;
-	_topOfStack = _topOfStack->_link;
+	Node * tmp = _topNode;
+	_topNode = _topNode->_link;
 	delete tmp;
 	--_count;
+
 	return true;
 }
 
 template<class T>
-T & LlistStack<T>::top() {
-	if (isEmpty())
-		throw std::runtime_error("Stack is empty");
-
-	return _topOfStack->_data;
+T & LlStack<T>::top() {
+	if (!isEmpty())
+		return _topNode->_data;
 }
 
 template<class T>
-void LlistStack<T>::clear() {
-	while (!isEmpty())
+void LlStack<T>::clear() {
+	while (!isEmpty()) 
 		pop();
 }
 
 template<class T>
-int LlistStack<T>::size() const {
-	return _count;
-}
+void print(const LlStack<T> & s) {
 
+	LlStack<T>::Node * cur = s._topNode;
+	while (cur) {
+		std::cout << cur->_data << " ";
+		cur = cur->_link;
+	}
+	std::cout << std::endl;
+}
 
 
 int main()
 {
-	LlistStack<int> stack02;
-	stack02.push(70);
-	stack02.push(80);
-	stack02.push(90);
+	LlStack<int> * st = new LlStack<int>;
+	st->push(10);
+	st->push(20);
+	st->push(30);
 
-	stack02.pop();
+	st->pop();
+	st->top() += 5;
 
-	stack02.top() += 5;
+	print<int>(*st);
+	std::cout << "Top element is: " << st->top() << std::endl;
+	std::cout << "Number of elements in a stack: " << st->count() << std::endl;
+	//--------------------------------------------------------
 
-	std::cout << "Top element is: " << stack02.top() << std::endl;
-	std::cout << "Stack size is " << stack02.size() << std::endl;
+	LlStack<int> st2;
+	st2.push(100);
+	st2.push(200);
+	st2.push(300);
+
+	st2.pop();
+	st2.top() += 5;
+
+	std::cout << "Top element is: " << st2.top() << std::endl;
+	std::cout << "Number of elements in a stack: " << st2.count() << std::endl;
 
 
 	std::cin.get();
 }
+
