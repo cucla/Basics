@@ -1,4 +1,4 @@
-//TEMPLATE CLASS with a FRIEND function
+// TEMPLATE CLASS with a FRIEND function
 
 // One disadvantage of using an array to implement a stack is the wasted space---most of the time most of the array is unused. 
 // A more elegant and economical implementation of a stack uses a linked list
