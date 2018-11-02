@@ -6,7 +6,7 @@ private:
 	int a;
 };
 
-int operator +(const A & lhs, const A & rhs) {
+int operator +(const A & lhs, const A & rhs) {  	// make possible addition of two A objects
 	return lhs.value() + rhs.value();
 }
 
