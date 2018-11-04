@@ -2,13 +2,24 @@
 #include <iostream>
 #include <cstdio>
 #include <string>
+#include <exception>
 
 using namespace std;
 
 const string unk = "unknown";
 const string clone_prefix = "clone-";
 
-// -- interface --
+// EXCEPTIONS!!!!!------------------------------------
+class E : public exception {
+	const char * msg = nullptr;
+	E() {};
+public:
+	E(const char * s) throw() : msg(s) {}
+	const char * what() const throw() { return msg; }
+};
+//----------------------------------------------------
+
+
 class Animal {
 public:
 	Animal();   // default constructor
@@ -32,6 +43,9 @@ Animal::Animal() : _type(unk), _name(unk), _sound(unk) {
 Animal::Animal(const string & type, const string & name, const string & sound)
 	: _type(type), _name(name), _sound(sound) {
 	puts("constructor with arguments");
+	if (type.length() == 0 || name.length() == 0 || sound.length() == 0) {
+		throw E("Insufficient parameters");
+	}
 }
 
 Animal::Animal(const Animal & a) {
@@ -81,7 +95,16 @@ int main(int argc, char ** argv) {
 	a = c;
 	a.print();
 
+	// EXCEPTIONS!!!!!------------------------------------
+	try {
+		Animal x("bear", "bill", "");
+		x.print();
+	}
+	catch (exception & e) {
+		printf("Animal x: %s\n", e.what());
+	}
+	//----------------------------------------------------
+
 	std::cin.get();
 }
-
 
