@@ -66,6 +66,15 @@ int main(int argc, char ** argv) {
 	const Animal b("goat", "bob", "baah");
 	b.print();
 
+	puts("\nVia pointer:");
+	Animal * prtA = new (nothrow) Animal; //default constructor is called
+	prtA->print();
+	Animal * prtA2 = new (nothrow) Animal("goat2", "bob2", "baah2");
+	prtA2->print();
+	//delete prtA2
+	Animal * prtA3 = new (nothrow) Animal[3]; //array of objects, initialized via default constructor
+	//delete[] ptrA3;
+
 	const Animal c = b;
 	c.print();
 
