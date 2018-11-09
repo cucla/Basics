@@ -57,7 +57,6 @@ namespace AppForInterview
         }
     }
 
-
     class Program
     {
         static void Main(string[] args)
@@ -74,9 +73,7 @@ namespace AppForInterview
 }
 
 
-
-
-...
+....
     public class Account
     {
 
@@ -91,7 +88,6 @@ namespace AppForInterview
         }
     }
 
-
     class Program
     {
         static void Main(string[] args)
@@ -101,7 +97,29 @@ namespace AppForInterview
             account.account2 = new CurrentAccount();
             account.PrintAccounts();
 
+            Console.Read();
+        }
+    }
 
+
+....
+    public class Account
+    {
+        //----------------DI via method------------------------------------
+
+        public void PrintAccounts(IAccount account1, IAccount account2)
+        {
+            account1.PrintData();
+            account2.PrintData();
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Account account = new Account();
+            account.PrintAccounts(new SavingAccount(), new CurrentAccount());
 
             Console.Read();
         }
