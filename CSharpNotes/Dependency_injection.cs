@@ -72,3 +72,37 @@ namespace AppForInterview
         }
     }
 }
+
+
+
+
+...
+    public class Account
+    {
+
+        //----------------DI via setter-------------------------------------
+        public IAccount account1 { get; set; }
+        public IAccount account2 { get; set; }
+
+        public void PrintAccounts()
+        {
+            account1.PrintData();
+            account2.PrintData();
+        }
+    }
+
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Account account = new Account();
+            account.account1 = new SavingAccount();
+            account.account2 = new CurrentAccount();
+            account.PrintAccounts();
+
+
+
+            Console.Read();
+        }
+    }
