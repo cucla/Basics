@@ -1,5 +1,6 @@
 /*  1. Two generic parameters
  *  2. Constructor constraint
+ *  3. Reference/value type constraints
  */
 
 // 1. Two generic parameters--------------------------------------------------
@@ -99,6 +100,58 @@ public class TwoGeneric<T, U>
             myClassTwo.PropertyOne = "Bye bye!";
             Console.WriteLine(myClassOne.PropertyOne);
             Console.WriteLine(myClassTwo.PropertyOne);
+
+            Console.Read();
+        }
+    }
+//----------------------------------------------------------------------------
+
+// 3. Reference/value type constraints----------------------------------------
+// Use either of these if generic code needs to know if it's dealing with 
+// reference (class) or value (struct) types.
+// Difference exists in comparison or equality semantics: by default Object.Equals() 
+// compares two references with same values but distinct memory locations as
+// different.
+// BUT: Object.Equals() can be overriden in derived classes, like in string class
+//----------------------------------------------------------------------------
+public class MyClass
+    {
+        public MyClass(): this(0) { }
+        public MyClass(int num)
+        {
+            _filed1 = num;
+        }
+
+        private int _filed1;
+
+        public int PropertyOne
+        {
+            get { return _filed1; }
+            set { _filed1 = value; }
+        }
+    }
+
+    public class EqualityCheker<T> where T : class
+    {
+        public bool CheckEquality(T a, T b)
+        {
+            bool result = a.Equals(b);
+            Console.WriteLine(result + ": {0} is " + (result ? "" : "not ") + "equal to {1}", a, b);
+            return result;
+        }
+    }
+
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            EqualityCheker<string> eq1 = new EqualityCheker<string>();
+            eq1.CheckEquality("hello", "hello");        // true
+            eq1.CheckEquality("hi", "bye");             // false
+
+            EqualityCheker<MyClass> eq2 = new EqualityCheker<MyClass>();
+            eq2.CheckEquality(new MyClass(5), new MyClass(5));      // false
 
             Console.Read();
         }
