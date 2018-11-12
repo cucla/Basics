@@ -7,19 +7,16 @@
 //----------------------------------------------------------------------------
 public class TwoGeneric<T, U>
     {
-        //fields
         private T _field1;
         private U _field2;
 
-        //constructors
         private TwoGeneric() { }  //disable default constructor
         public TwoGeneric(T arg1, U arg2)
         {
             _field1 = arg1;
             _field2 = arg2;
         }
-
-        //properties
+ 
         public T PropertyOne
         {
             get { return _field1; }
@@ -39,7 +36,6 @@ public class TwoGeneric<T, U>
         }
     }
 
-
     class Program
     {
         static void Main(string[] args)
@@ -47,8 +43,6 @@ public class TwoGeneric<T, U>
             TwoGeneric<string, int> myObj = new TwoGeneric<string, int>("Hello", 8);
             myObj.PropertyTwo = 365;
             myObj.PrettyPrint();
-
-            Console.Read();
         }
     }
 //----------------------------------------------------------------------------
@@ -100,8 +94,6 @@ public class TwoGeneric<T, U>
             myClassTwo.PropertyOne = "Bye bye!";
             Console.WriteLine(myClassOne.PropertyOne);
             Console.WriteLine(myClassTwo.PropertyOne);
-
-            Console.Read();
         }
     }
 //----------------------------------------------------------------------------
@@ -117,13 +109,9 @@ public class TwoGeneric<T, U>
 public class MyClass
     {
         public MyClass(): this(0) { }
-        public MyClass(int num)
-        {
-            _filed1 = num;
-        }
+        public MyClass(int num) { _filed1 = num; }
 
         private int _filed1;
-
         public int PropertyOne
         {
             get { return _filed1; }
@@ -141,7 +129,6 @@ public class MyClass
         }
     }
 
-
     class Program
     {
         static void Main(string[] args)
@@ -152,8 +139,6 @@ public class MyClass
 
             EqualityCheker<MyClass> eq2 = new EqualityCheker<MyClass>();
             eq2.CheckEquality(new MyClass(5), new MyClass(5));      // false
-
-            Console.Read();
         }
     }
 //----------------------------------------------------------------------------
