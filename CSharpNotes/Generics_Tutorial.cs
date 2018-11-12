@@ -1,7 +1,13 @@
 /*  1. Two generic parameters
- *  2. Constructor constraint
- *  3. Reference/value type constraints
- *  4. Interface constraint
+ *
+ *  2. Constructor constraint                       <T> where T : new() {...}
+ *  3. Reference/value type constraints             <T> where T : class {...}
+ *                                                  <T> where T : struct {...}
+ *  4. Interface constraint                         <T> where T : Iinterface_name {...}
+ *     access to all interface operatinos
+ *  5. Class constraint (see Operator_overload.cs)  <T> where T : Class_name {...}
+ *     access to all class operatinos
+ *  6. Naked constraint                             <T, U> where T : U {...}
  */
 
 // 1. Two generic parameters--------------------------------------------------
@@ -208,4 +214,37 @@ public struct MyStruct
     }
 //----------------------------------------------------------------------------
 
+// 6. Naked constraint--------------------------------------------------------
+//----------------------------------------------------------------------------
+    public class BaseClass
+    {
+        public virtual string InterfaceMethod() { return "From BaseClass"; }
+    }
 
+    public class DerivedClass : BaseClass
+    {
+        public override string InterfaceMethod() { return "From DerivedClass"; }
+    }
+
+
+    public class GenericClass<T> where T : BaseClass
+    {
+        // limits U to type specified by T or its subtypes
+        public void GenericMethod<U>(U arg) where U : T
+        {
+            Console.WriteLine(arg.InterfaceMethod());
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            GenericClass<BaseClass> gc1 = new GenericClass<BaseClass>();
+            gc1.GenericMethod<BaseClass>(new BaseClass());              // "From BaseClass"
+            gc1.GenericMethod<BaseClass>(new DerivedClass());           // "From DerivedClass"
+            gc1.GenericMethod<DerivedClass>(new DerivedClass());        // "From DerivedClass"
+        }
+    }
+
+//----------------------------------------------------------------------------
