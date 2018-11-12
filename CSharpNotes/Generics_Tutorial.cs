@@ -1,6 +1,7 @@
 /*  1. Two generic parameters
  *  2. Constructor constraint
  *  3. Reference/value type constraints
+ *  4. Interface constraint
  */
 
 // 1. Two generic parameters--------------------------------------------------
@@ -139,6 +140,70 @@ public class MyClass
 
             EqualityCheker<MyClass> eq2 = new EqualityCheker<MyClass>();
             eq2.CheckEquality(new MyClass(5), new MyClass(5));      // false
+        }
+    }
+//----------------------------------------------------------------------------
+public struct MyStruct
+    {   // explicit default constructors are not allowed in structs
+        public MyStruct(int num) { _filed1 = num; }
+
+        private int _filed1;
+        public int PropertyOne
+        {
+            get { return _filed1; }
+            set { _filed1 = value; }
+        }
+    }
+
+    public class EqualityCheker<T> where T : struct
+    {
+        public bool CheckEquality(T a, T b)
+        {
+            bool result = a.Equals(b);
+            Console.WriteLine(result + ": {0} is " + (result ? "" : "not ") + "equal to {1}", a, b);
+            return result;
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            EqualityCheker<int> eq1 = new EqualityCheker<int>();
+            eq1.CheckEquality(2, 2);        // true
+            eq1.CheckEquality(10, 20);      // false
+
+            EqualityCheker<MyStruct> eq2 = new EqualityCheker<MyStruct>();
+            eq2.CheckEquality(new MyStruct(5), new MyStruct(5));        // true
+        }
+    }
+//----------------------------------------------------------------------------
+
+// 4. Interface constraint----------------------------------------------------
+//----------------------------------------------------------------------------
+   public class EqualityCheker<T> where T : IComparable, IComparable<T>
+    {
+        public bool CheckEquality(T a, T b)
+        {
+            bool result = false;
+            int tmp = a.CompareTo(b);
+            if (tmp == 0)
+                result = true;
+            Console.WriteLine(result + ": {0} is " + (result ? "" : "not ") + "equal to {1}", a, b);
+            return result;
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            EqualityCheker<int> eq1 = new EqualityCheker<int>();
+            eq1.CheckEquality(2, 2);        // true
+            eq1.CheckEquality(1, 10);       // false
+
+            EqualityCheker<string> eq2 = new EqualityCheker<string>();
+            eq2.CheckEquality("Hi", "Hi");          // true
         }
     }
 //----------------------------------------------------------------------------
