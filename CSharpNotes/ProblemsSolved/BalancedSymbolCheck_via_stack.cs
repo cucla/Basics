@@ -1,3 +1,9 @@
+using System;
+using System.Collections.Generic;
+
+
+namespace AppForInterview
+{
     public class BalancedSymbolChecker
     {
         private const char OPEN_PAREN = '(';
@@ -7,11 +13,52 @@
         private const char OPEN_BRACE = '{';
         private const char CLOSE_BRACE = '}';
 
+
         public void Parse(string s)
         {
             Stack<char> myStack = new Stack<char>();
 
             foreach(char ch in s)
+            {
+                if (ch == OPEN_PAREN || ch == OPEN_BRACKET || ch == OPEN_BRACE)
+                    myStack.Push(ch);
+                else
+                {
+                    if (ch == CLOSE_PAREN || ch == CLOSE_BRACKET || ch == CLOSE_BRACE)
+                    {
+                        if (myStack.Count == 0)
+                        {
+                            Console.WriteLine("Error: Closing symbol not matched");
+                            return;
+                        }
+                        else
+                        {
+                            char tmp = myStack.Pop();
+                            if (!CheckMatch(tmp, ch)) return;
+                        }
+                    }
+                }
+            }
+
+            if (myStack.Count != 0)
+                Console.WriteLine("Error: Opening symbol not matched");
+            else
+                Console.WriteLine("All symbols matched!");
+        }
+
+        private char GetNextSymbol()
+        {
+            char c;
+            if ((c = (char)Console.Read()) == '\r') { return '\0'; }
+            return c;
+        }
+
+        public void ParseConsoleInput()
+        {
+            Stack<char> myStack = new Stack<char>();
+
+            char ch;
+            while ( (ch = GetNextSymbol()) != '\0')
             {
                 if (ch == OPEN_PAREN || ch == OPEN_BRACKET || ch == OPEN_BRACE)
                     myStack.Push(ch);
@@ -62,7 +109,11 @@
             scheck.Parse("({a + b) - c * k))");
             scheck.Parse("v * (((a + b) - c)");
 
+            Console.WriteLine("Input some string: ");
+            scheck.ParseConsoleInput();
+
 
             Console.Read();
         }
     }
+}
