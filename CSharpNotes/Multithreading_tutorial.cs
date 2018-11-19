@@ -2,6 +2,7 @@
  * 2. Begin/End Async pattern in UnitTests
  * 3. Begin/End Async Networking example in UnitTests
  * 4. Begin/End Async Database example in UnitTests
+ * 5. Use IsCompleted property of the IAsyncResult
  */
  
 // 1. Call method in a separate thread in Unit Tests-----------------------------------------
@@ -152,5 +153,36 @@ namespace Databases
         }
     }
 }
+//-------------------------------------------------------------------------------------------
+
+// 5. Use IsCompleted property of the IAsyncResult-------------------------------------------
+    class Program
+    {
+        public delegate int BinaryOp(int x, int y);
+
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Main() invoked on thread {0}", Thread.CurrentThread.ManagedThreadId);
+
+            BinaryOp b = Add;
+            IAsyncResult ar = b.BeginInvoke(5, 5, null, null);
+            while (!ar.IsCompleted)
+            {
+                //Do some other work on priamry thread..
+                Console.WriteLine("Doing some work in Main()!");
+                Thread.Sleep(100);
+            }
+
+            int result = b.EndInvoke(ar);
+            Console.WriteLine("5 + 5 is {0}", result);
+        }
+
+        public static int Add(int a, int b)
+        {
+            Console.WriteLine("On thread {0}", Thread.CurrentThread.ManagedThreadId);
+            Thread.Sleep(500);
+            return (a + b);
+        }
+    }
 //-------------------------------------------------------------------------------------------
 
