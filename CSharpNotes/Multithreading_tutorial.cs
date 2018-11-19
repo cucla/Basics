@@ -1,5 +1,7 @@
 /* 1. Call method in a separate thread in UnitTests
  * 2. Begin/End Async pattern in UnitTests
+ * 3. Begin/End Async Networking example in UnitTests
+ * 4. Begin/End Async Database example in UnitTests
  */
  
 // 1. Call method in a separate thread in Unit Tests-----------------------------------------
@@ -78,5 +80,77 @@ namespace UnitTestProject
 }
 //-------------------------------------------------------------------------------------------
 
+//3. Begin/End Async Networking example in UnitTests-----------------------------------------
+namespace Networking
+{
+    [TestClass]
+    public class Test_Download
+    {
+        string url = "http://deelay.me/5000/http://www.delsink.com";
 
+        [TestMethod]
+        public void Test_Download_DelsinkCOM()
+        {
+            var httpRequestInfo = HttpWebRequest.CreateHttp(url);
+            var callback = new AsyncCallback(HttpResponseAvailable);
+            var ar = httpRequestInfo.BeginGetResponse(callback, httpRequestInfo);
+
+            ar.AsyncWaitHandle.WaitOne();
+        }
+        private static void HttpResponseAvailable(IAsyncResult ar)
+        {
+            var httpRequestInfo = ar.AsyncState as HttpWebRequest;
+            var httpResponseInfo = httpRequestInfo.EndGetResponse(ar) as HttpWebResponse;
+
+            var responseStream = httpResponseInfo.GetResponseStream(); // downloading the page contents
+            using (var sr = new StreamReader(responseStream))
+            {
+                var webPage = sr.ReadToEnd();
+            }
+        }
+    }
+}
+//-------------------------------------------------------------------------------------------
+
+// 4. Begin/End Async Database example in UnitTests------------------------------------------
+namespace Databases
+{
+    [TestClass]
+    public class Test_Databases
+    {
+        [TestMethod]
+        public void Test_DB_Async()
+        {
+            string connectionString;
+            #region Assign connectionString
+            connectionString = "";
+            #endregion
+
+            string sqlSelect = "SELECT @@VERSION";
+
+            using (var sqlConnection = new SqlConnection(connectionString))
+            {
+                sqlConnection.Open();
+
+                var sqlCommand = new SqlCommand(sqlSelect, sqlConnection);
+                var callback = new AsyncCallback(DataAvailable);
+                var ar = sqlCommand.BeginExecuteReader(callback, sqlCommand);
+
+                ar.AsyncWaitHandle.WaitOne();
+            }
+        }
+        private static void DataAvailable(IAsyncResult ar)
+        {
+            var sqlCommand = ar.AsyncState as SqlCommand;
+            using (var reader = sqlCommand.EndExecuteReader(ar))
+            {
+                while (reader.Read())
+                {
+                    var data = reader[0].ToString();
+                }
+            }
+        }
+    }
+}
+//-------------------------------------------------------------------------------------------
 
