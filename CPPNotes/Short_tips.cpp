@@ -1,4 +1,4 @@
-/* 1. Array Sum
+/* 1. Array Sum / Vector sum
  */
  
 // 1. Array Sum-------------------------------------------------------------------------------
@@ -8,6 +8,15 @@ int sum = 0;
 std::for_each(std::begin(myArr), std::end(myArr), [&sum](int a) { return sum += a; });
 
 int sum2 = std::accumulate(std::begin(myArr), std::end(myArr), 0);
+
+// 1. VectorSum-------------------------------------------------------------------------------
+std::vector<int> myVector;
+for (int i = 1; i <= 5; i++) myVector.push_back(i);
+
+int sum = 0;
+std::for_each(myVector.begin(), myVector.end(), [&sum](int a) { return sum += a; });
+
+int sum2 = std::accumulate(myVector.begin(), myVector.end(), 0);  //0.0f for floats
 //--------------------------------------------------------------------------------------------
 
 // 1. Array Sum-------------------------------------------------------------------------------
