@@ -1,4 +1,5 @@
 /* 1. Array Sum
+ * 2. Matrix diagonals
  */
  
 // 1. Array Sum-------------------------------------------------------------------------------
@@ -11,7 +12,29 @@ Array.ForEach(myArr, (a) => { sum += a; });
 int sum2 = myArr.Aggregate((a, b) => a + b );
 //--------------------------------------------------------------------------------------------
 
-// 1. Array Sum-------------------------------------------------------------------------------
+// 2. Matrix diagonals------------------------------------------------------------------------
+public static IEnumerable<T> PrimaryDiagonal<T>(IEnumerable<T[]> values)
+{
+    return values.Select((x, i) => x[i]);
+}
+
+public static IEnumerable<T> SecondaryDiagonal<T>(IEnumerable<T[]> values)
+{
+    return values.Reverse().Select((x, i) => x[i]);
+}
+
+static void Main(string[] args)
+{
+    int[][] jaggedArr = new int[][]
+    {
+        new int[] { 11, 2, 4 },
+        new int[] { 4, 5, 6 },
+        new int[] { 10, 8, -12 }
+    };
+
+    var primarySum = PrimaryDiagonal(jaggedArr).Sum();
+    var secondarySum = SecondaryDiagonal(jaggedArr).Sum();
+}
 //--------------------------------------------------------------------------------------------
 
 // 1. Array Sum-------------------------------------------------------------------------------
