@@ -1,4 +1,5 @@
 /* 1. Array Sum / Vector sum
+ * 2. Lambda with std::count_if
  */
  
 // 1. Array Sum-------------------------------------------------------------------------------
@@ -19,7 +20,11 @@ std::for_each(myVector.begin(), myVector.end(), [&sum](int a) { return sum += a;
 int sum2 = std::accumulate(myVector.begin(), myVector.end(), 0);  //0.0f for floats
 //--------------------------------------------------------------------------------------------
 
-// 1. Array Sum-------------------------------------------------------------------------------
+// 2. Lambda with count_if--------------------------------------------------------------------
+// to count number of elements which are equal to my own parameter 'myMax'
+std::vector<int> ar({ 3, 2, 1, 3 });
+auto myMax = *std::max_element(ar.begin(), ar.end());
+auto myCount = std::count_if(ar.begin(), ar.end(), [myMax](int i) { return i == myMax; });
 //--------------------------------------------------------------------------------------------
 
 // 1. Array Sum-------------------------------------------------------------------------------
