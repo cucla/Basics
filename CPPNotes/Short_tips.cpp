@@ -1,6 +1,6 @@
 /* 1. Array Sum / Vector sum
  * 2. Lambda with std::count_if
- * 3. Convert decimal number to binary (recursive)
+ * 3. Convert decimal to binary (& viceverca)
  */
  
 // 1. Array Sum-------------------------------------------------------------------------------
@@ -28,13 +28,25 @@ auto myMax = *std::max_element(ar.begin(), ar.end());
 auto myCount = std::count_if(ar.begin(), ar.end(), [myMax](int i) { return i == myMax; });
 //--------------------------------------------------------------------------------------------
 
-// 3. Convert decimal number to binary (recursive)--------------------------------------------
-void convertToBinary(unsigned int n)
-{
+// 3. Convert decimal to binary (& viceverca)-------------------------------------------------
+void convertToBinary(unsigned int n) {
 	if (n / 2 != 0) {
 		convertToBinary(n / 2);
 	}
 	printf("%d", n % 2);
+}
+
+void convertToDecimal(unsigned int n) {
+	long factor = 1;
+	long total = 0;
+
+	while (n != 0)
+	{
+		total += (n % 10) * factor;
+		n /= 10;
+		factor *= 2;
+	}
+	printf("%d", total);
 }
 //--------------------------------------------------------------------------------------------
 
