@@ -1,5 +1,6 @@
 /* 1. Array Sum / Vector sum
  * 2. Lambda with std::count_if
+ * 3. Convert decimal number to binary (recursive)
  */
  
 // 1. Array Sum-------------------------------------------------------------------------------
@@ -27,7 +28,14 @@ auto myMax = *std::max_element(ar.begin(), ar.end());
 auto myCount = std::count_if(ar.begin(), ar.end(), [myMax](int i) { return i == myMax; });
 //--------------------------------------------------------------------------------------------
 
-// 1. Array Sum-------------------------------------------------------------------------------
+// 3. Convert decimal number to binary (recursive)--------------------------------------------
+void convertToBinary(unsigned int n)
+{
+	if (n / 2 != 0) {
+		convertToBinary(n / 2);
+	}
+	printf("%d", n % 2);
+}
 //--------------------------------------------------------------------------------------------
 
 // 1. Array Sum-------------------------------------------------------------------------------
