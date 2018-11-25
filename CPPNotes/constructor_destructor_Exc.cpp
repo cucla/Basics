@@ -10,12 +10,13 @@ const string unk = "unknown";
 const string clone_prefix = "clone-";
 
 // EXCEPTIONS!!!!!------------------------------------
-class E : public exception {
-	const char * msg = nullptr;
-	E() {};
+class E : public std::exception {
 public:
-	E(const char * s) throw() : msg(s) {}
-	const char * what() const throw() { return msg; }
+    explicit E(const char * s) throw() : msg(s) { }
+    const char * what() const throw() { return msg; }
+private:
+    E(){};	// no default constructor
+    const char * msg = nullptr;
 };
 //----------------------------------------------------
 
