@@ -7,7 +7,7 @@
 template<typename T>
 class ArrStack {
 public:
-	ArrStack(int max = CAPACITY);
+	explicit ArrStack(int max = CAPACITY);
 	~ArrStack();
 	bool push(T el);
 	bool pop();
