@@ -9,7 +9,7 @@ class ArrStack {
 public:
 	explicit ArrStack(int max = CAPACITY);
 	~ArrStack();
-	bool push(T el);
+	bool push(const T & el);
 	bool pop();
 	T & top();
 	int size() const;
@@ -47,7 +47,7 @@ ArrStack<T>::~ArrStack() {
 }
 
 template<class T>
-bool ArrStack<T>::push(T el) {
+bool ArrStack<T>::push(const T & el) {
 	if (!isFull()) {
 		_buffer[++_top] = el;
 		return true;
