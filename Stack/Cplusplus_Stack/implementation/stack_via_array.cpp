@@ -20,6 +20,7 @@ private:
 	T * _buffer;
 	int _top{ -1 };
 	int _capacity;
+	// or static const int CAPACITY = 10;
 };
 //----------------------------------------------------
 
