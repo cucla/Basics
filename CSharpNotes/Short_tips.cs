@@ -1,5 +1,6 @@
 /* 1. Array Sum
  * 2. Matrix diagonals
+ * 3. Anonymous delegate
  */
  
 // 1. Array Sum-------------------------------------------------------------------------------
@@ -37,7 +38,26 @@ static void Main(string[] args)
 }
 //--------------------------------------------------------------------------------------------
 
-// 1. Array Sum-------------------------------------------------------------------------------
+// 3. Anonymous delegate----------------------------------------------------------------------
+delegate int MyDelegate(int[] _scores, int _aScore);
+
+static int[] climbingLeaderboard(int[] scores, int[] alice)
+{
+    int[] result = new int[alice.Count()];
+    var distinctScores = scores.Distinct().ToArray();
+
+    MyDelegate locateRanking = (scoresArr, aliceScore) => {
+        var itr = Array.Find(scoresArr, el => el <= aliceScore);
+        var idx = Array.FindIndex(scoresArr, score => score == itr);
+        return idx == -1 ? distinctScores.Count() + 1 : idx + 1;
+    };
+
+    for (int i = 0; i < alice.Count(); i++)
+    {
+        result[i] = locateRanking(distinctScores, alice[i]);
+    }
+    return result;
+}
 //--------------------------------------------------------------------------------------------
 
 // 1. Array Sum-------------------------------------------------------------------------------
