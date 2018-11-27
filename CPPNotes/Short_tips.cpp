@@ -1,7 +1,8 @@
 /* 1. Array Sum / Vector sum
- * 2. Lambda with std::count_if
+ * 2. Count elements == to my own parameter 'myMax' (lambda with count_if)
  * 3. Convert decimal to binary (& vice verca)
  * 4. Pointer to 2D array
+ * 5. Search sequence for the first number, smaller than a given value
  */
  
 // 1. Array Sum-------------------------------------------------------------------------------
@@ -22,8 +23,7 @@ std::for_each(myVector.begin(), myVector.end(), [&sum](int a) { return sum += a;
 int sum2 = std::accumulate(myVector.begin(), myVector.end(), 0);  //0.0f for floats
 //--------------------------------------------------------------------------------------------
 
-// 2. Lambda with count_if--------------------------------------------------------------------
-// to count number of elements which are equal to my own parameter 'myMax'
+// 2. Count elements == to my own parameter 'myMax' (lambda with count_if)--------------------
 std::vector<int> ar({ 3, 2, 1, 3 });
 auto myMax = *std::max_element(ar.begin(), ar.end());
 auto myCount = std::count_if(ar.begin(), ar.end(), [myMax](int i) { return i == myMax; });
@@ -58,7 +58,17 @@ for (int i = 0; i < MAX_SIZE; ++i) {
 }
 //--------------------------------------------------------------------------------------------
 
-// 1. Array Sum-------------------------------------------------------------------------------
+// 5. Search sequence for the first number, smaller than a given value------------------------
+std::vector<int> scores({ 100, 50, 40, 20, 10 });
+std::vector<int> alice({ 5, 25, 50, 120 });
+
+auto locateRanking = [](const auto & _scores, int _newScore) {
+	auto itr = std::lower_bound(std::begin(_scores), std::end(_scores), _newScore, std::greater<int>());
+	return std::distance(std::begin(_scores), itr) + 1;
+};
+for (auto newScore : alice) {
+	std::cout << locateRanking(scores, newScore) << std::endl;
+}
 //--------------------------------------------------------------------------------------------
 
 // 1. Array Sum-------------------------------------------------------------------------------
