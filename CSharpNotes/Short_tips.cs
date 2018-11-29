@@ -1,3 +1,7 @@
+// https://books.google.com.tw/books?id=K0ICo6r29W4C&pg=PA1&source=gbs_toc_r&cad=4#v=onepage&q&f=false
+// https://books.google.com.tw/books?id=HCxxUaZHQF4C&pg=PA286&lpg=PA286&dq=C%23+sortablebindinglist.clear&source=bl&ots=Njy8YNJeaA&sig=bMnUhvDr3adTwVeYkpFvpyYBd-c&hl=en&sa=X&ved=2ahUKEwi4jMDv2sbdAhUJvbwKHfkfBEEQ6AEwD3oECAUQAQ#v=onepage&q=C%23%20sortablebindinglist.clear&f=false
+// (117 page)
+
 /* 1. Array Sum
  * 2. Matrix diagonals
  * 3. Anonymous delegate
