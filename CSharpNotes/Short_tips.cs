@@ -2,6 +2,9 @@
 // https://books.google.com.tw/books?id=HCxxUaZHQF4C&pg=PA286&lpg=PA286&dq=C%23+sortablebindinglist.clear&source=bl&ots=Njy8YNJeaA&sig=bMnUhvDr3adTwVeYkpFvpyYBd-c&hl=en&sa=X&ved=2ahUKEwi4jMDv2sbdAhUJvbwKHfkfBEEQ6AEwD3oECAUQAQ#v=onepage&q=C%23%20sortablebindinglist.clear&f=false
 // (117 page)
 
+// Interview No1: http://www.interviewsansar.com/category/csharp-muli-threading-interview-questions-and-answers/
+// Interview No2: https://www.byte-by-byte.com/tag/bit-manipulation/
+
 /* 1. Array Sum
  * 2. Matrix diagonals
  * 3. Anonymous delegate
