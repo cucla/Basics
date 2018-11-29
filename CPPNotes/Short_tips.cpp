@@ -3,6 +3,7 @@
  * 3. Convert decimal to binary (& vice verca)
  * 4. Pointer to 2D array
  * 5. Search sequence for the first number, smaller than a given value
+ * 6. Array of functions
  */
  
 // 1. Array Sum-------------------------------------------------------------------------------
@@ -71,7 +72,22 @@ for (auto newScore : alice) {
 }
 //--------------------------------------------------------------------------------------------
 
-// 1. Array Sum-------------------------------------------------------------------------------
+// 6. Array of functions----------------------------------------------------------------------
+typedef int(*FunctionPrt)(int);
+
+int utopianTree(int n) {
+	int initialHeight = 1;
+
+	FunctionPrt functions[] = {
+		[](int initialHeight) { return initialHeight * 2; },
+		[](int initialHeight) { return initialHeight + 1; }
+	};
+
+	for (int cycles = 0, i = 0; cycles < n; i = (i + 1) % 2, ++cycles) {
+		initialHeight = functions[i](initialHeight);
+	}
+	return initialHeight;
+}
 //--------------------------------------------------------------------------------------------
 
 // 1. Array Sum-------------------------------------------------------------------------------
