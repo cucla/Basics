@@ -67,7 +67,19 @@ static int[] climbingLeaderboard(int[] scores, int[] alice)
 }
 //--------------------------------------------------------------------------------------------
 
-// 1. Array Sum-------------------------------------------------------------------------------
+// 4. Array of functions----------------------------------------------------------------------
+int initialHeight = 1;
+
+// array of functions that take 1 int parameter and return int value
+var functions = new Func<int, int>[] {
+    a => { return a * 2; },
+    a => { return a + 1; }
+};
+
+for (int cycles = 0, i = 0; cycles < n; i = (i + 1) % 2, ++cycles) {
+ initialHeight = functions[i](initialHeight);
+}
+return initialHeight;
 //--------------------------------------------------------------------------------------------
 
 // 1. Array Sum-------------------------------------------------------------------------------
