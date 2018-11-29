@@ -8,6 +8,7 @@
 /* 1. Array Sum
  * 2. Matrix diagonals
  * 3. Anonymous delegate
+ * 4. Array of functions
  */
  
 // 1. Array Sum-------------------------------------------------------------------------------
