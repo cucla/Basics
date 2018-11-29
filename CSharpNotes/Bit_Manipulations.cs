@@ -98,6 +98,11 @@ namespace AppForInterview
             Console.WriteLine($"22 & 4 [{Convert.ToString(22, toBase: 2)} & {Convert.ToString(4, toBase: 2)}]  : " +
                 $"{Convert.ToString(22 & 4, toBase: 2)}, {22 & 4}");
             // if( N & (1 << i) ) return true;
+            
+            // https://www.hackerearth.com/practice/notes/bit-manipulation/
+            // x ^ ( x & (x-1)) : Returns the rightmost 1 in binary representation of x
+            // x & (-x) : Returns the rightmost 1 in binary representation of x
+            // x | (1 << n) : Returns the number x with the nth bit set
 
         }
     }
