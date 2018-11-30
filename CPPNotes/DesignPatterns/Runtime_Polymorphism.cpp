@@ -24,7 +24,7 @@ public:
 	virtual ~Base() {}
 
 	// example of a static field
-	static int count;						// static data member
+	static int count;				// static data member
 	static void addCount() { ++count; }		// static member function
 };
 
@@ -58,7 +58,6 @@ void someMethod(const Base & obj) {
 
 
 int main() {
-
 	Base * bp[4];
 	bp[0] = new Base();
 	bp[1] = new Derived1();
@@ -73,4 +72,32 @@ int main() {
 
 	std::cin.get();
 }
+
+// In order for each derived class to get their own static variable, you'll need to 
+// declare another static variable with a different name:
+
+class Base {
+    static int staticVarInst;
+public:
+    virtual int & staticVar() { return staticVarInst; }
+}
+class Derived: public Base {
+    static int derivedStaticVarInst;
+public:
+    virtual int & staticVar() { return derivedStaticVarInst; }
+}
+
+// Can "achieve dynamic binding with a static function, if wrap it in a non-static function
+
+class Base {
+public:
+     static void print() { cout << "base class static function" << endl; }
+     virtual void dynamic_print() { Base::print(); }
+};
+
+class Derived : public Base {
+public:
+     static void print() { cout << "derived class static function" << endl; }
+     virtual void dynamic_print() { Derived::print(); }
+};
 
