@@ -75,7 +75,6 @@ int main() {
 
 // In order for each derived class to get their own static variable, you'll need to 
 // declare another static variable with a different name:
-
 class Base {
     static int staticVarInst;
 public:
@@ -88,7 +87,6 @@ public:
 }
 
 // Can "achieve dynamic binding with a static function, if wrap it in a non-static function
-
 class Base {
 public:
      static void print() { cout << "base class static function" << endl; }
