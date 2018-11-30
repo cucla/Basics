@@ -5,6 +5,13 @@
  *
  * Virtual Function -
  * is overrided in the derived class, the compiler performs Late Binding on this function;
+ * 
+ * Static type - 			Dynamic type (of an expression that is a reference or a pointer) -
+ * is always known at compile time;  	the type of the object in memory, may not be known until run time;
+ *
+ * Derived x;
+ * Base * item = &x;		// ok
+ * Derived * new_item = item; 	// ERROR, use cast
  *
  * -> Derived class includes body only for the functions it intends to define;
  * -> Dynamic binding happens when a vitrual function is called through:
