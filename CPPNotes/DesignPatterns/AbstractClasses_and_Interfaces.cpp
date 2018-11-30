@@ -64,3 +64,56 @@ tee
 water
 sugar
 coffee
+
+
+
+/* 
+ * Interface in C++ :
+ * -> prefix class name with letter "I";
+ * -> keep only pure virtual functions;
+ */
+
+class ILogin {
+public:
+	virtual void name() = 0;
+	virtual void password() = 0;
+};
+
+class EmailLogin : public ILogin {
+public:
+	void name() {
+		std::cout << "Email Login name\n";
+	}
+	void password() {
+		std::cout << "Email Password\n";
+	}
+};
+class MembershipLogin :public ILogin {
+public:
+	void name() {
+		std::cout << "Membership Login name\n";
+	}
+	void password() {
+		std::cout << "Membership password\n";
+	}
+};
+
+int main() {
+	ILogin * items[2];
+	items[0] = new EmailLogin();
+	items[1] = new MembershipLogin();
+
+	for (size_t i = 0; i < 2; i++) {
+		items[i]->name();
+		items[i]->password();
+	}
+
+
+	std::cin.get();
+}
+
+//OUTPUT
+Email Login name
+Email Password
+Membership Login name
+Membership password
