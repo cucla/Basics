@@ -13,6 +13,9 @@
  * Base * item = &x;		// ok
  * Derived * new_item = item; 	// ERROR, use cast
  *
+ * -> Derived-to-base conversion applies only to pointer or reference types;
+ * -> There is no implicit base-to-derived conversion
+ *
  * -> Derived class includes body only for the functions it intends to define;
  * -> Dynamic binding happens when a vitrual function is called through:
  *		- a reference (someMethod());
