@@ -96,7 +96,7 @@ public:
     virtual int & staticVar() { return derivedStaticVarInst; }
 }
 
-// Can "achieve dynamic binding with a static function, if wrap it in a non-static function
+// Can "achieve" dynamic binding with a static function, if you wrap it in a non-static function
 class Base {
 public:
      static void print() { cout << "base class static function" << endl; }
