@@ -1,3 +1,26 @@
+/* Copy-and-swap idiom: uses copy ctor
+ * 1. add method:
+ * 	void Rational::swap(Rational & other) {
+ *	   std::swap(_d, other._d);
+ *	   std::swap(_n, other._n); }
+ *
+ * 2. change 'assignment' operator
+ 		    FROM								TO
+	 Rational & Rational::operator = (const Rational & rhs) {	Rational & Rational::operator = (Rational other) {
+		message("assignment");						message("copy and swap");
+		if (this != &rhs) {						swap(other);
+			_n = rhs.numerator();					return *this; }
+			_d = rhs.denominator();
+		}
+		return *this; }
+ *
+ * 3. now, d = b; will call copy-and-swap function
+ * 4. delete move assignment operator, now eigher move or copy will be used with one implementation:
+ * --->		b = std::move(a); 		will use move ctor
+ * --->		b = a;				will use copy ctor
+ */
+
+
 #include "stdafx.h"
 #include <iostream>
 
