@@ -1,5 +1,17 @@
 // 1. dynamic_cast basic example #1
 // 2. dynamic_cast or typeid: pass pointer to base to an independent method and chack if an object is derived or base class
+// 3. 'override' (override not possible) non virtual function
+
+/* When to use RTTI:
+ * -> to call a specialized member function of a child class using base class pointer (2.)
+ * -> to override a function from base class that is not virtual and we can’t make it virtual 
+ *    as base class is sitting in a library (3.)
+ *
+ * Alternatives:
+ * -> Virtual methods, puts the work within the object itself;
+ * -> If the work belongs outside the object in some processing code, consider a double-dispatch solution, 
+ *    such as the Visitor design pattern;
+ */
 
 // 1. dynamic_cast basic example #1---------------------------------------------------------------
 #include "stdafx.h"
@@ -33,15 +45,15 @@ int main() {
 
 	Base b;
 	Derived d;
-	b.f();			// Base::f()
-	d.f();			// Derived::f()
+	b.f();		// Base::f()
+	d.f();		// Derived::f()
 
 	Base * ptrB = &b;
 	Derived * ptrD = &d;
 	ptrB->f();      // Base::f()
 	ptrD->f();      // Derived::f()
 
-	ptrB = &d;			// or ptrB = dynamic_cast<Base*>(&d); 
+	ptrB = &d;		// or ptrB = dynamic_cast<Base*>(&d); 
 	// ptrD = &b;		// not allowed
 	ptrD = dynamic_cast<Derived *>(&b); // nullptr
 
@@ -112,4 +124,45 @@ int main() {
 	std::cin.get();
 }
 //------------------------------------------------------------------------------------------------
+
+// 3. 'override' (override not possible) non-virtual function-------------------------------------
+#include "stdafx.h"
+#include <iostream>
+#include <string>
+
+class Base {
+public:
+	Base(const std::string & s) : name(s) {};
+	virtual ~Base() {};
+
+	virtual void getName() { std::cout << "Base class " << name << std::endl; };
+	void func2() { std::cout << "Base class func2()" << std::endl; }     //Not virtual  !!!!!!
+private:
+	std::string name;
+};
+
+class Derived : public Base {
+public:
+	Derived(const std::string & s) : Base(s) {};
+	~Derived() {};
+	void func2() { std::cout << "Derived class func2()" << std::endl; }
+};
+
+//client code
+void DoSomething(Base * b) {
+	Derived * d = dynamic_cast<Derived *>(b);
+	if (d)		// if not null
+		d->func2();
+}
+
+int main() {
+	Base * w = new Base("plain window");
+	Derived * sw = new Derived("scroll window");
+	DoSomething(w);
+	DoSomething(sw);
+
+	std::cin.get();
+}
+//------------------------------------------------------------------------------------------------
+
 
