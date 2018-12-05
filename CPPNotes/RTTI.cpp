@@ -1,5 +1,5 @@
 // 1. dynamic_cast basic example #1
-// 2. dynamic_cast usage example #2: pass pointer to base to an independent method and chack if an object is derived or base class
+// 2. dynamic_cast or typeid: pass pointer to base to an independent method and chack if an object is derived or base class
 
 // 1. dynamic_cast basic example #1---------------------------------------------------------------
 #include "stdafx.h"
@@ -57,51 +57,59 @@ int main() {
 }
 //------------------------------------------------------------------------------------------------
 
-// 2. dynamic_cast usage example #2---------------------------------------------------------------
+// 2. dynamic_cast or typeid: pass pointer to base to an independent method and chack------------- 
+// if an object is derived or base class----------------------------------------------------------
+
+#include "stdafx.h"
 #include <iostream>
 #include <string>
-using namespace std;
 
-class Window
-{
+class Base {
 public:
-	Window(){}
-	Window(const string s):name(s) {};
-	virtual ~Window() {};
-	void getName() { cout << name << endl;};
+	Base(const std::string & s) : name(s) {};
+	virtual ~Base() {};
+	void getName() { std::cout << name << std::endl; };
 private:
-	string name;
+	std::string name;
 };
 
-class ScrollWindow : public Window
-{
+class Derived : public Base {
 public:
-	ScrollWindow(string s) : Window(s) {};
-	~ScrollWindow() {};
-	void scroll() { cout << "scroll()" << endl;};
+	Derived(const std::string & s) : Base(s) {};
+	~Derived() {};
+	void scroll() { std::cout << "scroll()" << std::endl; };
 };
 
-void DoSomething(Window *w)
-{
+void DoSomething(Base * w) {
 	w->getName();
-	// w->scroll();  // class "Window" has no member scroll
 
 	// check if the pointer is pointing to a scroll window
-	ScrollWindow *sw = dynamic_cast<ScrollWindow*>(w);
-
-	// if not null, it's a scroll window object
-	if(sw) sw->scroll();
+	Derived * sw = dynamic_cast<Derived *>(w);
+	if (sw)		// if not null
+		sw->scroll();
 }
 
-int main()
-{
-	Window *w = new Window("plain window");
-	ScrollWindow *sw = new ScrollWindow("scroll window");
+void DoSomething2(Base * w) {
+	w->getName();
+
+	// check if two objects are the same
+	if (typeid(Derived) == typeid(*w)) {
+		Derived * sw = dynamic_cast<Derived *>(w);
+		sw->scroll();
+	}
+	// Base b("plain window");
+	// if (typeid(Derived) == typeid(b)) ...
+}
+
+int main() {
+	Base * w = new Base("plain window");
+	Derived * sw = new Derived("scroll window");
 
 	DoSomething(w);
 	DoSomething(sw);
-
-	return 0;
+	DoSomething2(w);
+	DoSomething2(sw);
+	std::cin.get();
 }
 //------------------------------------------------------------------------------------------------
 
