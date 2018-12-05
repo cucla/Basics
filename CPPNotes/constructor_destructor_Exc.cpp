@@ -90,7 +90,7 @@ int main(int argc, char ** argv) {
 	Animal * prtA3 = new (nothrow) Animal[3]; //array of objects, initialized via default constructor
 	//delete[] ptrA3;
 
-	const Animal c = b;
+	const Animal c = b;    // call copy constructor 
 	c.print();
 
 	a = c;
