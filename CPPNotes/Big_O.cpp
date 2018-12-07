@@ -54,6 +54,7 @@ int linearSearch(int * arr, size_t n, int key) {
 // 'binarySearch' -> O(log_n), logarithmic runtime
 // each iteration eliminates half of the array
 // repeatedly dividing 1023 by 2 will yield at most 10 divisions (2^10 = 1023)
+// For any number n, lon2 n  gives the number of times n needs to be divided by 2 before reaching 1 
 int binarySearch(int * arr, int l, int r, int key) {
 	if (r >= l) {
 		int mid = l + (r - l) / 2;
