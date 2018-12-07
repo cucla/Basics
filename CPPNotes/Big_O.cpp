@@ -30,8 +30,6 @@ int main() {
 	print(arr, SIZE);
 
 
-
-
 	std::cin.get();
 }
 
@@ -58,16 +56,12 @@ int linearSearch(int * arr, size_t n, int key) {
 int binarySearch(int * arr, int l, int r, int key) {
 	if (r >= l) {
 		int mid = l + (r - l) / 2;
-
 		if (arr[mid] == key)
 			return mid;
-
 		if (arr[mid] > key)
 			return binarySearch(arr, l, mid - 1, key);
-
 		return binarySearch(arr, mid + 1, r, key);
 	}
-
 	return -1;
 }
 
@@ -80,25 +74,20 @@ void swap(int * a, int * b) {
 // 'selectionSort' -> O(n^2), quadratic runtime
 void selectionSort(int * arr, size_t n) {
 	int min;
-
 	for (auto i = 0; i < n - 1; i++) {
 		min = i;
-
 		for (auto j = i + 1; j < n; j++) {
 			if (arr[j] < arr[min]) 
 				min = j;
 		}
-
 		swap(&arr[i], &arr[min]);
 	}
-
 }
 
-//error
+// 'insertionSort'
 void insertionSort(int * arr, size_t n) {
-
 	for (size_t i = 1; i < n; i++) {
-		for (size_t j = i-1; j >= 0; j--) {
+		for (size_t j = i - 1; j-- > 0;) {
 			if (arr[i] < arr[j])
 				swap(&arr[i], &arr[i - 1]);
 		}
