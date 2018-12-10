@@ -107,7 +107,7 @@ void selectionSort(int * arr, size_t n) {
 	}
 }
 
-// 'mergeSort' -> O(nlog_n), logarithmic runtime
+// 'mergeSort' -> O(nlog_n), linearithmic runtime
 // divide-and-conquer sorting algorithm
 // always divides the array in two halves and take linear time to merge two halves
 void merger(int * arr, int leftIdx, int  mi, int rightIdx) {
