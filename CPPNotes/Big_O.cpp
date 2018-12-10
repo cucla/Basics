@@ -9,14 +9,14 @@
 const size_t SIZE = 15;
 
 void print(int * arr, size_t n);
-int linearSearch(int * arr, size_t n, int key);			// O(n)
+int linearSearch(int * arr, size_t n, int key);		// O(n)
 int binarySearch(int * arr, int l, int r, int key);		// O(log_n)
-void insertionSort(int * arr, size_t n);				// O(n^2)
-void selectionSort(int * arr, size_t n);				// O(n^2)
+void insertionSort(int * arr, size_t n);			// O(n^2)
+void selectionSort(int * arr, size_t n);			// O(n^2)
 
 void merger(int * arr, int lo, int  mi, int hi);
 void mergeSortHelper(int * arr, int lo, int hi);
-void mergeSort(int * arr, int arr_size);				// O(nlog_n)
+void mergeSort(int * arr, int arr_size);			// O(nlog_n)
 
 
 int main() {
