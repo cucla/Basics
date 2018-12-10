@@ -48,12 +48,11 @@ void print(int * arr, size_t n) {
 }
 
 // 'linearSearch' -> O(n), linear runtime
+// O(1), constant space complexity
 int linearSearch(int * arr, size_t n, int key) {
 	for (size_t i = 0; i < n; i++) {
-		if (arr[i] == key) 
-			return i;
-		else 
-			return -1;
+		if (arr[i] == key) return i;
+		else return -1;
 	}
 }
 
