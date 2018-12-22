@@ -68,6 +68,13 @@ Rational & Rational::operator = (const Rational & rhs) {
 	return *this;
 }
 
+// or copy-and-swap copy assignment:
+Rational & Rational::operator = (const Rational & rhs) {
+	Rational copy = rhs;
+	std::swap(*this, copy);
+	return *this;
+}
+
 Rational & Rational::operator = (Rational && rhs) noexcept {
 	if (this != &rhs) {
 		_n = std::move(rhs.numerator());
