@@ -3,7 +3,7 @@
 #include <vector>
 
 /* OOP
- * Comparable class type
+ * Comparable class type -> must provide < and ==
  * + operator overloading via member functions;
  */
 
