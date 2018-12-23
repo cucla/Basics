@@ -12,10 +12,10 @@ public:
 	explicit Comparable(int initial = 0) : val{initial} { }
 
 	int getVal() const { return val; }
-	bool operator< (const Comparable & rhs) const {
+	bool operator< (const Comparable & rhs) const {			// operator<
 		return getVal() < rhs.getVal();
 	}
-	Comparable operator+ (const Comparable & rhs) const {
+	Comparable operator+ (const Comparable & rhs) const {		// operator+
 		return Comparable(getVal() + rhs.getVal());
 	}
 
