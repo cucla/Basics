@@ -89,7 +89,7 @@ int main()
 	//std::transform(transpose[0].begin(), transpose[0].end(), scalars.begin(), transpose[0].begin(), std::plus<int>());	
 	std::for_each(transpose.begin(), transpose.end(),
 		[&scalars](std::vector<int> & v) {
-		transform(v.begin(), v.end(), scalars.begin(),
+		std::transform(v.begin(), v.end(), scalars.begin(),
 			v.begin(), std::plus<int>());
 		}
 	);
