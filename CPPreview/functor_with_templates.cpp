@@ -36,11 +36,6 @@ const Object & findMax(const std::vector<Object> & v, Comparator cmp) {
 	return v[maxIndex];
 }
 
-//template <typename Object>
-//const Object & findMax(const std::vector<Object> & v) {
-//	return findMax(v, std::less<Object>{ });
-//}
-
 class IsLessComparator {
 public:
 	bool isLessThan(const int & lhs, const int & rhs) const{
