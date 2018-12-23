@@ -51,10 +51,35 @@ public:
 	}
 };
 
+/--------------------------------------------------------------------------------
+/* [ 3 ]
+ * Generic 'findMax', using default ordering via std::less
+ */
+template <typename Object, typename Comparator>
+const Object & findMax(const std::vector<Object> & v, Comparator cmp) {
+	int maxIndex = 0;
+	for (int i = 0; i < v.size(); i++)
+	{
+		if (cmp(v[maxIndex], v[i]))
+			maxIndex = i;
+	}
+	return v[maxIndex];
+}
+
+template <typename Object>
+const Object & findMax(const std::vector<Object> & v) {
+	return findMax(v, std::less<Object>{ });
+}
+/--------------------------------------------------------------------------------
+
+
 int main()
 {
 	std::cout << findMax<int>({ 33, 4, 12 }) << std::endl;                        //[1]
 	std::cout << findMax<int>({ 33, 4, 12 }, IsLessComparator{ }) << std::endl;   //[2]
+	//---------------------------------------------------------------------------------
+	std::cout << findMax<int>({ 33, 4, 12 }) << std::endl;                        //[3]
+
 
 	std::cin.get();
 }
