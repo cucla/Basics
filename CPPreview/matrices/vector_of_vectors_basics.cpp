@@ -101,6 +101,47 @@ int main()
 	102 104 106
 	*/
 
+	std::vector<std::vector<int>> v_main{
+		{ 7, 2, 2, 1 },
+		{ 3, 4, 4 },
+		{ 5, 6, 5, 1, 1 } };
+	std::for_each(v_main.begin(), v_main.end(), 
+		[](std::vector<int> & v) {
+		v.erase(std::unique(v.begin(), v.end()), v.end()); 
+	});
+	prettyPrint(v_main);
+	/*
+	7 2 1
+	3 4
+	5 6 5 1
+	*/
+
+	//resize outer vector
+	v_main.resize(6, std::vector<int>(4));
+	prettyPrint(v_main);
+	/*
+	7 2 1
+	3 4
+	5 6 5 1
+	0 0 0 0
+	0 0 0 0
+	0 0 0 0
+	*/
+
+	//sort by size of each vector
+	std::sort(v_main.begin(), v_main.end(), 
+		[](const std::vector<int> & a, const std::vector<int> & b) { 
+		return a.size() < b.size(); });
+	prettyPrint(v_main);
+	/*
+	3 4
+	7 2 1
+	5 6 5 1
+	0 0 0 0
+	0 0 0 0
+	0 0 0 0
+	*/
+
 
 	std::cin.get();
 }
