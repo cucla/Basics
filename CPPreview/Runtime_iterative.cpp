@@ -100,3 +100,17 @@
       x = x / 2
    }
    
+/* 
+Explanation of recursive Fibonacci runtime, which is exponential O(2^n):
+
+     T(n) = T(n-1) + T(n-2) <
+     T(n-1) + T(n-1) 
+
+     = 2*T(n-1)   
+     = 2*2*T(n-2)
+     = 2*2*2*T(n-3)
+     ....
+     = 2^i*T(n-i)
+     ...
+     ==> O(2^n)
+ */
