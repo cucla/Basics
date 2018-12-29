@@ -2,6 +2,7 @@
 #include "iostream"
 #include <vector>
 
+// implementation doesn't contain error checks
 
 template<typename Object>
 class myVector {
