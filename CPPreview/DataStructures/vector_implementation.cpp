@@ -12,13 +12,7 @@ public:
 		_size{ size },
 		_capasity{ size + SPARE_CAPACITY }
 	{
-		_buff = new Object[_capasity];
-		if (_size > 0) {
-			static Object defaultObject;
-			for (int i = 0; i < _size; i++) {
-				_buff[i] = defaultObject;
-			}
-		}
+		_buff = new Object[_capasity]{};   // {} -> value-initialize items
 	}
 
 	myVector(const myVector & rhs) :
