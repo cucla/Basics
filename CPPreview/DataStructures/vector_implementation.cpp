@@ -12,7 +12,9 @@ public:
 		_size{ size },
 		_capasity{ size + SPARE_CAPACITY }
 	{
-		_buff = new Object[_capasity]{};   // {} -> value-initialize items
+		_buff = new Object[_capasity];   // new Object[_capasity]{}; -> value-initialize '_capasity' items
+		for (int i = 0; i < _size; i++)
+			_buff[i] = Object{};
 	}
 
 	myVector(const myVector & rhs) :
