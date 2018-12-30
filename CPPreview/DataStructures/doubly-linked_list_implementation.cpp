@@ -209,15 +209,15 @@ void printLst(const std::list<int> & l) {
 int main() {
 	std::list<int> libL01;					printLst(libL01);
 	std::list<int> libL02(5);				printLst(libL02);
-	std::list<int> libL03(5, 100);			printLst(libL03);
-	std::list<int> libL04 = libL03;			printLst(libL04);
-	std::list<int> libL05(libL03);			printLst(libL05);
-	std::list<int> libL06{ 1, 2, 3, 4, 5, 6 };			printLst(libL06);
+	std::list<int> libL03(5, 100);				printLst(libL03);
+	std::list<int> libL04 = libL03;				printLst(libL04);
+	std::list<int> libL05(libL03);				printLst(libL05);
+	std::list<int> libL06{ 1, 2, 3, 4, 5, 6 };		printLst(libL06);
 	std::list<int> libL07 = { 1, 2, 3, 4, 5, 6 };		printLst(libL07);
 
 
 	std::cout << "myList: " << std::endl;
-	myList<int> lst01;						std::cout << lst01 << std::endl;
+	myList<int> lst01;					std::cout << lst01 << std::endl;
 	myList<int> lst02(5);					std::cout << lst02 << std::endl;
 	myList<int> lst03 = lst02;				std::cout << lst03 << std::endl;
 	myList<int> lst04(lst02);				std::cout << lst04 << std::endl;
