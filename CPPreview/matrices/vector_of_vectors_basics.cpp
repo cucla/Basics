@@ -154,8 +154,16 @@ int main()
 		{ 9, 19, 7 }	
 	};
 	int sz = 3;
-	auto res = std::all_of(m.begin(), m.end(), [&sz](std::vector<int> & v) { return v.size() == sz; });  	// 1
+	auto res = std::all_of(m.begin(), m.end(), [& sz](std::vector<int> & v) { return v.size() == sz; });  	// 1
 	
+	// verify if matrix contains a vector
+	std::vector<int> key{ 1, 0, 14 };
+	auto isPresent = std::any_of(m.begin(), m.end(), [& key](std::vector<int> & v) { return v == key; });	// 1
+
+	// find a vector
+	auto found = std::find(m.begin(), m.end(), key);
+	if (found != m.end())
+		for (auto el : * found)	 std::cout << el << " ";
 
 
 	std::cin.get();
