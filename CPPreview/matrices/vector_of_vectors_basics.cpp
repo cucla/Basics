@@ -145,6 +145,17 @@ int main()
 	0 0 0 0
 	0 0 0 0
 	*/
+	
+	
+	// verify all vectors have equal size
+	std::vector<std::vector<int>> m{
+		{ 2, 4, 33 },
+		{ 1, 0, 14 },
+		{ 9, 19, 7 }	
+	};
+	int sz = 3;
+	auto res = std::all_of(m.begin(), m.end(), [&sz](std::vector<int> & v) { return v.size() == sz; });  	// 1
+	
 
 
 	std::cin.get();
