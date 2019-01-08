@@ -13,7 +13,7 @@ The length of times will be in the range [1, 6000].
 All edges times[i] = (u, v, w) will have 1 <= u, v <= N and 1 <= w <= 100.
  */
  
- // Dijkstra's Algorithm
+ // Solution #1: Dijkstra's Algorithm
  
  using namespace std;
 
@@ -67,3 +67,33 @@ int main() {
 
 	std::cin.get();
 }
+
+// Solution #2 BFS
+
+int networkDelayTime(vector<vector<int>>& times, int N, int K) {
+	vector<int> sigTime(N, INT_MAX);
+	vector< vector<int> > mat(N, vector<int>(N, -1));    //adjacent matrix
+	for (auto edgeVec : times) {
+		mat[edgeVec[0] - 1][edgeVec[1] - 1] = edgeVec[2];
+	}
+	K = K - 1;
+	sigTime[K] = 0;
+	queue<int> nodeQ;
+	nodeQ.push(K);
+	while (!nodeQ.empty()) {
+		int nd = nodeQ.front();
+		for (int i = 0; i<N; ++i) {
+			if (mat[nd][i] >= 0 && sigTime[i] > sigTime[nd] + mat[nd][i]) {
+				nodeQ.push(i);
+				sigTime[i] = sigTime[nd] + mat[nd][i];
+			}
+		}
+		nodeQ.pop();
+	}
+	int ans = 0;
+	for (auto t : sigTime) {
+		ans = max(t, ans);
+	}
+	return (ans == INT_MAX) ? -1 : ans;
+}
+
