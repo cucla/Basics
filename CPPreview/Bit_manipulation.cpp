@@ -15,7 +15,56 @@
  
  /* CHAR
   * 
-  * In ASCII - letters and numbers [0 - 127]
+  * In ASCII - letters and numbers [0 - 127] codes, which can be represented using bits
   *   signed char     holds at least the values [-127 - 127] 
   *   unsigned char   holds at least the values [0 - 255]
   */
+
+// 1. Convert Decimal number to Binary number
+// 2. Conver Binary number to Deciml number
+
+
+// 1. Convert Decimal number to Binary number------------------------------------------------
+// IMPPORTANT:
+	std::cout << 1 / 2 << std::endl;   // 0
+	std::cout << 1 % 2 << std::endl;   // 1
+// if n = 97: 97 % 2, 48 % 2, 24 % 2, 12 % 2... in reverse order
+
+void decToBinary(int n) {
+	if (n / 2 != 0) {
+		decToBinary(n / 2);
+	}
+	std::cout << n % 2;
+}
+
+// 2. Convert Binary number to Deciml number-------------------------------------------------
+// if n = 1100001 : 1 * 2^6 + 1 * 2^5 + 0 * 2^4 + 0 * 2^3 + 0 * 2^2 + 0 * 2^1 + 1 * 2^0 
+void binToDecimal(int n) {
+	int power = 1;
+	int result = 0;
+
+	while (n != 0) {
+		result += (n % 10) * power;
+		power *= 2;
+		n /= 10;
+	}
+	std::cout << result << std::endl;
+}
+
+// 1. Convert Decimal number to Binary number------------------------------------------------
+//-------------------------------------------------------------------------------------------
+
+// 1. Convert Decimal number to Binary number------------------------------------------------
+//-------------------------------------------------------------------------------------------
+
+// 1. Convert Decimal number to Binary number------------------------------------------------
+//-------------------------------------------------------------------------------------------
+
+// 1. Convert Decimal number to Binary number------------------------------------------------
+//-------------------------------------------------------------------------------------------
+
+// 1. Convert Decimal number to Binary number------------------------------------------------
+//-------------------------------------------------------------------------------------------
+
+// 1. Convert Decimal number to Binary number------------------------------------------------
+//-------------------------------------------------------------------------------------------
