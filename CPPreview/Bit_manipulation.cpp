@@ -1,6 +1,5 @@
 /*  1 byte = 8 bits
  *  1 byte is the smallest addressable unit of memory; bit does not get its own address
- *
  *  a variable with n bits can hold 2^n possible values
  *
  *  bool      [1 byte,  8 bits]    0000.0000             -> 2^8, 256 possible values
@@ -14,7 +13,6 @@
  */
  
  /* CHAR
-  * 
   * In ASCII - letters and numbers [0 - 127] codes, which can be represented using bits
   *   signed char     holds at least the values [-127 - 127] 
   *   unsigned char   holds at least the values [0 - 255]
