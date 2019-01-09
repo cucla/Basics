@@ -1,6 +1,6 @@
 /* 1. Array Sum / Vector sum
  * 2. Count elements == to my own parameter 'myMax' (lambda with count_if)
- * 3. Convert decimal to binary (& vice verca)
+ * 3. 
  * 4. Int to char/char to int
  * 5. Search sequence for the first number, smaller than a given value
  * 6. Array of functions
@@ -36,25 +36,6 @@ auto myCount = std::count_if(ar.begin(), ar.end(), [myMax](int i) { return i == 
 //--------------------------------------------------------------------------------------------
 
 // 3. Convert decimal to binary (& viceverca)-------------------------------------------------
-void convertToBinary(unsigned int n) {
-	if (n / 2 != 0) {
-		convertToBinary(n / 2);
-	}
-	printf("%d", n % 2);
-}
-
-void convertToDecimal(unsigned int n) {
-	long factor = 1;
-	long total = 0;
-
-	while (n != 0)
-	{
-		total += (n % 10) * factor;
-		n /= 10;
-		factor *= 2;
-	}
-	printf("%d", total);
-}
 //--------------------------------------------------------------------------------------------
 
 // 4. Int to char/char to int-----------------------------------------------------------------
