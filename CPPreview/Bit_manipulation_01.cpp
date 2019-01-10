@@ -16,6 +16,7 @@
  *
  *  OVERFLOW - when bits are lost because a variable has not been allocated enough memory to store them,
  *  see 'Limits on Integer Constants', like INT_MAX [2147483647]
+ *  automatic promotion follows the general progression:  char->short->int->long->float->double
  */
  
 
@@ -53,6 +54,16 @@ std::cout << sizeof(char) << std::endl;			// 1
   *           0000 0000 0000 0000 0000 0000 0000 0111  add 7
   *       -------------------------------------------
   *          10000 0000 0000 0000 0000 0000 0000 0001  1       ignore the final carry as it is overflow
+  *
+  *  Literal suffixes:
+  *	int	u or U						unsigned int
+  *	int	l or L						long
+  *	int	ul, uL, Ul, UL, lu, lU, Lu, or LU		unsigned long
+  *	int	ll or LL					long long
+  *	int	ull, uLL, Ull, ULL, llu, llU, LLu, or LLU	unsigned long long
+  *	double	f or F						float
+  *	double	l or L						long double
+  *
   */
 
  /* FLOAT
@@ -100,8 +111,47 @@ std::cout << sizeof(char) << std::endl;			// 1
   *  2 = 0  10000000 00000000000000000000000
   */
 float y{ 5.0f };
+float f = 4.1;   // is treated as double by default
 double z1{ 5e4 };   // 50000
 double z2{ 5e-2 };  // 0.05
+
+// BOOL
+bool b1 { true };
+bool b2 = !true; // false
+std::cout << std::boolalpha; // print bools as true or false
+std::cout << true << std::endl;
+std::cout << false << std::endl;   // std::noboolalpha to turn it back off
+
+// OCTAL
+int x1 = 012; // 0 before the number means this is octal
+
+/* HEXADECIMAL
+ * Decimal	0  1  2	 3  4  5  6  7	8  9  10  11  12  13  14  15  16  17
+ * Hexadecimal	0  1  2	 3  4  5  6  7	8  9  A   B   C	  D   E	  F   10  11
+ * Because there are 16 different values for a hexadecimal digit - a single hexadecimal digit encompasses 4 bits, 0000
+ * A pair of hexadecimal digits can be used to exactly represent a full byte, 00000000
+ */
+int bin(0);
+bin = 0x01;   // binary 0000 0001  	1
+bin = 0x02;   // binary 0000 0010  	2
+bin = 0x04;   // binary 0000 0100  	4
+bin = 0x08;   // binary 0000 1000  	8
+bin = 0x10;   // binary 0001 0000  	16
+bin = 0x20;   // binary 0010 0000  	32
+bin = 0x40;   // binary 0100 0000  	64
+bin = 0x80;   // binary 1000 0000  	128
+bin = 0xFF;   // binary 1111 1111  	255
+
+// BINARY, C++14
+int bin;
+bin = 0b1;		// binary 0000 0001		1	
+bin = 0b10;		// binary 0000 0010		2
+bin = 0b100;		// binary 0000 0100		4
+bin = 0b1'000;		// binary 0000 1000		8
+bin = 0b10'000;		// binary 0001 0000		16
+bin = 0b100'000;	// binary 0010 0000		32
+bin = 0b1'000'000;  	// binary 0100 0000		64
+bin = 0b10'000'000;	// binary 1000 0000		128
 
 
 // 1. Convert Decimal number to Binary number
