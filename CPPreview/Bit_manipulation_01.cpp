@@ -57,11 +57,47 @@ std::cout << sizeof(char) << std::endl;			// 1
 
  /* FLOAT
   *  Floating point numbers are divided into sign bit, exponent and mantissa
+  *  Single precision, which uses 32 bits		Double precision, which uses 64 bits
+  *	1 bit for the sign					1 bit for the sign
+  *	8 bits for the exponent					11 bits for the exponent
+  *	23 bits for the mantissa				52 bits for the mantissa
   *
   *  Scientific notation: 	9.87654e+06 for 9876543.21
   *  The precision - defines how many significant digits it can represent without information loss
   *  float	4 bytes		6-9 significant digits, typically 7
   *  double	8 bytes		15-18 significant digits, typically 16
+  *
+  *  Convert 17.125 to floating point:							101.101 translates as:
+  *	i. Convert 17 to Binary									1 * 2^2	   4
+  *	    17 / 2 = 8  r 1									0 * 2^1	   0
+  *	    8  / 2 = 4  r 0									1 * 2^0	   1
+  *	    4  / 2 = 2  r 0									1 * 2^-1   1/2  double the denominator
+  *	    2  / 2 = 1  r 0					dec  bin			0 * 2^-2   0
+  *	    1  / 2 = 0  r 1  stop read backwards,		17 = 10001			1 * 2^-3   1/8
+  *	ii. Convert .125 to binary							     	    5.625
+  *	    .125 x 2 = 0.25   0
+  *	    .25  x 2 = 0.50   0
+  *	    .5   x 2 = 1.0    1					 dec    bin
+  *	     0   stop when zero or you run out of bits, 	.125 = .001
+  *	iii. 17.125 = 10001.001 
+  *	iv. Move the decimal point 4 digits to the left (4 = 100) 
+  *	    1.0001001 x 2^100 
+  *     v. Bias the exponent by 127  (add 127 to 4 = 100)
+  *        0111 1111  (127 in binary)
+  *	   0000 0100
+  *	   ----------
+  *        1000 0011
+  *	   	The 8 bits of exponent allow us to encode unsigned numbers [0 .. 255[. 
+  *	   	The IEEE standard uses a midpoint bias to center this range at zero and allow negative numbers. 
+  *	   	The range of (exponent-127) is [-127 .. 128], which allows negative exponents up to -127.
+  *	vi.   Sign bit = 0
+  *	vii.  Exponent = 10000011
+  *	viii. Mantissa = 0001001   (before storing the mantissa we drop the leading 1 to store 1 more bit of data)
+  *     ix.   17.125 = 0 10000011 000100100000000000000000 = 0x43120000
+  *
+  *  Special cases:
+  *  1 = 0  01111111 00000000000000000000000
+  *  2 = 0  10000000 00000000000000000000000
   */
 float y{ 5.0f };
 double z1{ 5e4 };   // 50000
