@@ -126,8 +126,25 @@ std::cout << false << std::endl;   // std::noboolalpha to turn it back off
 int x1 = 012; // 0 before the number means this is octal
 
 /* HEXADECIMAL
- * Decimal	0  1  2	 3  4  5  6  7	8  9  10  11  12  13  14  15  16  17
- * Hexadecimal	0  1  2	 3  4  5  6  7	8  9  A   B   C	  D   E	  F   10  11
+ *	Hex	Decimal		Binary
+ *	0	0		0000
+ *	1	1		0001
+ *	2	2		0010
+ * 	3	3		0011
+ *	4	4		0100
+ * 	5	5		0101
+ *	6	6		0110
+ *	7	7		0111
+ *	8	8		1000
+ *	9	9		1001
+ *	A	10		1010
+ *	B	11		1011
+ *	C	12		1100
+ *	D	13		1101
+ *	E	14		1110
+ *	F	15		1111
+ *	10	16
+ *	11	17
  * Because there are 16 different values for a hexadecimal digit - a single hexadecimal digit encompasses 4 bits, 0000
  * A pair of hexadecimal digits can be used to exactly represent a full byte, 00000000
  */
