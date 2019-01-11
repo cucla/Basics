@@ -1,3 +1,5 @@
+// book: http://sandbox.mc.edu/~bennet/cs110/index.html
+
 /*  1 byte = 8 bits
  *  1 byte is the smallest addressable unit of memory; bit does not get its own address
  *  a variable with n bits can hold 2^n possible values,
@@ -17,6 +19,18 @@
  *  OVERFLOW - when bits are lost because a variable has not been allocated enough memory to store them,
  *  see 'Limits on Integer Constants', like INT_MAX [2147483647]
  *  automatic promotion follows the general progression:  char->short->int->long->float->double
+ *
+ *  CONVERTING TO 2s COMPLEMENT
+ *  0000.0000   ->  2^8,  256 possible values
+ *  [-128 to -1]  : 128 values		1000.0000 to 1111.1111
+ *  [0 to 127]    : 128 values		0000.0000 to 0111.1111
+ *  		In normal unsigned binary numbers 1000.0000 represents 128, but in 2's complement this represents -128
+ *  		The normal behaviour of adding 1, 1000.0001 represents -127
+ *  12		Take positive of number
+ *  1100	Convert to Binary (unsigned)
+ *  00001100	Pad out to required number of bits
+ *  11110011	Invert the digits
+ *  11110100	Add 1, and you are done :)
  */
  
 
@@ -171,11 +185,11 @@ bin = 0b1'000'000;  	// binary 0100 0000		64
 bin = 0b10'000'000;	// binary 1000 0000		128
 
 
-// 1. Convert Decimal number to Binary number
+// 1. Convert positive Decimal number to Binary
 // 2. Conver Binary number to Deciml number
 
 
-// 1. Convert Decimal number to Binary number------------------------------------------------
+// 1. Convert positive Decimal number to Binary----------------------------------------------
 // IMPPORTANT:
 	std::cout << 1 / 2 << std::endl;   // 0
 	std::cout << 1 % 2 << std::endl;   // 1
