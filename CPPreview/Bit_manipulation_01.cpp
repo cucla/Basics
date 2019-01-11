@@ -26,11 +26,19 @@
  *  [0 to 127]    : 128 values		0000.0000 to 0111.1111
  *  		In normal unsigned binary numbers 1000.0000 represents 128, but in 2's complement this represents -128
  *  		The normal behaviour of adding 1, 1000.0001 represents -127
- *  12		Take positive of number
- *  1100	Convert to Binary (unsigned)
- *  00001100	Pad out to required number of bits
- *  11110011	Invert the digits
- *  11110100	Add 1, and you are done :)
+ * Find negative of 75:
+ *	1001011		Convert to Binary (unsigned)
+ *	01001011	Pad out to required number of bits
+ *	10110100	Invert the digits
+ *	10110101	Add 1, and you are done :)
+ *  		!!! to find the negative of an n-bit number -> subtract the number from 0 or 2^n (one bit followed by n zero bits)
+ *		to find positive -> add negative to 2^n (positive is negative of negative)
+ * Find negative of 75:
+ *	   1111 111
+ *	 1.0000.0000   // 256
+ *	-  0100.1011   // 75
+ *	------------
+ *	 0.1011.0101
  */
  
 
@@ -51,7 +59,12 @@ std::cout << sizeof(char) << std::endl;			// 1
   *   signed int       holds at least the values [-2,147,483,648 to 2,147,483,647] 
   *   unsigned int     holds at least the values [0 to 4,294,967,295]
   *
-  *  binary arithmetic:		0 + 0 = 0; 	0 + 1 = 1;	1 + 0 = 1;	1 + 1 = 10
+  *  binary arithmetic:		
+  *	0 + 0 = 0; 		
+  *	0 + 1 = 1;		
+  *	1 + 0 = 1;		
+  *	1 + 1 = 10		
+  *
   *     add 7 + 4 = 11
   *	4       00000000 00000000 00000000 00000100
   *	7       00000000 00000000 00000000 00000111
@@ -185,15 +198,16 @@ bin = 0b1'000'000;  	// binary 0100 0000		64
 bin = 0b10'000'000;	// binary 1000 0000		128
 
 
-// 1. Convert positive Decimal number to Binary
-// 2. Conver Binary number to Deciml number
+// 1. Convert positive Decimal int to Binary
+// 2. Convert char (8 bits) positive/negative to Binary
+// 3. Conver Binary number to Deciml number
 
 
-// 1. Convert positive Decimal number to Binary----------------------------------------------
+// 1. Convert positive Decimal int to Binary-------------------------------------------------
+// if n = 97: 97 % 2, 48 % 2, 24 % 2, 12 % 2... in reverse order
 // IMPPORTANT:
 	std::cout << 1 / 2 << std::endl;   // 0
 	std::cout << 1 % 2 << std::endl;   // 1
-// if n = 97: 97 % 2, 48 % 2, 24 % 2, 12 % 2... in reverse order
 
 void decToBinary(int n) {
 	if (n / 2 != 0) {
@@ -202,7 +216,23 @@ void decToBinary(int n) {
 	std::cout << n % 2;
 }
 
-// 2. Convert Binary number to Deciml number-------------------------------------------------
+// 2. Convert char (8 bits) positive/negative to Binary--------------------------------------
+// IMPPORTANT:		'0' ASCII code 48
+//			'1' ASCII code 49
+
+std::string decimal_to_binary(int n) {
+	if (n < 0) {		// check if negative
+		n = 256 + n;    // for char input 8 bits; for int, 32 bits, input 65,536
+	}
+	std::string result = "";
+	while (n > 0) {
+		result = std::string(1, (char)(n % 2 + 48)) + result;
+		n = n / 2;
+	}
+	return result;
+}
+
+// 3. Convert Binary number to Deciml number-------------------------------------------------
 // if n = 1100001 : 1 * 2^6 + 1 * 2^5 + 0 * 2^4 + 0 * 2^3 + 0 * 2^2 + 0 * 2^1 + 1 * 2^0 
 void binToDecimal(int n) {
 	int power = 1;
