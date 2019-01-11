@@ -60,11 +60,11 @@ std::cout << sizeof(char) << std::endl;			// 1
   *   signed int       holds at least the values [-2,147,483,648 to 2,147,483,647] 
   *   unsigned int     holds at least the values [0 to 4,294,967,295]
   *
-  *  binary arithmetic:		
-  *	0 + 0 = 0; 		
-  *	0 + 1 = 1;		
-  *	1 + 0 = 1;		
-  *	1 + 1 = 10		
+  *  Binary arithmetic:		
+  *	0 + 0 = 0; 		0 x 0 = 0;
+  *	0 + 1 = 1;		0 x 1 = 0;
+  *	1 + 0 = 1;		1 x 0 = 0;
+  *	1 + 1 = 10;		1 x 1 = 1;
   *
   *     add 7 + 4 = 11
   *	4       00000000 00000000 00000000 00000100
