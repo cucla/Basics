@@ -176,6 +176,9 @@ int x1 = 012; // 0 before the number means this is octal
  * Because there are 16 different values for a hexadecimal digit - a single hexadecimal digit encompasses 4 bits, 0000
  * A pair of hexadecimal digits can be used to exactly represent a full byte, 00000000
  */
+
+// Properties for numbers which are powers of 2, is that they have one and only one bit set in their binary representation
+
 int bin(0);
 bin = 0x01;   // binary 0000 0001  	1
 bin = 0x02;   // binary 0000 0010  	2
