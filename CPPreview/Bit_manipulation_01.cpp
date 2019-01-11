@@ -1,4 +1,5 @@
 // book: http://sandbox.mc.edu/~bennet/cs110/index.html
+// https://www.cs.cornell.edu/~tomf/notes/cps104/
 
 /*  1 byte = 8 bits
  *  1 byte is the smallest addressable unit of memory; bit does not get its own address
