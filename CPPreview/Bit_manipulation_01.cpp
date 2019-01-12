@@ -47,6 +47,9 @@
   * In ASCII - letters and numbers [0 - 127] codes, which can be represented using bits
   *   signed char     holds at least the values [-127 to 127] 
   *   unsigned char   holds at least the values [0 to 255]
+  *
+  *  Save char '5' as int 5: '5' has the int value 53 if we write '5'-'0' it evaluates to 53-48, or the int 5
+  *  if we write char c = 'B'+ 32; then c stores 'b'
   */
 char ch1(97);	// initialize with integer 97
 char ch2('a');	// initialize with code point for 'a' (97)
