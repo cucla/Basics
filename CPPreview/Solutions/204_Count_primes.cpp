@@ -10,8 +10,8 @@ int countPrimes(int n) {
 		if (!passed[i]) {
 			sum++;
 			if (i>upper) continue;
-			for (int j = i * i; j<n; j += i) {   // non prime numbers are formed from n * n of the first prime numbers and consecutive +n steps
-				passed[j] = true;
+			for (int j = i * i; j<n; j += i) {   // non prime numbers are formed from n * n of the first odd/prime numbers 
+				passed[j] = true;            // and consecutive +n steps
 			}
 		}
 	}
