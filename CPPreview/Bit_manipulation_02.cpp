@@ -1,7 +1,7 @@
 /*  Bitwise Operators:
  *
  *  NOT ( ~ ):  1's complement, flip 0 to 1; 1 to 0
-char a = 0xA5;		// 1010.0101
+char a = 0xA5;	  // 1010.0101
 char b = ~a;      // 0101.1010
  *
  *  AND ( & ):  operates on two equal-length bit patterns; 1 & 1 = 1, otherwise 0
@@ -34,6 +34,9 @@ char r = x >> 4;  // 0000.0100
 // 2. Count the number of 1s in the binary representation of a number
 // 3. Check if the ith bit is set (is 1) in the binary form of a number
 // 4. Generate all the possible subsets of a set
+// 5. Find the largest power of 2 (leftmost 1 in bin), less equal to N
+// 6. Find the rightmost 1 in binary representation of x
+// 7. Set nth bit
  
 
 // 1. Check if a given number is a power of 2-------------------------------------------------
@@ -64,6 +67,7 @@ int count_one (int n) {
 // Complexity: O(K), where K is the number of 1s
 
 // 3. Check if the ith bit is set in the binary form of a number-----------------------------
+// if non-zero number -> bit is set
  bool check (int N) {
         if( N & (1 << i) )
             return true;
@@ -74,17 +78,48 @@ int count_one (int n) {
 // 4. Generate all the possible subsets of a set---------------------------------------------
 // for a set of N elements: each element has 2 possibilities - in set or not
 // total number of subsets in 2^N, 	for 3 -> 2^3 = 8 subsets;  char A[]{ 'a', 'b', 'c' };
-[] //empty	0	0
-a		1	1
-b		2	10
-a b		3	11
-c		4	100
-a c		5	101
-b c		6	110
-a b c		7	111
+0 = (000)2 = {}
+1 = (001)2 = {c}
+2 = (010)2 = {b}
+3 = (011)2 = {b, c}
+4 = (100)2 = {a}
+5 = (101)2 = {a, c}
+6 = (110)2 = {a, b}
+7 = (111)2 = {a, b, c}
 
+void possibleSubsets(char A[], int N) {
+	for (int i = 0; i < (1 << N); ++i) {
+		for (int j = 0; j < N; ++j)
+			if (i & (1 << j))
+				std::cout << A[j] << ' ';
+		std::cout << std::endl;
+	}
+}
 
-//-------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------
+// 5. Find the largest power of 2 (leftmost 1 in bin), less equal to N----------------------
+// if all bits are 1s: 31 = {11111} = 32 - 1 = 2 * 16 - 1, we are searching for 16
+int a = 0b1000'0000'0010'0000'0000;	10000000001000000000			
+int b = a | (a >> 1);			11000000001100000000		
+int c = b | (b >> 2);			11110000001111000000		
+int d = c | (c >> 4);			11111111001111111100		
+int e = d | (d >> 8);			11111111111111111111		
+int f = e | (e >> 16); //if needed	11111111111111111111		
+int res = (f + 1) >> 1;			524800 -> 524288		
+
+// 6. Find the rightmost 1 in binary representation of x-------------------------------------
+x ^ ( x & (x-1))	// or
+x & (-x)
+/*
+  x  = 10  = (1010)2
+(-x) = -10 = (0110)2
+x & (-x) = (1010)2 & (0110)2 = (0010)2   */
+	
+// 7. Set nth bit----------------------------------------------------------------------------
+x | (1 << n) 
+/*
+x = 10 = (1010)2 n = 2
+1 << n = (0100)2 
+x | (1 << n) = (1010)2 | (0100)2 = (1110)2   */
+	
 //-------------------------------------------------------------------------------------------
 
