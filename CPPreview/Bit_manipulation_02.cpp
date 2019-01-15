@@ -30,7 +30,7 @@ char r = x >> 4;  // 0000.0100
  */
  
 
-// 1. Check if a given number is a power of 2
+// 1. Check if a given number is a power of 2, 4
 // 2. Count the number of 1s in the binary representation of a number
 // 3. Check if the ith bit is set (is 1) in the binary form of a number
 // 4. Generate all the possible subsets of a set
@@ -39,7 +39,7 @@ char r = x >> 4;  // 0000.0100
 // 7. Set nth bit
  
 
-// 1. Check if a given number is a power of 2-------------------------------------------------
+// 1. Check if a given number is a power of 2, 4----------------------------------------------
 // x = 4 = (100)2
 // x - 1 = 3 = (011)2 
 // x & (x-1) = 4 & 3 = (100)2 & (011)2 = (000)2
@@ -48,6 +48,20 @@ char r = x >> 4;  // 0000.0100
 	// x will check if x == 0 and !(x & (x - 1)) will check if x is a power of 2 or not
 	return (x && !(x & (x - 1)));
  }
+
+// Powers of two can have a 1 bit in either odd or even bit positions, but powers of 4 only have 1 bit in odd positions
+// mathematically, 4^n - 1 can be divided by 3
+
+bool isPowerOfFour(int num) {
+    int mask = 0b01010101010101010101010101010101;
+    return num > 0 && (num & (num - 1)) == 0 && (num | mask) == mask;
+}
+bool isPowerOfFour(int num) {
+return (num > 0) && ((num & (num - 1)) == 0) && ((num & 0x55555555));
+}
+bool isPowerOfFour(int num) {
+    return num > 0 && (num & (num - 1)) == 0 && (num - 1) % 3 == 0;
+}
  
 // 2. Count the number of 1s in the binary representation of a number------------------------
 // 888 = (1101111000)2
