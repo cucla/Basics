@@ -37,6 +37,7 @@ char r = x >> 4;  // 0000.0100
 // 5. Find the largest power of 2 (leftmost 1 in bin), less equal to N
 // 6. Find the rightmost 1 in binary representation of x
 // 7. Set nth bit
+// 8. Sum of Two Integers without +
  
 
 // 1. Check if a given number is a power of 2, 4----------------------------------------------
@@ -135,5 +136,19 @@ x = 10 = (1010)2 n = 2
 1 << n = (0100)2 
 x | (1 << n) = (1010)2 | (0100)2 = (1110)2   */
 	
+// 8. Sum of Two Integers without + ---------------------------------------------------------
+// adding can be done with ^, except of 1 + 1 case. Here use (a & b) << 1 and add up again	
+	
+int getSum(int a, int b) {
+	int carry = 0;
+	while (b != 0) {
+		carry = (a & b) << 1;   // 01 & 01 = 01; 01 << 1 = 10; shift in all 1s pairs
+		a = a ^ b;              // ^ for simple cases : 0 + 1 or 1 + 0
+		b = carry;              // for 1 + 1 bit case      
+	}
+	return a;
+}	
+	
+//-------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------
 
