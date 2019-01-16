@@ -207,7 +207,8 @@ bin = 0b10'000'000;	// binary 1000 0000		128
 
 // 1. Convert positive Decimal int to Binary
 // 2. Convert char (8 bits) positive/negative to Binary
-// 3. Conver Binary number to Deciml number
+// 3. Convert Binary number to Deciml number
+// 4. Convert Decimal positive/negative to Hex
 
 
 // 1. Convert positive Decimal int to Binary-------------------------------------------------
@@ -252,3 +253,19 @@ void binToDecimal(int n) {
 	}
 	std::cout << result << std::endl;
 }
+
+// 4. Convert Decimal positive/negative to Hex-----------------------------------------------
+const std::string HEX = "0123456789abcdef";
+
+std::string decimal_to_hex(int num) {
+	if (num == 0) return "0";
+	std::string result;
+	int count = 0;
+	while (num && count++ < 8) {
+		result = HEX[(num & 0xf)] + result;
+		num >>= 4;
+	}
+	return result;
+}
+
+
