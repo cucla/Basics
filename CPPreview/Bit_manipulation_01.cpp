@@ -10,7 +10,7 @@
  *  bool      [1 byte,  8 bits]    00000000             -> 2^8, 256 possible values
  *  char      [1 byte,  8 bits]    00000000             -> 2^8, 256 possible values
  *  short     [2 bytes,  16 bits]  00000000.00000000    -> 2^16, 65,536 possible values
- *  int       [4 bytes,  32 bits]  00000000.00000000.00000000.00000000   -> 2^32, 65,536 possible values
+ *  int       [4 bytes,  32 bits]  00000000.00000000.00000000.00000000   -> 2^32, 4,294,967,296 possible values
  *  long      [4 bytes,  32 bits]  00000000.00000000.00000000.00000000   -> 2^32, 4,294,967,296 possible values
  *  long long [8 bytes,  64 bits]  00000000.00000000.00000000.00000000.00000000.00000000.00000000.00000000   -> 2^64
  *  float     [4 bytes,  32 bits]  00000000.00000000.00000000.00000000   -> 2^32, 4,294,967,296 possible values
