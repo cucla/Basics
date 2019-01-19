@@ -30,7 +30,6 @@ int intersectionCardinality(std::vector<std::vector<int>> & sets, std::vector<in
 
 int main() 
 {
-										                    //A1        A2         A3        A4
 	std::vector<std::vector<int>> sets{ {1, 2, 3}, {2, 3, 4}, {1, 3, 5}, {2, 3} };
 
 	int result = 0;
