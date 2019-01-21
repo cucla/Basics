@@ -12,6 +12,36 @@ K will be in the range [1, N].
 The length of times will be in the range [1, 6000].
 All edges times[i] = (u, v, w) will have 1 <= u, v <= N and 1 <= w <= 100.
  */
+
+/*
+	std::vector<std::vector<int>> times{
+		{2, 1, 1},
+		{2, 3, 1},
+		{3, 4, 1} };
+
+	/* adjacency matrix
+	         0  1  2  3
+	1 |  0  -1 -1 -1 -1
+	2 |  1   1 -1  1 -1
+	3 |  2  -1 -1 -1  1
+	4 |  3  -1 -1 -1 -1
+	*/
+	std::vector<std::vector<int>> adjMatr(4, std::vector<int>(4, -1));
+	for (auto el : times) {
+		adjMatr[el[0] - 1][el[1] - 1] = el[2];
+	}
+
+	/* adjacency list, {node, weight}
+	1 |  0  []
+	2 |  1  {0, 1}, {2, 1}
+	3 |  2  {3, 1}
+	4 |  3  []
+	*/
+	std::vector<std::vector<std::pair<int, int>>> adjList(4);
+	for (auto el : times) {
+		adjList[el[0] - 1].push_back({ el[1] - 1, el[2] });
+	}
+ */
  
  // Solution #1: Dijkstra's Algorithm
  
