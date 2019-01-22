@@ -10,6 +10,8 @@ A solution set is:
 ]
 */
 
+// Solution using Backtracking
+
 void combinationSum2(std::vector<int> &candidates, int target, std::vector<std::vector<int> > &res, std::vector<int> &combination, int begin) {
 	if (!target) {
 		res.push_back(combination);
