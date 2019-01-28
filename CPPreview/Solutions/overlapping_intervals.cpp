@@ -82,6 +82,7 @@ int TotalNInt(std::vector<std::pair<int, int>> & v1)
 	/* find TOTAL N of overlapping intervals in 1 vector of pairs
 	 * __1____2________5____
 	 * [1, 2] and [2, 5] are overlapping
+	 * steps: megre overlapping intervals -> filter out non-megred from original vector
 	 */
 
 	std::sort(v1.begin(), v1.end(), compPairs2);
