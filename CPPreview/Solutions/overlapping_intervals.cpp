@@ -13,7 +13,7 @@ struct Comp {
 	}
 } compPairs;
 
-int MaxNInt(std::vector<std::pair<int, int>> & v1) 
+int maxNInt(std::vector<std::pair<int, int>> & v1) 
 {
 	/* find MAX N of overlapping intervals in 1 vector of pairs
 	 * __1____2________5____
@@ -35,7 +35,7 @@ int MaxNInt(std::vector<std::pair<int, int>> & v1)
 	return maxInt;
 }
 
-std::vector<std::pair<int, int>> MergeInt(std::vector<std::pair<int, int>> & v)
+std::vector<std::pair<int, int>> mergeInt(std::vector<std::pair<int, int>> & v)
 {
 	/* merge overlapping intervals in 1 vector of pairs
 	* __1____2________5____
@@ -77,7 +77,7 @@ struct Comp2 {
 	}
 } compPairs2;
 
-int TotalNInt(std::vector<std::pair<int, int>> & v1) 
+int totalNInt(std::vector<std::pair<int, int>> & v1) 
 {
 	/* find TOTAL N of overlapping intervals in 1 vector of pairs
 	 * __1____2________5____
@@ -97,7 +97,7 @@ int TotalNInt(std::vector<std::pair<int, int>> & v1)
 
 int main() 
 {	 
-	// to test vector of pairs -> MaxNInt, TotalNInt
+	// to test vector of pairs -> maxNInt, totalNInt
 	std::vector<std::pair<int, int>> v1{ { 0,2 },{ 1,5 },{ 3,7 },{ 7,8 },{ 4,6 },{ 9,11 } };
 	std::vector<std::pair<int, int>> v2{ { 2,4 },{ 3,6 },{ 7,8 },{ 9,14 },{ 10,16 },{ 13,15 } };
 	
