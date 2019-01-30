@@ -94,7 +94,7 @@ int totalNInt(std::vector<std::pair<int, int>> & v1)
 	return v3.size();
 }
 
-//-----------merging vactor of structs------------------
+//-----------merging vector of structs------------------
 struct Interval {
 	int start;
 	int end;
@@ -135,47 +135,64 @@ std::vector<Interval> insert(std::vector<Interval> & intervals, Interval newInte
 	return intervals;
 }
 
+//-------------get the number of overlapping intervals, given two lists of intervals-------
+/*
+Example
+
+L1: ([1,2][2,3][4,5][6,7])
+L2: ([1,5][2,3][4,7][5,7])
+
+[1,5] overlaps [1,2] [2,3] [4,5]
+[2,3] overlaps [1,2] [2,3]
+[4,7] overlaps [4,5] [6,7]
+[5,7] overlaps [4,5] [6,7]
+
+total = 3+2+2+2 = 9
+ */
+std::vector<std::pair<int, int>> v1{ { 1,2 },{ 2,3 },{ 4,5 },{ 6,7 } };
+std::vector<std::pair<int, int>> v2{ { 1,5 },{ 2,3 },{ 4,7 },{ 5,7 } };
+
+std::vector<std::pair<int, int>> A{ { 1,1 },{ 2,1 },{ 2,-1 },{ 3,-1 },
+{ 4,1 },{ 5,-1 },{ 6,1 },{ 7,-1 } };
+std::vector<std::pair<int, int>> B{ { 1,1 },{ 2,1 },{ 3,-1 },{ 4,1 },
+{ 5,1 },{ 5,-1 },{ 7,-1 },{ 7,-1 } };
+
+
+int CntA = 0;
+int CntB = 0;
+int Res = 0;
+int ia = 0;
+int ib = 0;
+while ((ia < A.size()) && (ib < B.size())) {
+	if ((3 * A[ia].first - A[ia].second) <= (3 * B[ib].first - B[ib].second)) {
+		CntA += A[ia].second;
+		if (A[ia].second < 0)
+			Res += CntB;
+		ia++;
+	}
+	else {
+		CntB = CntB + B[ib].second;
+		if (B[ib].second < 0)
+			Res += CntA;
+		ib++;
+	}
+}
+std::cout << Res << std::endl;
+
+/*
+Subtle moment - comparison if Compare(A[ia], B[ib]) <= 0 We should here take into account 
+also flags - to correctly treat situations when endpoints only touch like [1..2][2..3] 
+(you consider this situation as intersection). So both sorting and merge comparator should 
+take synthetic value like this:  3 * A[ia].Value - A[ia].Flag. With such comparing start of 
+interval is treated before end of interval with the same coordinate.
+*/
+
 
 int main() 
 {	 
 	// to test vector of pairs -> maxNInt, totalNInt
 	std::vector<std::pair<int, int>> v1{ { 0,2 },{ 1,5 },{ 3,7 },{ 7,8 },{ 4,6 },{ 9,11 } };
 	std::vector<std::pair<int, int>> v2{ { 2,4 },{ 3,6 },{ 7,8 },{ 9,14 },{ 10,16 },{ 13,15 } };
-	
-	
-	
-	
-	std::vector<std::pair<int, int>> v1{ { 1,2 },{ 2,3 },{ 4,5 },{ 6,7 } };
-	std::vector<std::pair<int, int>> v2{ { 1,5 },{ 2,3 },{ 4,7 },{ 5,7 } };
-
-	std::vector<std::pair<int, int>> A{ { 1,1 },{ 2,1 },{ 2,-1 },{ 3,-1 },
-										{ 4,1 },{ 5,-1 },{ 6,1 },{ 7,-1 } };
-	std::vector<std::pair<int, int>> B{ { 1,1 },{ 2,1 },{ 3,-1 },{ 4,1 },
-										{ 5,1 },{ 5,-1 },{ 7,-1 },{ 7,-1 } };
-
-
-	int CntA = 0;
-	int CntB = 0;
-	int Res = 0;
-	int ia = 0;
-	int ib = 0;
-	while ((ia < A.size()) && (ib < B.size())) {
-		if ( (3 * A[ia].first - A[ia].second) <= (3 * B[ib].first - B[ib].second) ) {      
-			CntA += A[ia].second;
-			if (A[ia].second < 0)
-				Res += CntB;
-			ia++;
-		}
-		else {
-			CntB = CntB + B[ib].second;
-			if (B[ib].second < 0)
-				Res += CntA;
-			ib++;
-		}
-	}
-
-	std::cout << Res << std::endl;
-
 
 	std::cin.get();
 }
