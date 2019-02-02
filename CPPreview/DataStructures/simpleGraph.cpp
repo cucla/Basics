@@ -1,3 +1,5 @@
+// Implemented as adjacency list (array of vectors)
+
 class Graph {
 public:
 	Graph(int vertices = 0) : V{ vertices } {
