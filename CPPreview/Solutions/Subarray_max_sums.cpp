@@ -16,6 +16,8 @@ Output : 9 6 6 5
 #include "stdafx.h"
 #include <iostream>
 
+// Divide-and-conquer Solution
+// Other Solution: https://www.geeksforgeeks.org/k-maximum-sum-overlapping-contiguous-sub-arrays/
 
 int Foo(std::vector<int> & v, int left, int right, std::priority_queue<int> & pq) {
 	if (left == right) {
