@@ -1,6 +1,6 @@
 /* 1. Array Sum / Vector sum
  * 2. Count elements == to my own parameter 'myMax' (lambda with count_if)
- * 3. 
+ * 3. Remove non-consecutive duplicates from Container
  * 4. Int to char/char to int
  * 5. Search sequence for the first number, smaller than a given value
  * 6. Array of functions
@@ -27,16 +27,17 @@ int sum = 0;
 std::for_each(myVector.begin(), myVector.end(), [&sum](int a) { return sum += a; });
 
 int sum2 = std::accumulate(myVector.begin(), myVector.end(), 0);  //0.0f for floats
-//--------------------------------------------------------------------------------------------
 
 // 2. Count elements == to my own parameter 'myMax' (lambda with count_if)--------------------
 std::vector<int> ar({ 3, 2, 1, 3 });
 auto myMax = *std::max_element(ar.begin(), ar.end());
 auto myCount = std::count_if(ar.begin(), ar.end(), [myMax](int i) { return i == myMax; });
-//--------------------------------------------------------------------------------------------
 
-// 3. Convert decimal to binary (& viceverca)-------------------------------------------------
-//--------------------------------------------------------------------------------------------
+// 3. Remove non-consecutive duplicates from Container----------------------------------------
+	std::string s = "wwxwwm";
+	std::set<char> seen;
+	s.erase(std::remove_if(s.begin(), s.end(), [&seen](char c) { return !seen.insert(c).second; }), s.end());
+	std::cout << s;   // "wxm"
 
 // 4. Int to char/char to int-----------------------------------------------------------------
 	
