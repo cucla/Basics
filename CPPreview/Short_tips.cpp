@@ -4,6 +4,7 @@
  * 4. Int to char/char to int
  * 5. Search sequence for the first number, smaller than a given value
  * 6. Array of functions
+ * 7. std::find_if vs std::find
  */
  
 //--------------------------------------------------------------------------------------------
@@ -49,8 +50,6 @@ auto myCount = std::count_if(ar.begin(), ar.end(), [myMax](int i) { return i == 
 	char f = 'f', g = 'g';
 	int fi = f - 'a', gi = g - 'a';
 	std::cout << fi << " " << gi << std::endl;   // 5  6
-  
-//--------------------------------------------------------------------------------------------
 
 // 5. Search sequence for the first number, smaller than a given value------------------------
 std::vector<int> scores({ 100, 50, 40, 20, 10 });
@@ -63,7 +62,6 @@ auto locateRanking = [](const auto & _scores, int _newScore) {
 for (auto newScore : alice) {
 	std::cout << locateRanking(scores, newScore) << std::endl;
 }
-//--------------------------------------------------------------------------------------------
 
 // 6. Array of functions----------------------------------------------------------------------
 typedef int(*FunctionPrt)(int);
@@ -81,10 +79,23 @@ int utopianTree(int n) {
 	}
 	return initialHeight;
 }
-//--------------------------------------------------------------------------------------------
 
-// 1. Array Sum-------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------
+// 7. std::find_if vs std::find---------------------------------------------------------------
+struct Interval {
+	Interval(int a, int b) : start(a), end(b) {}
+	int start;
+	int end;
+	bool operator==(const Interval & rhs) const { return start == rhs.start; }  // for std::find
+};
+
+int main() { 
+	std::vector<Interval> iv{ { 2,1 },{ 3,0 },{ 4,1 },{ 5,1 } };
+	Interval toFind{ 4,1 };
+
+	auto it = std::find_if(iv.begin(), iv.end(), [&toFind](const Interval & k) {return k.start == toFind.start; });
+	
+        // can use std::find directly with "toFind" with appropriate == overload:
+	auto it = std::find(iv.begin(), iv.end(), toFind); }
 
 // 1. Array Sum-------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------
