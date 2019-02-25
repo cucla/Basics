@@ -104,7 +104,7 @@ s.erase( s.begin(), std::find_if(s.begin(), s.end(), [](char c) { return !isspac
 s.erase(std::find_if(s.rbegin(), s.rend(), [](char c) { return !isspace(c); }).base(), s.end());   // right trim
 
 // 9. MAP: select by value + custom comparator------------------------------------------------
-// select 'first' item in a map that equals to some value
+// select 'first' item in a map that equals to some VALUE, not KEY
 template <typename Key, typename Value>
 struct check_x {
 	check_x(int x) : x_(x) {}
@@ -122,7 +122,6 @@ struct Compare {
 		return lhs > rhs;
 	}
 };
-
 
 int main() 
 { 
