@@ -5,6 +5,7 @@
  * 5. Search sequence for the first number, smaller than a given value
  * 6. Array of functions
  * 7. std::find_if vs std::find
+ * 8. trim spaces in a string using std::find_if()
  */
  
 //--------------------------------------------------------------------------------------------
@@ -17,7 +18,6 @@ int myArr[] = { 1, 10, 100, 1000 };
 
 int sum = 0;
 std::for_each(std::begin(myArr), std::end(myArr), [&sum](int a) { return sum += a; });
-
 int sum2 = std::accumulate(std::begin(myArr), std::end(myArr), 0);
 
 // 1. VectorSum-------------------------------------------------------------------------------
@@ -26,7 +26,6 @@ for (int i = 1; i <= 5; i++) myVector.push_back(i);
 
 int sum = 0;
 std::for_each(myVector.begin(), myVector.end(), [&sum](int a) { return sum += a; });
-
 int sum2 = std::accumulate(myVector.begin(), myVector.end(), 0);  //0.0f for floats
 
 // 2. Count elements == to my own parameter 'myMax' (lambda with count_if)--------------------
@@ -97,8 +96,10 @@ int main() {
         // can use std::find directly with "toFind" with appropriate == overload:
 	auto it = std::find(iv.begin(), iv.end(), toFind); }
 
-// 1. Array Sum-------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------
+// 8. trim spaces in a string using std::find_if()--------------------------------------------
+std::string s{ "      with spaces    " };
+s.erase( s.begin(), std::find_if(s.begin(), s.end(), [](char c) { return !isspace(c); } ));        // left trim
+s.erase(std::find_if(s.rbegin(), s.rend(), [](char c) { return !isspace(c); }).base(), s.end());   // right trim
 
 // 1. Array Sum-------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------
