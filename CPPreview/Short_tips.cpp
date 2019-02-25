@@ -8,6 +8,7 @@
  * 8. trim spaces in a string using std::find_if()
  * 9. MAP: select by value + custom comparator
  * 10. decltype() to deduce the type for std::find_if()
+ * 11. Find element, that satisfies v[i] <= x < v[i + 1], using std::adjacent_find()
  */
  
 //--------------------------------------------------------------------------------------------
