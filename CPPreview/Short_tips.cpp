@@ -135,14 +135,21 @@ int main()
 }
 
 // 10. decltype() to deduce the type for std::find_if()---------------------------------------
-	int num = 2;
-	std::vector<std::pair<int, std::string>> v{ {1, "one"}, {2, "two"}, {3, "three"} };
-	auto r = std::find_if(v.begin(), v.end(), [&](const decltype(*v.begin()) & el) { return el.first == num; });
+int num = 2;
+std::vector<std::pair<int, std::string>> v{ {1, "one"}, {2, "two"}, {3, "three"} };
+auto r = std::find_if(v.begin(), v.end(), [&](const decltype(*v.begin()) & el) { return el.first == num; });
 
-	std::cout << r->first << " " << r->second << std::endl;
+std::cout << r->first << " " << r->second << std::endl;
 
-// 1. Array Sum-------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------
+// 11. Find element, that satisfies v[i] <= x < v[i + 1]--------------------------------------
+const std::vector<double> v{ 1.5, 3.1, 12.88, 32.4 };
+
+const auto x = 13.0;
+auto it = std::adjacent_find(v.begin(), v.end(), [x](double lhs, double rhs) { return lhs <= x && x < rhs; });
+if (it != v.end()) {
+	std::cout << *it << " " << *(it + 1) << std::endl;
+}
+// OUTPUT: 12.88, 32.4
 
 // 1. Array Sum-------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------
