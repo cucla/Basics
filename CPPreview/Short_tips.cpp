@@ -6,6 +6,7 @@
  * 6. Array of functions
  * 7. std::find_if vs std::find
  * 8. trim spaces in a string using std::find_if()
+ * 9. MAP: select by value + custom comparator
  */
  
 //--------------------------------------------------------------------------------------------
@@ -101,8 +102,37 @@ std::string s{ "      with spaces    " };
 s.erase( s.begin(), std::find_if(s.begin(), s.end(), [](char c) { return !isspace(c); } ));        // left trim
 s.erase(std::find_if(s.rbegin(), s.rend(), [](char c) { return !isspace(c); }).base(), s.end());   // right trim
 
-// 1. Array Sum-------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------
+// 9. MAP: select by value + custom comparator------------------------------------------------
+// select 'first' item in a map that equals to some value
+template <typename Key, typename Value>
+struct check_x {
+	check_x(int x) : x_(x) {}
+	bool operator()(const std::pair<Key, Value> & v) const {
+		return v.second == x_;
+	}
+private:
+	int x_;
+};
+
+// custom comparator for 'mymap2' (in descending order by KEY)
+template <typename Key>
+struct Compare {
+	bool operator()(const Key & lhs, const Key & rhs) const {
+		return lhs > rhs;
+	}
+};
+
+
+int main() 
+{ 
+	std::map<char, int> mymap{ {'c',1},{'d',2},{'e',2},{'a',3},{'b',1} };
+	auto r = std::find_if(mymap.begin(), mymap.end(), check_x<char, int>(2));
+	std::cout << r->first << " => " << r->second << '\n';
+
+	std::map<char, int, Compare<char>> mymap2{ { 'c',1 },{ 'd',2 },{ 'e',2 },{ 'a',3 },{ 'b',1 } };
+	for (std::map<char, int>::iterator it = mymap2.begin(); it != mymap2.end(); ++it)
+		std::cout << it->first << " => " << it->second << '\n';
+}
 
 // 1. Array Sum-------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------
