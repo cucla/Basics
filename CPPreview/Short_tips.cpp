@@ -9,6 +9,7 @@
  * 9. MAP: select by value + custom comparator
  * 10. decltype() to deduce the type for std::find_if()
  * 11. Find element, that satisfies v[i] <= x < v[i + 1], using std::adjacent_find()
+ * 12. Functor + std::for_each
  */
  
 //--------------------------------------------------------------------------------------------
@@ -152,8 +153,30 @@ if (it != v.end()) {
 }
 // OUTPUT: 12.88, 32.4
 
-// 1. Array Sum-------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------
+// 12. Functor + std::for_each----------------------------------------------------------------
+/* std::for_each accepts the functor by value, that means it modifies a local copy. 
+The assignment gets that local copy back so you can actually see the modified version.
+
+This is important as your functor has mutable state that you are interested in, 
+in particular evenodd.even_sum and evenodd.odd_sum.
+*/
+struct EvenOdd {
+	int evens = 0;
+	int odds = 0;
+	void operator()(int x) {
+		if (x % 2 == 0) evens += x;
+		else odds += x;
+	} };
+
+int main() 
+{ 
+	std::vector<int> v{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+	EvenOdd functorObj;
+	functorObj = std::for_each(v.begin(), v.end(), functorObj);
+
+	std::cout << functorObj.evens << std::endl;  // 30
+	std::cout << functorObj.odds << std::endl;   // 25
+}
 
 // 1. Array Sum-------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------
