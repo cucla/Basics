@@ -187,6 +187,24 @@ int main()
 	std::cout << functorObj.evens << std::endl;  // 30
 	std::cout << functorObj.odds << std::endl;   // 25
 }
+//--------------------------------------------------------------------------------------------
+class CalculateAverage {
+private:
+   std::size_t num;
+   double sum;
+public:    
+   CalculateAverage() : num (0) , sum (0) { }
+   void operator()(int elem) {
+      num++;
+      sum += elem; }
+   operator double () const { return sum / num; }
+};
+
+int main()
+{
+    vector<int> values { 1,2,3,4,5 };
+    int average = std::for_each(values.begin(), values.end(), CalculateAverage());   // OUTPUT: 3
+}
 
 // 1. Array Sum-------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------
