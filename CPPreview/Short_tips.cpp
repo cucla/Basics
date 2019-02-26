@@ -3,7 +3,7 @@
  * 3. Remove non-consecutive duplicates from Container
  * 4. Int to char/char to int
  * 5. Search sequence for the first number, smaller than a given value
- * 6. Array of functions
+ * 6. Array of functions, function pointer vector
  * 7. std::find_if vs std::find
  * 8. trim spaces in a string using std::find_if()
  * 9. MAP: select by value + custom comparator
@@ -66,7 +66,7 @@ for (auto newScore : alice) {
 	std::cout << locateRanking(scores, newScore) << std::endl;
 }
 
-// 6. Array of functions----------------------------------------------------------------------
+// 6. Array of functions + function pointer vector--------------------------------------------
 typedef int(*FunctionPrt)(int);
 
 int utopianTree(int n) {
@@ -82,6 +82,16 @@ int utopianTree(int n) {
 	}
 	return initialHeight;
 }
+// -------------------------------------------------------------------------------------------
+std::vector<int(*)(const char*)> processors;
+processors.push_back(std::atoi);
+processors.push_back(reinterpret_cast<int(*)(const char*)>(std::strlen));
+
+const char data[] = "1.23";
+
+for (std::vector<int(*)(const char*)>::iterator it = processors.begin();
+	it != processors.end(); ++it)
+	std::cout << (*it)(data) << std::endl;
 
 // 7. std::find_if vs std::find---------------------------------------------------------------
 struct Interval {
