@@ -197,7 +197,7 @@ public:
    void operator()(int elem) {
       num++;
       sum += elem; }
-   operator double () const { return sum / num; }
+   operator double () const { return sum / num; }   // conversion operator
 };
 
 int main()
