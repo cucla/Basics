@@ -10,6 +10,7 @@
  * 10. decltype() to deduce the type for std::find_if()
  * 11. Find element, that satisfies v[i] <= x < v[i + 1], using std::adjacent_find()
  * 12. Functor + std::for_each
+ * 13. std::transform with std::back_inserter
  */
  
 //--------------------------------------------------------------------------------------------
@@ -206,7 +207,12 @@ int main()
     int average = std::for_each(values.begin(), values.end(), CalculateAverage());   // OUTPUT: 3
 }
 
-// 1. Array Sum-------------------------------------------------------------------------------
+// 13. std::transform with std::back_inserter-------------------------------------------------
+std::vector<std::string> names = {"hi", "test", "foo"};
+std::vector<std::size_t> name_sizes;
+
+std::transform(names.begin(), names.end(), std::back_inserter(name_sizes), 
+	       [](const std::string & name) { return name.size(); });
 //--------------------------------------------------------------------------------------------
 
 // 1. Array Sum-------------------------------------------------------------------------------
