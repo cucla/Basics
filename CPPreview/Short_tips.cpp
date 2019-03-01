@@ -1,4 +1,6 @@
-/* 1. Array Sum / Vector sum
+/* http://www.gotw.ca/gotw/
+ *
+ * 1. Array Sum / Vector sum
  * 2. Count elements == to my own parameter 'myMax' (lambda with count_if)
  * 3. Remove non-consecutive duplicates from Container
  * 4. Int to char/char to int
