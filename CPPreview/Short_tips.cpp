@@ -11,6 +11,8 @@
  * 11. Find element, that satisfies v[i] <= x < v[i + 1], using std::adjacent_find()
  * 12. Functor + std::for_each
  * 13. std::transform with std::back_inserter
+ * 14. Rotate vector to the right 
+ * 15. Intersection of two arrays
  */
  
 //--------------------------------------------------------------------------------------------
@@ -213,6 +215,26 @@ std::vector<std::size_t> name_sizes;
 
 std::transform(names.begin(), names.end(), std::back_inserter(name_sizes), 
 	       [](const std::string & name) { return name.size(); });
+
+// 14. Rotate vector to the right-------------------------------------------------------------
+	std::vector<int> nums{ 1, 2, 3, 4, 5, 6, 7 };
+	std::rotate(nums.rbegin(), nums.rbegin() + 2 % nums.size(), nums.rend());
+// 6 7 1 2 3 4 5
+//--------------------------------------------------------------------------------------------
+
+// 15. Intersection of two arrays-------------------------------------------------------------
+	std::vector<int> first{ 5, 10, 10, 15, 20, 25 };
+	std::vector<int> second{ 10, 10, 20, 30, 40, 50 };
+
+	auto it = std::set_intersection(first.begin(), first.end(), 
+		                       second.begin(), second.end(), first.begin());
+	first.resize(it - first.begin());
+// 10 10 20
+
+// 1. Array Sum-------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------
+
+// 1. Array Sum-------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------
 
 // 1. Array Sum-------------------------------------------------------------------------------
