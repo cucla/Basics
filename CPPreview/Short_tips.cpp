@@ -15,6 +15,7 @@
  * 13. std::transform with std::back_inserter
  * 14. Rotate vector to the right 
  * 15. Intersection of two arrays
+ * 16. Check if a string is a palindrome
  */
  
 //--------------------------------------------------------------------------------------------
@@ -233,8 +234,10 @@ std::transform(names.begin(), names.end(), std::back_inserter(name_sizes),
 	first.resize(it - first.begin());
 // 10 10 20
 
-// 1. Array Sum-------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------
+// 16. Check if a string is a palindrome------------------------------------------------------
+if (input == std::string(input.rbegin(), input.rend())) {
+    cout << input << " is a palindrome";
+}
 
 // 1. Array Sum-------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------
