@@ -1,3 +1,5 @@
+// FIX:      https://www.onixs.biz/fix-dictionary/4.2/app_d.html 
+
 /* http://www.gotw.ca/gotw/
  *
  * 1. Array Sum / Vector sum
