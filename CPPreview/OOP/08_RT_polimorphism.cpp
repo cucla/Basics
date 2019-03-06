@@ -130,6 +130,8 @@ int main() {
 		D1 * p = (D1 *)&dd;
 		p->extra();
 	}
+	
+	std::cin.get();
 }
 
 
