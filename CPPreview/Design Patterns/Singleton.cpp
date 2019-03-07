@@ -1,32 +1,20 @@
 class Singleton{
 public:
-    static Singleton* GetInstance(){
+    static Singleton * GetInstance() {
 		if(NULL == s_instance)
-		{
 			 s_instance=new Singleton();
-		}
- 
 		return s_instance;      
 	}
-    void display(){		
-		printf("Singleton class!!!\n");
-	}
-  
-	~Singleton(){ 
-		//delete s_instance;
-	}
+    void display() { printf("Singleton class!!!\n"); }  
+    ~Singleton() { }
 private:
-	// Make the constructor private so, user can 
-	//create object directly but with GetInstance() method.
-	Singleton(){} 
-	// copy constructor private
-	Singleton(const Singleton & obj){}
+    Singleton(){} 
+    Singleton(const Singleton & obj){}
    
-    static Singleton* s_instance;
-    
+    static Singleton * s_instance;    
 };
-// initialize static singleton pointer
-Singleton *Singleton::s_instance = 0;
+
+Singleton * Singleton::s_instance = 0;
 
 
 int main()
