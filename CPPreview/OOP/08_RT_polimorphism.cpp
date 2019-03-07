@@ -10,13 +10,15 @@
 * virtual function. VTABLE is an array of function pointers pointing to virtual functions. If Derived
 * class is missing implementation, its VTABLE contains pointer to the function, implemented in a
 * Base class.
+* Virtual desturctor is used to maintain the destructors call order in a polymorphic class in an 
+* inheritance hierarchy.
 *
 *
 * RTTI – Run Time Type Information - allows the type of an object to be determined at run time.
 *
 * RTTI is included in VTABLE. Only for 
-* POLYMORPHIC classes - which have at least one virtual method;
-* (ABSTRACT class - has at least 1 pure virtual function, and cannot be instantiated, but we can create the pointer)
+* POLYMORPHIC CLASS - has at least one virtual method;
+* (ABSTRACT CLASS - has at least 1 pure virtual function, cannot be instantiated, but we can create pointer)
 * RTTI is provided through two operators:
 * dynamic_cast :	Used for type conversion of polymorphic types.
 * typeid operator:  Used for identifying the exact type of an object.
@@ -97,6 +99,7 @@ int main() {
 	*                                       D1_destructor
 	* Base_destructor                       Base_destructor
 	*/
+	                  cout << endl;
 
 	Base * bPtr1 = new Base;
 	Base * bPtr2 = new D2;
@@ -109,15 +112,19 @@ int main() {
 
 	delete bPtr2;
 	delete bPtr1;
+	                  cout << endl;
 
 	Base bObj;
 	D2 cObj;
 	bPtr2 = &cObj;
 	cPtr = dynamic_cast<D2*>(&bObj);  // base-to-derived conversion, downcasting, gives nullptr
-	                  	
+	                  
+	                  cout << endl;
+	
 	f1()->foo();     // "Base_foo()"
 	f1()->bar();     // "D3_bar()"
 	//f2()->bar();   error: downcasting - D2 Obj to D3 pointer
+	                  cout << endl;
 
 	Base * b01 = new Base;
 	D1 * d01 = new D1;
@@ -130,10 +137,9 @@ int main() {
 		D1 * p = (D1 *)&dd;
 		p->extra();
 	}
-	
+
 	std::cin.get();
 }
-
 
 
 
