@@ -4,6 +4,10 @@
  *
  * DELETE calls the destructor before deallocating the memory; DO NOT `delete(this);` in a destructor, 
  * it wil couse endless recursion: this->~destructor, then delete(this) will again call this->~destructor...
+ *
+ * We can delete “this” pointer inside a member function only if the function call is made by the class 
+ * object that has been created dynamically i.e. using “new” keyword. 
+ * If we call the function using statically allocated object then a runtime crash will happen.
  */
 
 #include "stdafx.h"
@@ -64,4 +68,20 @@ Value of i = 5
 Destructor
 Custom memory de-allocation
 
+//---------------------------------------------------------------------------------------
 
+class Test {
+public:
+	void function() {
+		delete this;
+		cout << "Object deleted\n";
+	}
+};
+
+int main() {
+	//Test object;
+	//object.function();
+
+	Test * pointer = new Test(); 
+	pointer->function();
+}
