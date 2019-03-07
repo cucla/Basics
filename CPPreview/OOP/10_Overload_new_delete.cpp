@@ -8,6 +8,19 @@
  * We can delete “this” pointer inside a member function only if the function call is made by the class 
  * object that has been created dynamically i.e. using “new” keyword. 
  * If we call the function using statically allocated object then a runtime crash will happen.
+ *
+ * MALLOC vs NEW
+ * 1. new operator constructs the object and initializes allocated memory from heap memory by calling constructor 
+ * where as malloc function does not, and allocate uninitialized memory.
+ * 2. new can be overloaded but malloc cannot be.
+ * 3. C++ syntax of using new is easy e.g int*p = new int; where as for malloc it is little bit complex e.g 
+ * int *p= (int*)malloc(sizeof(int));
+ * 4. new returns proper typed pointer and malloc returns void pointer which needs to be typecasted.
+ * 5. No need to calculate the size of memory using sizeof() operator in case of “new”.
+ * 6. new throws an exception on memory allocation failure and malloc returns NULL.
+ * 7. heap memory allocated by new cannot be resized while memory allocated by malloc can be resized using realloc function.
+ * 
+ * If we don’t use delete but free() function, it will not call class destructor and memory leak may happen.
  */
 
 #include "stdafx.h"
