@@ -72,6 +72,10 @@ Custom memory de-allocation
 /* this pointer is not available to static method
  * friend function doesn’t have this pointer
  * this pointer is rvalue not lvalue, so, can’t access address of it
+ *
+ * Whenever we call a non-static member function of a class on some objects, a ‘this’ pointer get created and 
+ * address of that object get stored in it and passed as a hidden argument to that function and in function 
+ * body we can use this pointer as a local variable
  */
 
 class Test {
