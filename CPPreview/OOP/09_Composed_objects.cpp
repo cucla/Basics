@@ -1,3 +1,6 @@
+// Constructor call of composed objects  will be as in order they have declared;
+// Destructor in reverse
+
 #include "stdafx.h"
 #include "iostream"
 
