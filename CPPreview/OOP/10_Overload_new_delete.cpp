@@ -1,3 +1,8 @@
+/* Overloaded NEW operator can accept additional arguments except size to be allocated.
+ * In one class DELETE operator can be overloaded only once.
+ * In one class NEW operator can be overloaded multiple times.
+ */
+
 #include "stdafx.h"
 #include "iostream"
 
