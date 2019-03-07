@@ -69,6 +69,10 @@ Destructor
 Custom memory de-allocation
 
 //---------------------------------------------------------------------------------------
+/* this pointer is not available to static method
+ * friend function doesn’t have this pointer
+ * this pointer is rvalue not lvalue, so, can’t access address of it
+ */
 
 class Test {
 public:
