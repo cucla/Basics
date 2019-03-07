@@ -29,19 +29,14 @@ private:
 Singleton *Singleton::s_instance = 0;
 
 
-int main(){
-    //Singleton pattern
-    Singleton* s_obj1 = Singleton::GetInstance();
+int main()
+{
+    // both objects have the same address
+    Singleton * s_obj1 = Singleton::GetInstance();
     s_obj1->display();
-	
-	cout<<"Address of object is:"<<s_obj1<<"\n"; 
-Singleton* s_obj2 = Singleton::GetInstance(); 
-s_obj2->display();	
-	
-	cout<<"Address of object is:"<<s_obj2<<"\n";
+    cout<<"Address of object is:"<<s_obj1<<"\n"; 
  
-	//Note that address of both object s_obj1 & s_obj2 must be same.	
-	
- 
-    return 0;
+    Singleton * s_obj2 = Singleton::GetInstance(); 
+    s_obj2->display();	
+    cout<<"Address of object is:"<<s_obj2<<"\n";
 }
