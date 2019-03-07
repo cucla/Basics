@@ -1,6 +1,9 @@
 /* Overloaded NEW operator can accept additional arguments except size to be allocated.
  * In one class DELETE operator can be overloaded only once.
  * In one class NEW operator can be overloaded multiple times.
+ *
+ * DELETE calls the destructor before deallocating the memory; DO NOT `delete(this);` in a destructor, 
+ * it wil couse endless recursion: this->~destructor, then delete(this) will again call this->~destructor...
  */
 
 #include "stdafx.h"
