@@ -18,6 +18,7 @@
  * 14. Rotate vector to the right 
  * 15. Intersection of two arrays
  * 16. Check if a string is a palindrome
+ * 17. Split string into words (by whitespace)
  */
  
 //--------------------------------------------------------------------------------------------
@@ -241,8 +242,27 @@ if (input == std::string(input.rbegin(), input.rend())) {
     cout << input << " is a palindrome";
 }
 
-// 1. Array Sum-------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------
+// 17. Split string into words (by whitespace)------------------------------------------------
+#include <sstream>
+
+	std::string s = "  inc 3 6 ";
+	std::istringstream iss(s);
+	std::vector<std::string> tokens{ std::istream_iterator<std::string>{iss}, std::istream_iterator<std::string>{} };
+
+	for (auto el : tokens) std::cout << "*" << el << "*" << std::endl;
+
+*inc*
+*3*
+*6*
+
+	std::string s1 = "  push 2 ";
+	std::string s2 = "  pop ";
+	std::string s3 = "  inc 3 6 "; 
+	for (auto el : {s1, s2, s3})
+		if (el.find("pop") != std::string::npos)
+			std::cout << "*" << el << "*" << std::endl;
+
+*  pop *
 
 // 1. Array Sum-------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------
