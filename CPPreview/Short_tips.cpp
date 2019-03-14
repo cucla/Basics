@@ -242,6 +242,12 @@ if (input == std::string(input.rbegin(), input.rend())) {
     cout << input << " is a palindrome";
 }
 
+bool isPalindrome(string X, int i, int j) {
+	while (i <= j)
+		if (X[i++] != X[j--]) return false;
+	return true;
+}
+
 // 17. Split string into words (by whitespace)------------------------------------------------
 #include <sstream>
 
