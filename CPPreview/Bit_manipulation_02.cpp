@@ -30,6 +30,7 @@ char r = x >> 4;  // 0000.0100
  */
  
 
+// 0. Odd or even
 // 1. Check if a given number is a power of 2, 4
 // 2. Count the number of 1s in the binary representation of a number
 // 3. Check if the ith bit is set (is 1) in the binary form of a number
@@ -39,6 +40,11 @@ char r = x >> 4;  // 0000.0100
 // 7. Set nth bit
 // 8. Sum of Two Integers without +
  
+
+// 0. Odd or even-----------------------------------------------------------------------------
+if (number & 1) {
+  // It's odd 
+}
 
 // 1. Check if a given number is a power of 2, 4----------------------------------------------
 // x = 4 = (100)2
