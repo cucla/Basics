@@ -1,6 +1,7 @@
 /* Generate all subsets from [1, 3, 1] -> with repeated elements:
- * sort
- * consider element / don't consider element
+ * sort & 
+ * exclude all adjacent duplicated elements along with case 2
+ * case 1: consider element / case 2: don't consider element
  */
 
 
