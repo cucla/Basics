@@ -20,6 +20,7 @@
  * 16. Check if a string is a palindrome
  * 17. Split string into words (by whitespace)
  * 18. Negate vector
+ * 19. Set both elements to 0 in binary array
  */
  
 //--------------------------------------------------------------------------------------------
@@ -274,7 +275,16 @@ bool isPalindrome(string X, int i, int j) {
 // 18. Negate vector--------------------------------------------------------------------------
 std::transform(arr.begin(), arr.end(), arr.begin(), std::negate<int>());
 
-// 1. Array Sum-------------------------------------------------------------------------------
+// 19. Set both elements to 0 in binary array-------------------------------------------------
+// if arr is : [0, 1] or [1, 0] or [0, 0]
+arr[!arr[0]] = arr[arr[0]];
+arr[!arr[1]] = arr[arr[1]];
+arr[!arr[0]] = arr[!arr[1]];
+
+arr[arr[1]] = 0;
+arr[arr[1]] = arr[arr[0]];
+
+arr[0] = arr[1] = arr[0] & arr[1];
 //--------------------------------------------------------------------------------------------
 
 // 1. Array Sum-------------------------------------------------------------------------------
