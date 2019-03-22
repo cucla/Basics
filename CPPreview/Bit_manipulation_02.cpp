@@ -39,6 +39,7 @@ char r = x >> 4;  // 0000.0100
 // 6. Find the rightmost 1 in binary representation of x
 // 7. Set nth bit
 // 8. Sum of Two Integers without +
+// 9. find 2 odd occuring elements in an array
  
 
 // 0. Odd or even-----------------------------------------------------------------------------
@@ -164,6 +165,22 @@ int getSum(int a, int b) {
 	return a;
 }	
 	
-//-------------------------------------------------------------------------------------------
+// 9. find 2 odd occuring elements in an array-----------------------------------------------
+pair<int, int> findOddOccuring(vector<int> arr, int n) {
+	int res = 0;
+	for (int i = 0; i < n; i++)   res = res ^ arr[i];
+
+	int k = log2(res & -res);
+	int x = 0, y = 0;
+	for (int i = 0; i < n; i++) {
+		if (arr[i] & (1 << k))        // elements that have k'th bit 1
+			x = x ^ arr[i];
+		else                          // elements that have k'th bit 0
+			y = y ^ arr[i];
+	}
+	return make_pair(x, y);
+}
+
+
 //-------------------------------------------------------------------------------------------
 
