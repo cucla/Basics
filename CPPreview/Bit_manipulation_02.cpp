@@ -142,7 +142,14 @@ x | (1 << n)
 /*
 x = 10 = (1010)2 n = 2
 1 << n = (0100)2 
-x | (1 << n) = (1010)2 | (0100)2 = (1110)2   */
+x | (1 << n) = (1010)2 | (0100)2 = (1110)2   
+
+	std::cout << (0 | 1 << 0) << std::endl;   1     00000
+	std::cout << (0 | 1 << 1) << std::endl;   2     00010
+	std::cout << (0 | 1 << 2) << std::endl;   4     00100
+	std::cout << (0 | 1 << 3) << std::endl;   8     01000
+	std::cout << (0 | 1 << 4) << std::endl;   16    10000
+*/
 	
 // 8. Sum of Two Integers without + ---------------------------------------------------------
 // adding can be done with ^, except of 1 + 1 case. Here use (a & b) << 1 and add up again	
