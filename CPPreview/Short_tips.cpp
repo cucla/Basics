@@ -1,4 +1,5 @@
 // FIX:      https://www.onixs.biz/fix-dictionary/4.2/app_d.html 
+// Memory:   https://isocpp.org/wiki/faq
 
 /* http://www.gotw.ca/gotw/
  *
