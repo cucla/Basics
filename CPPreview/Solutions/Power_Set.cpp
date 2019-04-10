@@ -9,11 +9,12 @@ void powerSet(std::vector<int> & candidates, int idx, std::vector<int> & tmp, st
 		res.insert(tmp);
 		return;
 	}
-
+	// include
 	tmp.push_back(candidates[idx]);
 	powerSet(candidates, idx + 1, tmp, res);
+	
+	// exclude
 	tmp.pop_back();
-
 	powerSet(candidates, idx + 1, tmp, res);
 }
 
