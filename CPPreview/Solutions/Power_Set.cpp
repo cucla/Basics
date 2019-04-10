@@ -43,3 +43,42 @@ int main()
 1 1 3
 1 3
 3
+
+	
+/* When Power Set is used to find subset with maximum product,
+ * however, linear time approach exists: https://www.techiedelight.com/maximum-product-subset-problem/
+ */
+	
+void maxProduct(std::vector<int> & comb, int & res) {
+	int product = 1;
+	for (int j : comb) product = product * j;
+
+	if (comb.size())
+		res = std::max(res, product);
+}
+
+void maxProduct(std::vector<int> & candidates, int idx, std::vector<int> & comb, int & res) {
+	if (idx == 0) {
+		maxProduct(comb, res);
+		return;
+	}
+
+	comb.push_back(candidates[idx - 1]);
+	maxProduct(candidates, idx - 1, comb, res);
+
+	comb.pop_back();
+	maxProduct(candidates, idx - 1, comb, res);
+}
+
+int main() 
+{
+	std::vector<int> candidates{ -6, 4, -5, 8, -10, 0, 8 };
+
+	int res = 1;
+	std::vector<int> comb;
+	maxProduct(candidates, candidates.size(), comb, res);
+
+	std::cout << res << std::endl;
+
+	std::cin.get();
+}
