@@ -16,8 +16,8 @@ int r = x | y;    // 0101.1011
  *
  *  XOR ( ^ ):  takes two equal-length bit patterns; 1 ^ 0 = 1; 0 ^ 1 = 1, otherwise 0
 char x = 75;      // 0100.1011
-char y = 82;      // 0101.0010
-int r = x ^ y;    // 0001.1001
+char y = 82;      // 0101.0010			x ^ 0 = x
+int r = x ^ y;    // 0001.1001			x ^ x = 0
  *
  *  Left Shift ( << ): appends 0s at the end; is equivalent to multiplying with 2^k ( if we are shifting k bits )
 char x = 75;      // 0100.1011
