@@ -1,4 +1,5 @@
 // FIX:      https://www.onixs.biz/fix-dictionary/4.2/app_d.html 
+// SQL:      https://www.essentialsql.com/build-dynamic-sql-stored-procedure/
 // Memory:   https://isocpp.org/wiki/faq
 
 /* http://www.gotw.ca/gotw/
