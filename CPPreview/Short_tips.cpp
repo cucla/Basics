@@ -1,5 +1,6 @@
 // FIX:      https://www.onixs.biz/fix-dictionary/4.2/app_d.html 
-// SQL:      https://www.essentialsql.com/build-dynamic-sql-stored-procedure/
+// SQL1:     https://www.essentialsql.com/build-dynamic-sql-stored-procedure/
+// SQL2:     https://codingsight.com/tag/t-sql/
 // Memory:   https://isocpp.org/wiki/faq
 
 /* http://www.gotw.ca/gotw/
