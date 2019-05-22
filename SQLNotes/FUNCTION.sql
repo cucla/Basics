@@ -1,4 +1,4 @@
--- A table-valued function - accepts parameter(s) and returns the result set in the table variable
+-- A table-evaluated function - accepts parameter(s) and returns the result set in the table variable
    -- 1. It can be executed within the Select query.
    -- 2. It can be used in multiple parts of a query, e.g.g in the Case statement, where/having clauses.
    -- 3. The output of a table-valued function is a recordset, hence you can join the function with tables.
@@ -26,6 +26,7 @@ AS
              INNER JOIN [HUMANRESOURCES].[VEMPLOYEE] B 
                      ON A.BUSINESSENTITYID = B.BUSINESSENTITYID 
       WHERE  A.HIREDATE BETWEEN @FROMDATE AND @TODATE 
+      
       RETURN 
   END
   
@@ -55,3 +56,61 @@ SELECT EMPLOYEENAME,
        PHONENUMBER, 
        HIREDATE 
 FROM GETEMPLOYEESBYHIREDATE(@FROMDT, @TODT)
+
+
+
+-- Joining a table with a table-evaluated function
+
+CREATE TABLE [DBO].[DEPARTMENT] 
+  ( 
+     [DEPARTMENTID]   INT IDENTITY (1, 1), 
+     [DEPARTMENTNAME] [VARCHAR](MAX) NULL 
+  ) 
+                       
+CREATE FUNCTION Getemployeesbydepartment (@DEPARTMENTID INT) 
+RETURNS @EMPLOYEES TABLE ( 
+  EMPLOYEENAME   VARCHAR (MAX), 
+  BIRTHDATE      DATETIME, 
+  JOBTITLE       VARCHAR(150), 
+  EMAILID        VARCHAR(100), 
+  PHONENUMBER    VARCHAR(20), 
+  HIREDATE       DATETIME, 
+  DEPARTMENTID VARCHAR(500)) 
+AS 
+  BEGIN 
+      INSERT INTO @EMPLOYEES 
+      SELECT A.EMPLOYEENAME, 
+             A.BIRTHDATE, 
+             A.JOBTITLE, 
+             A.EMAILID, 
+             A.PHONENUMBER, 
+             A.HIREDATE, 
+             A.DEPARTMENTID 
+      FROM   [EMPLOYEES] A 
+      WHERE  A.DEPARTMENTID = @DEPARTMENTID 
+
+      RETURN 
+  END
+                  
+-- CROSS APPLY, like inner join:                      
+SELECT A.[EMPLOYEENAME], 
+       A.[BIRTHDATE], 
+       A.[JOBTITLE], 
+       A.[EMAILID], 
+       A.[PHONENUMBER], 
+       A.[HIREDATE], 
+       B.[DEPARTMENTNAME] 
+FROM   DEPARTMENT B 
+       CROSS APPLY GETEMPLOYEESBYDEPARTMENT(B.DEPARTMENTID) A
+
+-- OUTER APPLY, like left join:
+SELECT A.[EMPLOYEENAME], 
+       A.[BIRTHDATE], 
+       A.[JOBTITLE], 
+       A.[EMAILID], 
+       A.[PHONENUMBER], 
+       A.[HIREDATE], 
+       B.[DEPARTMENTNAME] 
+FROM   DEPARTMENT B 
+       OUTER APPLY GETEMPLOYEESBYDEPARTMENT(B.DEPARTMENTID) A
+
