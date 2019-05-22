@@ -24,3 +24,26 @@ FETCH NEXT FROM Student_Cursor INTO @TableName
 END
 CLOSE Student_Cursor 
 DEALLOCATE Student_Cursor 
+
+
+
+-- Declare Student cursor with variables to process 2 columns from a table (concatenating their string values)
+USE UniversityV3
+GO
+
+DECLARE @StudentId INT,
+        @StudentName VARCHAR(40)
+DECLARE Student_Cursor CURSOR FOR SELECT 
+  StudentId, 
+  Name
+FROM dbo.Student;
+OPEN Student_Cursor
+FETCH NEXT FROM Student_Cursor INTO @StudentId, @StudentName -- Fetch first row and store it into variables
+WHILE @@FETCH_STATUS = 0
+BEGIN
+PRINT CONCAT(@StudentId, '--', @StudentName) -- Show variables data
+FETCH NEXT FROM Student_Cursor -- Get next row data into cursor and store it into variables
+INTO @StudentId, @StudentName
+END
+CLOSE Student_Cursor 
+DEALLOCATE Student_Cursor 
