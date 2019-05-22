@@ -15,7 +15,7 @@ WHILE @@FETCH_STATUS = 0
 BEGIN
   IF RIGHT(@TableName, 6) <> 'Backup'
   BEGIN
-    SET @NewTableName = @TableName+'_Backup'
+    SET @NewTableName = @TableName + '_Backup'    -- SET @NewTableName = SUBSTRING(@TableName, 1, LEN(@TableName)-7)  [to remove]
     EXEC sp_rename @TableName, @NewTableName
   END
 ELSE
