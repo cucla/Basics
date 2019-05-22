@@ -6,24 +6,25 @@ USE SQLDevBlogV2;
 
 CREATE TABLE Author (
   AuthorId          INT            PRIMARY KEY         IDENTITY (1, 1),
-  Name              VARCHAR(40),
+  Name              VARCHAR(40)    NOT NULL,
   RegistrationDate  DATETIME2,
-  Notes             VARCHAR(400)
+  Notes             VARCHAR(400)   NULL
 )
 
 CREATE TABLE Category (
   CategoryId        INT            PRIMARY KEY         IDENTITY (1, 1),
-  Name              VARCHAR(50),
+  Name              VARCHAR(50)    NOT NULL,
   Notes             VARCHAR(400)
 )
 
 CREATE TABLE Article (
-  ArticleId         INT            PRIMARY KEY         IDENTITY (1, 1),
+  ArticleId         INT            NOT NULL            IDENTITY (1, 1),
   CategoryId        INT,
   AuthorId          INT,
   Title             VARCHAR(150),
   Published         DATETIME2,
-  Notes             VARCHAR(400)  
+  Notes             VARCHAR(400),
+  CONSTRAINT PK_Article PRIMARY KEY CLUSTERED (ArticleId ASC)
 )
 
 -- Adding foreign keys for author and article category
