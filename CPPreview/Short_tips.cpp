@@ -275,6 +275,22 @@ bool isPalindrome(string X, int i, int j) {
 			std::cout << "*" << el << "*" << std::endl;
 
 *  pop *
+---------------------
+
+std::string s = "z z' x' y ";
+
+std::string t;
+for (size_t i = 0; i < s.size(); ) {
+	t = s.substr(i, s.find(" ", i) - i);
+	std::cout << t << std::endl;
+	i = s.find(" ", i) + 1;
+}
+
+OUTPUT:    (but if leading space "  z z' x' y " -> will print spaces first;)
+z
+z'
+x'
+y
 
 // 18. Negate vector--------------------------------------------------------------------------
 std::transform(arr.begin(), arr.end(), arr.begin(), std::negate<int>());
