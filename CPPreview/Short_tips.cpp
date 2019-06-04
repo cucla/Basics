@@ -283,7 +283,7 @@ std::string t;
 for (size_t i = 0; i < s.size(); ) {
 	t = s.substr(i, s.find(" ", i) - i);
 	std::cout << t << std::endl;
-	i = s.find(" ", i) + 1;
+	i = s.find(" ", i) != std::string::npos ? s.find(" ", i) + 1 : s.size();
 }
 
 OUTPUT:    (but if leading space "  z z' x' y " -> will print spaces first;)
