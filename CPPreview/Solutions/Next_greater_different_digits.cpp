@@ -4,7 +4,7 @@ int nextNum(int num) {
 
 	string tmp = to_string(num);              // "3025"
 	for (int i = 0; i < tmp.size(); ++i) {    // '3' '0' '2' '5'
-		used.insert(tmp[i] - '0');              // 3 0 2 5
+		used.insert(tmp[i] - '0');        // 3 0 2 5
 	}
 	if (used.size() == 10) return -1;
 	if (used.size() == 9 && used.count(0) == 1) return -1;
