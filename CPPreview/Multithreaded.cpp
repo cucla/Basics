@@ -6,22 +6,15 @@
 #include <iostream>
 #include <thread>
 
-void do_smth() {
-	std::cout << "Action No1" << std::endl;
-}
-void do_smth_else() {
-	std::cout << "Action No2" << std::endl;
-}
+void do_smth() 		{ std::cout << "Action No1" << std::endl; }
+void do_smth_else() 	{ std::cout << "Action No2" << std::endl; }
 
-struct background_task{
-	void operator()() const{
+struct background_task {
+	void operator() () const{
 		do_smth();
-		do_smth_else();
-	}
-};
+		do_smth_else(); } };
 
-int main()
-{
+int main() {
 	std::thread thread_two(do_smth);           // std::thread works with any callable type
 	thread_two.join();
 
@@ -37,8 +30,7 @@ int main()
 		do_smth_else(); } );
 	thread_five.join();
 
-	std::cin.get();
-}
+	std::cin.get(); }
 //---------------------------------------------------------------------------------------------
 
 //---------------------------------------------------------------------------------------------
