@@ -4,7 +4,13 @@
 // 3. Passing arguments
 // 4. Transferring ownership of a thread
 // 5. Spawn number of threads
+// 6. Tasks, [see 3 to compare examples]
+// 7. Shared Memory and Shared Resources
 
+// -------------------------------------------------------------------------------------------
+#include <thread>
+    unsigned int c = std::thread::hardware_concurrency();
+    std::cout << " number of cores: " << c << endl;
 
 // 1. Intro -----------------------------------------------------------------------------------
 #include "stdafx.h"
@@ -95,22 +101,61 @@ void good2() {
 
 
 // 3. Passing arguments -----------------------------------------------------------------------
-void f(int i, std::string const & s);
+void f1(int i, std::string const & s);
 
-std::thread t(f, 3, ”hello”);   	// arguments are copied into internal storage, even if passed by ref
+std::thread t(f1, 3, ”hello”);   	// arguments are copied into internal storage, even if passed by ref
 t.detach();
 
 void not_oops(int some_param) {
 	char buffer[1024];				// when passing pointer to local var to thread
-	std::thread t(f, 3, std::string(buffer));  	// cast to string
+	std::thread t(f1, 3, std::string(buffer));  	// cast to string
 	t.detach(); 
 }
 
-void not_oops(int some_param) {
-	string data;
-	std::thread t(f, 3, std::ref(data));   		// if the thread needs to update data passed by ref
-	t.join();
+// Using a function pointer
+void f2(const std::vector<int> & v, long long & acm, int b, int e) {
+    acm = 0;
+    for (int i = b; i < e; ++i)  acm += v[i];
 }
+
+long long acm1 = 0;
+long long acm2 = 0;
+std::thread t1(f2, std::ref(v), std::ref(acm1), 0, v.size() / 2);        // std::ref to pass by reference
+std::thread t2(f2, std::ref(v), std::ref(acm2), v.size() / 2, v.size());
+t1.join();
+t2.join();
+std::cout << "acm1 + acm2: " << acm1 + acm2 << endl;
+
+// Using Functors
+struct CAccumulatorFunctor3 {
+    void operator()(const std::vector<int> & v, int b, int e) {
+        _acm = 0;
+        for (unsigned int i = beginIndex; i < endIndex; ++i)  _acm += v[i];
+    }
+    long long _acm;
+};
+
+CAccumulatorFunctor3 accumulator1 = CAccumulatorFunctor3();     // can store its return value in a member variable
+CAccumulatorFunctor3 accumulator2 = CAccumulatorFunctor3();
+std::thread t1(std::ref(accumulator1), std::ref(v), 0, v.size() / 2);
+std::thread t2(std::ref(accumulator2), std::ref(v), v.size() / 2, v.size());
+t1.join();
+t2.join();
+std::cout << accumulator1._acm + accumulator2._acm << endl;
+
+// Using Lambda Functions
+long long acm1 = 0;
+long long acm2 = 0;
+std::thread t1([&acm1, &v] {
+    for (unsigned int i = 0; i < v.size() / 2; ++i)  acm1 += v[i];
+});
+std::thread t2([&acm2, &v] {
+    for (unsigned int i = v.size() / 2; i < v.size(); ++i)  acm2 += v[i];
+});
+t1.join();
+t2.join();
+std::cout << "acm1 + acm2: " << acm1 + acm2 << endl;
+
 
 struct X {
 	void do_lengthy_work();
@@ -192,9 +237,72 @@ void f() {
 	std::for_each(threads.begin(), threads.end(), std::mem_fn(&std::thread::join));
 }
 
-//---------------------------------------------------------------------------------------------
+// 6. Tasks -----------------------------------------------------------------------------------
+// tasks are defined and created using std::async
+// returned value is a std::future, get its values by calling __.get()
 
-//---------------------------------------------------------------------------------------------
+auto f1 = [](std::vector<int> & v, unsigned int left, unsigned int right) {
+    long long acm = 0;
+    for (unsigned int i = left; i < right; ++i)  acm += v[i];
+    return acm;
+};
+auto t1 = std::async(f1, std::ref(v), 0, v.size() / 2);
+auto t2 = std::async(f1, std::ref(v), v.size() / 2, v.size());
+
+long long acm1 = t1.get();
+long long acm2 = t2.get();
+std::cout << "acm1 + acm2: " << acm1 + acm2 << endl;
+
+// 7. Shared Memory and Shared Resources ------------------------------------------------------
+// std::lock_guard
+#include <list>
+#include <mutex>
+#include <algorithm>
+
+std::list<int> some_list;
+std::mutex some_mutex; 		// the accesses in 2 functions is mutually exclusive
+				// list_contains() will never see the list partway through a modification
+void add_to_list(int new_value) {
+	std::lock_guard<std::mutex> guard(some_mutex);
+	some_list.push_back(new_value);
+}
+bool list_contains(int value_to_find) {
+	std::lock_guard<std::mutex> guard(some_mutex);       
+	return std::find(some_list.begin(), some_list.end(), value_to_find) != some_list.end();
+}
+
+/* Don’t pass pointers and references to protected data outside the scope of the lock, whether by
+returning them from a function, storing them in externally visible memory, or passing them as
+arguments to user-supplied functions. */
+// Here Mutex won't work, because 'unprotected->do_something()' modifies 'data' while it is 'locked'
+class some_data {
+public:
+	void do_something();
+private:
+	int a;
+	std::string b;
+};
+
+class data_wrapper {
+public:
+	template<typename Function>       // allows supply user-defined function
+	void process_data(Function func) {
+		std::lock_guard<std::mutex> l(m);
+		func(data);
+	}
+private:
+	some_data data;
+	std::mutex m;
+};
+
+some_data * unprotected;
+void malicious_function(some_data& protected_data) { unprotected = &protected_data; }
+data_wrapper x;
+
+void foo() {
+	x.process_data(malicious_function);
+	unprotected->do_something();
+}
 
 //---------------------------------------------------------------------------------------------
 
