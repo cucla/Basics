@@ -16,8 +16,8 @@ struct background_task {
 		do_smth_else(); } };
 
 int main() {
-	std::thread thread_two(do_smth);           // std::thread works with any callable type
-	thread_two.join();
+	std::thread thread_two(do_smth);        // std::thread works with any callable type
+	thread_two.join();			// or thread_two.detach();
 
 	background_task t;
 	std::thread thread_three(t);
