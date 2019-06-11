@@ -1,0 +1,27 @@
+#include "stdafx.h"
+#include "iostream"
+
+#include <string>
+#include <vector>
+#include <list>
+#include <map>
+#include <set>
+#include <queue> 
+#include <stack>
+#include <unordered_map>
+#include <unordered_set>
+#include <iterator>
+#include <algorithm>
+#include <functional>
+#include <ctype.h>
+#include <string.h>
+#include <tuple> 
+#include <unordered_map>
+#include <bitset>
+#include <math.h> 
+#include <assert.h>
+#include <numeric> 
+#include <sstream>
+#include <time.h>
+#include <locale>
+#include <thread>
