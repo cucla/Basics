@@ -1,3 +1,4 @@
+// PPT : https://home.deib.polimi.it/fornacia/lib/exe/fetch.php?media=teaching:aos:2017:aos_l4_multithreading_cpp.pdf
 
 // 1. Intro
 // 2. Waiting for a thread to complete (.join()), class thread_guard
@@ -8,7 +9,9 @@
 // 7. Shared Memory and Shared Resources
 // 8. Thread-safe stack
 // 9. Avoid deadlock where you need to acquire two or more locks together
+
 // 10. Producer-consumer scenario
+// 11. Compute a single function in parallel for > 1 different initial values
 
 // -------------------------------------------------------------------------------------------
 #include <thread>
@@ -408,7 +411,48 @@ int main()
 	t.join();
 }
 
-//---------------------------------------------------------------------------------------------
+// 11. Compute a single function in parallel for > 1 different initial values -----------------
+#include <chrono>
+#include <mutex>
+#include <thread>
+#include <future>
+
+using namespace std;
+
+int myComputation(int x) {
+	for (unsigned i = 0; i < 99999999; ++i) {
+		x++;
+	}
+	return x;
+}
+int main() 
+{
+	packaged_task<int(int)> task1(&myComputation);
+	packaged_task<int(int)> task2(&myComputation);
+
+	future<int> val1 = task1.get_future();
+	future<int> val2 = task2.get_future();
+
+	thread t1(move(task1), 0);
+	thread t2(move(task2), 5);
+
+	bool s1 = false, s2 = false;
+	do {
+		s1 = val1.wait_for(chrono::milliseconds(50)) == future_status::ready;
+		s2 = val2.wait_for(chrono::milliseconds(50)) == future_status::ready;
+		cout << "Value 1 is " << (s1 ? "" : "not ") << "ready" << endl;
+		cout << "Value 2 is " << (s2 ? "" : "not ") << "ready" << endl;
+		this_thread::sleep_for(chrono::milliseconds(300));
+	} while (!s1 || !s2);
+
+	t1.join();
+	t2.join();
+
+	cout << "Value 1: " << val1.get() << endl;
+	cout << "Value 2: " << val2.get() << endl;
+
+	std::cin.get();
+}
 
 //---------------------------------------------------------------------------------------------
 
