@@ -1,4 +1,5 @@
 // PPT : https://home.deib.polimi.it/fornacia/lib/exe/fetch.php?media=teaching:aos:2017:aos_l4_multithreading_cpp.pdf
+// good tutorial: https://baptiste-wicht.com/posts/2012/03/cp11-concurrency-tutorial-part-2-protect-shared-data.html
 
 // 1. Intro
 // 2. Waiting for a thread to complete (.join()), class thread_guard
@@ -235,7 +236,10 @@ scoped_thread t(std::thread(background_task(some_local_state)));
 }
 
 // 5. Spawn number of threads -----------------------------------------------------------------
-void do_work(unsigned id);
+void do_work(unsigned id) {
+	std::cout << "Hello from thread " << std::this_thread::get_id() << std::endl;
+}
+
 void f() {
 	std::vector<std::thread> threads;
 	for(unsigned i = 0; i < 20; ++i) 
