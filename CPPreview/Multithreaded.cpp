@@ -6,6 +6,9 @@
 // 5. Spawn number of threads
 // 6. Tasks, [see 3 to compare examples]
 // 7. Shared Memory and Shared Resources
+// 8. Thread-safe stack
+// 9. Avoid deadlock where you need to acquire two or more locks together
+// 10. Producer-consumer scenario
 
 // -------------------------------------------------------------------------------------------
 #include <thread>
@@ -304,11 +307,106 @@ void foo() {
 	unprotected->do_something();
 }
 
-//---------------------------------------------------------------------------------------------
 
-//---------------------------------------------------------------------------------------------
+// 8. Thread-safe stack -----------------------------------------------------------------------
+#include <exception>
+#include <memory>
+#include <mutex>
+#include <stack>
 
-//---------------------------------------------------------------------------------------------
+struct empty_stack: std::exception {
+	const char* what() const throw();
+};
+
+template<typename T>
+class threadsafe_stack {
+private:
+	std::stack<T> data;
+	mutable std::mutex m;
+public:
+	threadsafe_stack(){}
+	threadsafe_stack(const threadsafe_stack & other) {
+		std::lock_guard<std::mutex> lock(other.m);
+		data=other.data;
+	}
+	threadsafe_stack & operator=(const threadsafe_stack&) = delete;
+	
+	void push(T new_value) {
+		std::lock_guard<std::mutex> lock(m);
+		data.push(new_value);
+	}
+	std::shared_ptr<T> pop() {
+		std::lock_guard<std::mutex> lock(m);
+		if(data.empty()) throw empty_stack();
+		std::shared_ptr<T> const res(std::make_shared<T>(data.top()));
+		data.pop();
+		return res;
+	}
+	void pop(T & value) {
+		std::lock_guard<std::mutex> lock(m);
+		if(data.empty()) throw empty_stack();
+		value=data.top();
+		data.pop();
+	}
+	bool empty() const {
+		std::lock_guard<std::mutex> lock(m);
+		return data.empty();
+	}
+};
+
+
+// 9. Avoid deadlock where you need to acquire two or more locks together ---------------------
+class some_big_object;
+void swap(some_big_object & lhs, some_big_object & rhs);
+
+class X {
+private:
+	some_big_object some_detail;
+	std::mutex m;
+public:
+	X(some_big_object const & sd): some_detail(sd) {}
+	friend void swap(X& lhs, X& rhs) {
+		if(&lhs == &rhs)
+			return;
+		std::lock(lhs.m, rhs.m);
+		std::lock_guard<std::mutex> lock_a(lhs.m, std::adopt_lock);
+		std::lock_guard<std::mutex> lock_b(rhs.m, std::adopt_lock);
+		swap(lhs.some_detail, rhs.some_detail);
+	}
+};
+
+// 10. Producer-consumer scenario -------------------------------------------------------------
+#include <chrono>
+#include <mutex>
+#include <thread>
+#include <future>
+
+using namespace std;
+static mutex theLock;
+
+void produce(int * data) {
+	for (int i = 1; i <= 5; ++i) {
+		{
+			lock_guard<mutex> lock(theLock);
+			*data = i;
+		}
+		this_thread::sleep_for(chrono::milliseconds(500));
+	}
+}
+int main() 
+{
+	int data = 0;
+	int val = 0;
+	thread t(produce, &data);
+	do {
+		{
+			lock_guard<mutex> lock(theLock);
+			if (data != 5) data += 12;
+			val = data;
+		}
+	} while (val != 5);
+	t.join();
+}
 
 //---------------------------------------------------------------------------------------------
 
