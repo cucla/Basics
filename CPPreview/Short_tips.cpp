@@ -25,6 +25,7 @@
  * 18. Negate vector
  * 19. Set both elements to 0 in binary array
  * 20. QuickSelect logic
+ * 21. Sort vector of complex numbers, Using Pointer
  */
  
 //--------------------------------------------------------------------------------------------
@@ -47,16 +48,19 @@ int sum = 0;
 std::for_each(myVector.begin(), myVector.end(), [&sum](int a) { return sum += a; });
 int sum2 = std::accumulate(myVector.begin(), myVector.end(), 0);  //0.0f for floats
 
+
 // 2. Count elements == to my own parameter 'myMax' (lambda with count_if)--------------------
 std::vector<int> ar({ 3, 2, 1, 3 });
 auto myMax = *std::max_element(ar.begin(), ar.end());
 auto myCount = std::count_if(ar.begin(), ar.end(), [myMax](int i) { return i == myMax; });
+
 
 // 3. Remove non-consecutive duplicates from Container----------------------------------------
 	std::string s = "wwxwwm";
 	std::set<char> seen;
 	s.erase(std::remove_if(s.begin(), s.end(), [&seen](char c) { return !seen.insert(c).second; }), s.end());
 	std::cout << s;   // "wxm"
+
 
 // 4. Int to char/char to int-----------------------------------------------------------------
 	
@@ -80,6 +84,7 @@ auto locateRanking = [](const auto & _scores, int _newScore) {
 for (auto newScore : alice) {
 	std::cout << locateRanking(scores, newScore) << std::endl;
 }
+
 
 // 6. Array of functions + function pointer vector--------------------------------------------
 typedef int(*FunctionPrt)(int);
@@ -108,6 +113,7 @@ for (std::vector<int(*)(const char*)>::iterator it = processors.begin();
 	it != processors.end(); ++it)
 	std::cout << (*it)(data) << std::endl;
 
+
 // 7. std::find_if vs std::find---------------------------------------------------------------
 struct Interval {
 	Interval(int a, int b) : start(a), end(b) {}
@@ -125,10 +131,12 @@ int main() {
         // can use std::find directly with "toFind" with appropriate == overload:
 	auto it = std::find(iv.begin(), iv.end(), toFind); }
 
+
 // 8. trim spaces in a string using std::find_if()--------------------------------------------
 std::string s{ "      with spaces    " };
 s.erase( s.begin(), std::find_if(s.begin(), s.end(), [](char c) { return !isspace(c); } ));        // left trim
 s.erase(std::find_if(s.rbegin(), s.rend(), [](char c) { return !isspace(c); }).base(), s.end());   // right trim
+
 
 // 9. MAP: select by value + custom comparator------------------------------------------------
 // select 'first' item in a map that equals to some VALUE, not KEY
@@ -161,12 +169,14 @@ int main()
 		std::cout << it->first << " => " << it->second << '\n';
 }
 
+
 // 10. decltype() to deduce the type for std::find_if()---------------------------------------
 int num = 2;
 std::vector<std::pair<int, std::string>> v{ {1, "one"}, {2, "two"}, {3, "three"} };
 auto r = std::find_if(v.begin(), v.end(), [&](const decltype(*v.begin()) & el) { return el.first == num; });
 
 std::cout << r->first << " " << r->second << std::endl;
+
 
 // 11. Find element, that satisfies v[i] <= x < v[i + 1]--------------------------------------
 const std::vector<double> v{ 1.5, 3.1, 12.88, 32.4 };
@@ -177,6 +187,7 @@ if (it != v.end()) {
 	std::cout << *it << " " << *(it + 1) << std::endl;
 }
 // OUTPUT: 12.88, 32.4
+
 
 // 12. Functor + std::for_each----------------------------------------------------------------
 /* std::for_each accepts the functor by value, that means it modifies a local copy. 
@@ -221,6 +232,7 @@ int main()
     int average = std::for_each(values.begin(), values.end(), CalculateAverage());   // OUTPUT: 3
 }
 
+
 // 13. std::transform with std::back_inserter-------------------------------------------------
 std::vector<std::string> names = {"hi", "test", "foo"};
 std::vector<std::size_t> name_sizes;
@@ -228,11 +240,12 @@ std::vector<std::size_t> name_sizes;
 std::transform(names.begin(), names.end(), std::back_inserter(name_sizes), 
 	       [](const std::string & name) { return name.size(); });
 
+
 // 14. Rotate vector to the right-------------------------------------------------------------
 	std::vector<int> nums{ 1, 2, 3, 4, 5, 6, 7 };
 	std::rotate(nums.rbegin(), nums.rbegin() + 2 % nums.size(), nums.rend());
 // 6 7 1 2 3 4 5
-//--------------------------------------------------------------------------------------------
+
 
 // 15. Intersection of two arrays-------------------------------------------------------------
 	std::vector<int> first{ 5, 10, 10, 15, 20, 25 };
@@ -242,6 +255,7 @@ std::transform(names.begin(), names.end(), std::back_inserter(name_sizes),
 		                       second.begin(), second.end(), first.begin());
 	first.resize(it - first.begin());
 // 10 10 20
+
 
 // 16. Check if a string is a palindrome------------------------------------------------------
 if (input == std::string(input.rbegin(), input.rend())) {
@@ -253,6 +267,7 @@ bool isPalindrome(string X, int i, int j) {
 		if (X[i++] != X[j--]) return false;
 	return true;
 }
+
 
 // 17. Split string into words (by whitespace)------------------------------------------------
 #include <sstream>
@@ -292,8 +307,10 @@ z'
 x'
 y
 
+
 // 18. Negate vector--------------------------------------------------------------------------
 std::transform(arr.begin(), arr.end(), arr.begin(), std::negate<int>());
+
 
 // 19. Set both elements to 0 in binary array-------------------------------------------------
 // if arr is : [0, 1] or [1, 0] or [0, 0]
@@ -305,7 +322,7 @@ arr[arr[1]] = 0;
 arr[arr[1]] = arr[arr[0]];
 
 arr[0] = arr[1] = arr[0] & arr[1];
-//--------------------------------------------------------------------------------------------
+
 
 // 20. QuickSelect logic----------------------------------------------------------------------
 	vector<int> arr{ 4, -2, -3, 5, 1, 6, -9, 7 };
@@ -328,7 +345,34 @@ arr[0] = arr[1] = arr[0] & arr[1];
 
 	// K'th smallest element is -2   (idx starts at 0)
 
-// 20. QuickSelect logic----------------------------------------------------------------------
+
+// 21. Sort vector of complex numbers, Using Pointer -----------------------------------------
+
+struct Complex {
+	double real;
+	double imaginary;
+};
+int main() 
+{
+	std::vector<Complex> vec = { { 3, 1 },
+	{ 1, 9 },
+	{ 8, 2 },
+	{ 3, 14 } };
+
+	double Complex::*var;
+	auto comparator = [&var](const Complex &a, const Complex &b) { return a.*var < b.*var; };
+
+	var = &Complex::real;        		//Sorting for real numbers
+	std::sort(vec.begin(), vec.end(), comparator);
+
+	var = &Complex::imaginary; 		//Sorting for imaginary numbers
+	std::sort(vec.begin(), vec.end(), comparator);
+
+	std::cin.get();
+}
+
+
+
 //--------------------------------------------------------------------------------------------
 
 // 20. QuickSelect logic----------------------------------------------------------------------
