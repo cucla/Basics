@@ -3,21 +3,23 @@
 
 // 1. Intro
 // 2. Waiting for a thread to complete (.join()), class thread_guard
-// 3. Passing arguments
-// 4. Transferring ownership of a thread
-// 5. Spawn number of threads
-// 6. Tasks, [see 3 to compare examples]
-// 7. Shared Memory and Shared Resources
-// 8. Thread-safe stack
-// 9. Avoid deadlock where you need to acquire two or more locks together
+// 3. .detach() threads, reusing the same function
+// 4. Passing arguments
+// 5. Transferring ownership of a thread
+// 6. Spawn number of threads
+// 7. Tasks, [see 3 to compare examples]
+// 8. Shared Memory and Shared Resources
+// 9. Thread-safe stack
+// 10. Avoid deadlock where you need to acquire two or more locks together
 
-// 10. Producer-consumer scenario
-// 11. Compute a single function in parallel for > 1 different initial values
+// 11. Producer-consumer scenario
+// 12. Compute a single function in parallel for > 1 different initial values
 
 // -------------------------------------------------------------------------------------------
 #include <thread>
     unsigned int c = std::thread::hardware_concurrency();
     std::cout << " number of cores: " << c << endl;
+
 
 // 1. Intro -----------------------------------------------------------------------------------
 #include "stdafx.h"
@@ -36,7 +38,7 @@ int main() {
 	std::thread thread_two(do_smth);        // std::thread works with any callable type
 	thread_two.join();			// or thread_two.detach();
 
-	background_task t;
+	background_task t;			// function object is copied into the storage belonging to the new thread
 	std::thread thread_three(t);
 	thread_three.join();
 
@@ -70,7 +72,7 @@ void oops() {
 	background_task bt(some_local_state);
 	std::thread my_thread(bt);
 	my_thread.detach();		// if oops() exits, my_thread may still be running
-}					// holding reference to local variable, which is destroyed
+}					// holding reference to local variable, which is destroyed, undefined behavior
 
 void good1() {
 	int some_local_state = 0;
@@ -80,13 +82,14 @@ void good1() {
 		//do_something_in_current_thread();   
 	}
 	catch (...) {
-		t.join();			// to ensure the thread complete before good() exits
+		t.join();			// to ensure the thread complete before good1() exits
 		throw;
 	}
 	t.join();
 }
 
-// use RAII idiom and provide a class that does the join() in its destructor
+// RAII - Resource Acquisition Is Initialization
+// provide a class that does the join() in its destructor
 class thread_guard {
 public:
 	explicit thread_guard(std::thread & t) : _t(t) {}
@@ -102,15 +105,41 @@ void good2() {
 	int some_local_state = 0;
 	background_task bt(some_local_state);
 	std::thread my_thread(bt);
-	thread_guard g(my_thread);	// when func exits, thread_guard is destroyed first, thread is joined
-	//do_something_in_current_thread();
+	thread_guard g(my_thread);	// when func exits, local objects are destroyed in reverse order of construction
+					// thread_guard is destroyed first, thread is joined
+	
+	do_something_in_current_thread();
 }
 
 
-// 3. Passing arguments -----------------------------------------------------------------------
+// 3. .detach() threads, reusing the same function -------------------------------------------
+/* Because the new thread is doing the same operation as the current thread but on a different
+file, you can reuse the same function (edit_document) with the newly chosen filename
+as the supplied argument. */
+
+void edit_document(std::string const & filename) {
+	open_document_and_display_gui(filename);
+	while(!done_editing()) {
+		user_command cmd = get_user_input();
+		if(cmd.type == open_new_document) {
+			std::string const new_name = get_filename_from_user();
+			std::thread t(edit_document, new_name);
+			t.detach();
+		}
+		else {
+			process_user_input(cmd);
+		}
+	}
+}
+
+
+// 4. Passing arguments -----------------------------------------------------------------------
+/* by default the arguments are copied into internal storage, where they can be accessed by the newly 
+created thread, even if the corresponding parameter in the function is expecting a reference */
+
 void f1(int i, std::string const & s);
 
-std::thread t(f1, 3, ”hello”);   	// arguments are copied into internal storage, even if passed by ref
+std::thread t(f1, 3, ”hello”); 
 t.detach();
 
 void not_oops(int some_param) {
@@ -125,8 +154,7 @@ void f2(const std::vector<int> & v, long long & acm, int b, int e) {
     for (int i = b; i < e; ++i)  acm += v[i];
 }
 
-long long acm1 = 0;
-long long acm2 = 0;
+long long acm1 = 0, acm2 = 0;
 std::thread t1(f2, std::ref(v), std::ref(acm1), 0, v.size() / 2);        // std::ref to pass by reference
 std::thread t2(f2, std::ref(v), std::ref(acm2), v.size() / 2, v.size());
 t1.join();
@@ -151,8 +179,7 @@ t2.join();
 std::cout << accumulator1._acm + accumulator2._acm << endl;
 
 // Using Lambda Functions
-long long acm1 = 0;
-long long acm2 = 0;
+long long acm1 = 0, acm2 = 0;
 std::thread t1([&acm1, &v] {
     for (unsigned int i = 0; i < v.size() / 2; ++i)  acm1 += v[i];
 });
@@ -163,21 +190,24 @@ t1.join();
 t2.join();
 std::cout << "acm1 + acm2: " << acm1 + acm2 << endl;
 
-
+// pass a member function pointer with suitable object pointer
 struct X {
 	void do_lengthy_work();
 };
 X my_x;
-std::thread t(&X::do_lengthy_work, &my_x);		// pass a member function pointer with suitable object pointer
+std::thread t(&X::do_lengthy_work, &my_x);		// will invoke my_x.do_lengthy_work() on the new thread
 t.join();
 
+// use std::move to transfer ownership of a dynamic object into a thread
 void process_big_object(std::unique_ptr<big_object>);
 std::unique_ptr<big_object> p(new big_object);
 p->prepare_data(42);
-std::thread t(process_big_object, std::move(p));	// when args can't be copied
+std::thread t(process_big_object, std::move(p));	// the ownership of the big_object is transferred first into 
+							// internal storage for the newly created thread and
+							// then into process_big_object
 
 
-// 4. Transferring ownership of a thread ------------------------------------------------------
+// 5. Transferring ownership of a thread ------------------------------------------------------
 void some_function();
 void some_other_function();
 std::thread t1(some_function);
@@ -235,7 +265,7 @@ scoped_thread t(std::thread(background_task(some_local_state)));
 // do_something_in_current_thread();      // scoped_thread obj is destroyed when function exits
 }
 
-// 5. Spawn number of threads -----------------------------------------------------------------
+// 6. Spawn number of threads -----------------------------------------------------------------
 void do_work(unsigned id) {
 	std::cout << "Hello from thread " << std::this_thread::get_id() << std::endl;
 }
@@ -247,7 +277,7 @@ void f() {
 	std::for_each(threads.begin(), threads.end(), std::mem_fn(&std::thread::join));
 }
 
-// 6. Tasks -----------------------------------------------------------------------------------
+// 7. Tasks -----------------------------------------------------------------------------------
 // tasks are defined and created using std::async
 // returned value is a std::future, get its values by calling __.get()
 
@@ -263,7 +293,7 @@ long long acm1 = t1.get();
 long long acm2 = t2.get();
 std::cout << "acm1 + acm2: " << acm1 + acm2 << endl;
 
-// 7. Shared Memory and Shared Resources ------------------------------------------------------
+// 8. Shared Memory and Shared Resources ------------------------------------------------------
 // std::lock_guard
 #include <list>
 #include <mutex>
@@ -315,7 +345,7 @@ void foo() {
 }
 
 
-// 8. Thread-safe stack -----------------------------------------------------------------------
+// 9. Thread-safe stack -----------------------------------------------------------------------
 #include <exception>
 #include <memory>
 #include <mutex>
@@ -362,7 +392,7 @@ public:
 };
 
 
-// 9. Avoid deadlock where you need to acquire two or more locks together ---------------------
+// 10. Avoid deadlock where you need to acquire two or more locks together --------------------
 class some_big_object;
 void swap(some_big_object & lhs, some_big_object & rhs);
 
@@ -382,7 +412,7 @@ public:
 	}
 };
 
-// 10. Producer-consumer scenario -------------------------------------------------------------
+// 11. Producer-consumer scenario -------------------------------------------------------------
 #include <chrono>
 #include <mutex>
 #include <thread>
@@ -415,7 +445,7 @@ int main()
 	t.join();
 }
 
-// 11. Compute a single function in parallel for > 1 different initial values -----------------
+// 12. Compute a single function in parallel for > 1 different initial values -----------------
 #include <chrono>
 #include <mutex>
 #include <thread>
