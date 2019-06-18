@@ -1,3 +1,7 @@
+/* What is the copy-and-swap idiom?
+ * A way of implementing the assignment operator in terms of a swap function
+ */
+
 #include <algorithm> 
 #include <cstddef> 
 
@@ -29,6 +33,9 @@ public:
 
     ~dumb_array() { delete [] mArray; }                           // destructor
 
+    /* We might be tempted to use std::swap instead of providing our own, but this would be impossible; 
+    std::swap uses the copy-constructor and copy-assignment operator within its implementation, 
+    and we'd ultimately be trying to define the assignment operator in terms of itself! */
     friend void swap(dumb_array& first, dumb_array& second) {     // friend function swap
         using std::swap;
         swap(first.mSize, second.mSize);
