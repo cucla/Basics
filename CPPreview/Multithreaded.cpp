@@ -198,6 +198,18 @@ X my_x;
 std::thread t(&X::do_lengthy_work, &my_x);		// will invoke my_x.do_lengthy_work() on the new thread
 t.join();
 
+// pass function that takes pointer to void
+void func(void* data) {
+  MyClass* c = static_cast<MyClass*>(data);        	// Conversion from MyClass* -> void* is implicit
+  ...
+}
+
+int main() {
+  MyClass c;
+  start_thread(&func, &c)  				// func(&c) will be called
+      .join();
+}
+
 // use std::move to transfer ownership of a dynamic object into a thread
 void process_big_object(std::unique_ptr<big_object>);
 std::unique_ptr<big_object> p(new big_object);
