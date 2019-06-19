@@ -31,6 +31,9 @@ private:
 
 const string A::RECTANGLE = "rectangle";    // In one of the implementation files
 
+A a, b; &a.RECTANGLE == &b.RECTANGLE == &A::RECTANGLE;   // address of all three names above is the same
+
+
 class A {                                   // Starting from C++17
 private:      
   inline static const string RECTANGLE = "rectangle";
