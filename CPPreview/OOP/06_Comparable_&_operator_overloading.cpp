@@ -5,6 +5,11 @@
 /* OOP
  * Comparable class type -> must provide operator< and operator=
  * + operator overloading via member functions;
+ 
+ * There are two ways to overload a binary operator like << (binary because it takes two operands, one on the 
+ * left side and one on the right, left << right). One is to make it a member of the type of left and give it 
+ * a single parameter of the type of right. The other is to make it a non-member function with two parameters, 
+ * one the type of left and the other the type of right.
  */
 
 class Comparable {
