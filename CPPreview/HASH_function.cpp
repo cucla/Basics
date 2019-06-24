@@ -12,6 +12,16 @@
  * - the XOR/bit-shifting method
 */
 
+
+// 1: class with operator==(), specialized std::hash<Node> template in common namespace
+//		std::unordered_map<Node, int> m
+// 2: class with operator==(), custom HashFunction template
+//		std::unordered_map<Node, int, HashFunction<Node>> m
+// 3: using lambda expressions
+//		std::unordered_map<Node, int, decltype(hash), decltype(equal)> m(8, hash, equal)
+
+
+// 1: class with operator==(), specialized std::hash<Node> template in common namespace
 class Node {
 public:
 	Node() {}
@@ -50,9 +60,7 @@ struct std::hash<Node> {
 	}
 };
 
-
-int main() 
-{
+int main() {
 	std::unordered_map<Node, int> m = {
 		{ { 10, "-ten" }, 1 },
 		{ { 100, "-hundred" }, 2 },
@@ -74,7 +82,69 @@ NODE: 100-hunrded
 NODE: 1000-thousand
 */
 
-// Can use lambda expressions:
+
+// 2: class with operator==(), custom HashFunction template
+class Node {
+public:
+	Node() {}
+	Node(int A, std::string B) : a{ A }, b{ B } {}
+
+	bool operator==(const Node& i) const {
+		if (i.a == this->a && i.b == this->b) return true;
+		else return false;
+	}
+
+	void print(std::ostream & os = std::cout) const {
+		os << "NODE: " << a << b << "\n";
+	}
+
+//private:
+	int a;
+	std::string b;
+};
+
+template<class Key>
+class HashFunction; // leave entirely unimplemented
+
+template<>
+class HashFunction<Node> {
+public:
+	size_t operator()(const Node& n) const {
+		size_t res = 17;
+		res = res * 31 + int_hash(n.a);
+		res = res * 31 + str_hash(n.b);
+		return res;
+	}
+private:
+	std::hash<int> int_hash;             // To avoid constructing the std::hash all the time
+	std::hash<std::string> str_hash;
+
+};
+
+int main() {
+	std::unordered_map<Node, int, HashFunction<Node>> m = {
+		{ { 10, "-ten" }, 1 },
+		{ { 100, "-hundred" }, 2 },
+		{ { 1000, "-thousand" }, 3 }
+	};
+
+	for (auto el : m) {
+		std::cout << el.second << std::endl;
+		el.first.print(); 
+	}
+}
+
+/*
+1
+NODE: 10-ten
+2
+NODE: 100-hunrded
+3
+NODE: 1000-thousand
+*/
+
+
+// 3: using lambda expressions
 class Node {
 public:
 	Node() {}
