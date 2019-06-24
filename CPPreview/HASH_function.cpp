@@ -64,3 +64,54 @@ int main()
 		el.first.print(); 
 	}
 }
+
+
+// Can use lambda expressions:
+class Node {
+public:
+	Node() {}
+	Node(int A, std::string B) : a{ A }, b{ B } {}
+
+	void print(std::ostream & os = std::cout) const {
+		os << "NODE: " << a << b << "\n";
+	}
+
+//private:
+	int a;
+	std::string b;
+};
+
+
+int main() {
+	auto hash = [](const Node& n) {
+		size_t res = 17;
+		res = res * 31 + std::hash<int>()(n.a);
+		res = res * 31 + std::hash<std::string>()(n.b);
+		return res;
+	};
+
+	auto equal = [](const Node& n1, const Node& n2) {
+		return n1.a == n2.a && n1.b == n2.b;
+	};
+
+	std::unordered_map<Node, int, decltype(hash), decltype(equal)> m(8, hash, equal);
+
+	Node n1{ 10, "-ten" };
+	Node n2{ 100, "-hunrded" };
+	Node n3{ 1000, "-thousand" };
+
+	m[n1] = 1; 
+	m[n2] = 2;
+	m[n3] = 3;
+
+	for (auto el : m) {
+		std::cout << el.second << std::endl;
+		el.first.print(); 
+	}
+}
+
+
+
+
+
+
