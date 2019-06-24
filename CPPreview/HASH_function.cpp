@@ -31,7 +31,7 @@ public:
 	std::string b;
 };
 
-
+// Template Specialization: a special behavior for a Node type in a template class std::hash
 template <>
 struct std::hash<Node> {
 	std::size_t operator()(const Node& k) const {
@@ -65,6 +65,14 @@ int main()
 	}
 }
 
+/*
+1
+NODE: 10-ten
+2
+NODE: 100-hunrded
+3
+NODE: 1000-thousand
+*/
 
 // Can use lambda expressions:
 class Node {
@@ -110,7 +118,14 @@ int main() {
 	}
 }
 
-
+/*
+1
+NODE: 10-ten
+2
+NODE: 100-hunrded
+3
+NODE: 1000-thousand
+*/
 
 
 
