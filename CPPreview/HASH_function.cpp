@@ -1,6 +1,6 @@
 /* To be able to use std::unordered_map with a user-defined key-type, you need to define 2 things:
  *
- * A hash function -> specialize the std::hash template for your key-type
+ * A hash function -> specialize std::hash<> or create your own function object
  * A comparison function for equality -> to deal with collisions; implement this either 
    as a class that overrides operator(), or as a specialization of std::equal, or by overloading 
    operator==() for your key type
