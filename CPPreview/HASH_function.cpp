@@ -43,7 +43,7 @@ public:
 // Template Specialization: a special behavior for a Node type in a template class std::hash
 template <>
 struct std::hash<Node> {
-	std::size_t operator()(const Node& k) const {
+	std::size_t operator()(const Node& k) const {      // hasher function should be qualified as const
 		using std::size_t;
 		using std::hash;
 		using std::string;
@@ -108,7 +108,7 @@ class HashFunction; // leave entirely unimplemented
 template<>
 class HashFunction<Node> {
 public:
-	size_t operator()(const Node& n) const {
+	size_t operator()(const Node& n) const {        // hasher function should be qualified as const
 		size_t res = 17;
 		res = res * 31 + int_hash(n.a);
 		res = res * 31 + str_hash(n.b);
@@ -187,6 +187,17 @@ int main() {
 	}
 }
 
+// it's also possible to define make function to enable type deduction if you want to get rid of decltype:
+template<typename Key, typename Val, typename Hash = std::hash<Key>, typename Equal>
+std::unordered_map<Key, Val, Hash, Equal> make_unordered_map(
+	typename std::unordered_map<Key, Val, Hash>::size_type bucket_count = 10,
+	const Hash& hash = Hash(),
+	const Equal& equals = Equal())
+	{
+	return std::unordered_map<Key, Val, Hash, Equal>(bucket_count, hash, equals);
+	}
+// call: 	auto m = make_unordered_map<Node, int>(10, hash, equal);
+
 /*
 1
 NODE: 10-ten
@@ -222,7 +233,7 @@ inline void hash_combine(std::size_t & seed, const T & v) {
 
 template<typename F, typename S>
 struct std::hash<std::pair<F, S>> {
-	std::size_t operator()(const std::pair<F, S>& some_pair) const {
+	std::size_t operator()(const std::pair<F, S>& some_pair) const {      // hasher function should be qualified as const
 		size_t seed = 0;
 		hash_combine(seed, some_pair.first);
 		hash_combine(seed, some_pair.second);
