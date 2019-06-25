@@ -10,6 +10,8 @@
  * define a hash function that projects that distribution to a space of possible results as wide and evenly 
  * distributed as possible
  * - the XOR/bit-shifting method
+ In general, you should pick a multiplier that is in the order of your hash size and has no common factors 
+ with it. This way the hash function covers all your hash space uniformly.
 */
 
 
