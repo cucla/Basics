@@ -1,3 +1,6 @@
+// The derived function Derived::hidden_foo() hides all members with the same name from the base class. 
+// So you can only use the base class member via scope resolution. To avoid hiding -> 'using'
+
 class Base {
 public:
 	void not_virtual_foo() { std::cout << "base" << std::endl; }
