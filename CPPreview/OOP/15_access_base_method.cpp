@@ -19,18 +19,18 @@ public:
 int main() 
 {
 	Derived bar;
-	bar.not_virtual_foo();				// "derived"
+	bar.not_virtual_foo();			// "derived"
 	bar.Base::not_virtual_foo();		// "base";   using a qualified-id
 
 	Base* bar2 = new Derived;
-	bar2->not_virtual_foo();			// "base"
-	//bar2->Derived::not_virtual_foo();			// error
+	bar2->not_virtual_foo();		// "base"
+	//bar2->Derived::not_virtual_foo();	// error
 
-	bar2->virtual_foo();				// "derived virtual"
-	bar2->Base::virtual_foo();			// "base virtual";  using a qualified-id
+	bar2->virtual_foo();			// "derived virtual"
+	bar2->Base::virtual_foo();		// "base virtual";  using a qualified-id
 
 
 	// Base::hidden_foo() isn't directly usable from derived without the 'using' declaration
-	bar.hidden_foo();					// "base hidden foo"
-	bar.hidden_foo(4);					// "derived hidden foo -> "
+	bar.hidden_foo();			// "base hidden foo"
+	bar.hidden_foo(4);			// "derived hidden foo -> "
 }
