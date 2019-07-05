@@ -61,7 +61,7 @@ int main()
 	Foo* varptr2;			// nothing
 	varptr2 = varptr;		// nothing
 	varptr2 = new Foo;			// ctor
-	delete varptr2;				// return memory back 
+	delete varptr2;				// return memory, delete the pointer before reassigning
 	varptr2 = new Foo(darr[0]);		// copy ctor
 
 	
