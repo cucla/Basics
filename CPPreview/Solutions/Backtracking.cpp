@@ -85,7 +85,6 @@ vector<vector<int>> pathSum(TreeNode* root, int sum) {
 	return ans;
 }
 
-
 int main() 
 {
 	TreeNode* root = new TreeNode(1);
@@ -96,5 +95,5 @@ int main()
 	root->right->left = new TreeNode(-2);
 	root->left->left->left = new TreeNode(-1);
 
-
 	auto r = pathSum(root, 2);
+}
