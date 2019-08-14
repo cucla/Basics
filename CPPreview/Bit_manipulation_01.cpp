@@ -20,18 +20,10 @@
  *  OVERFLOW - when bits are lost because a variable has not been allocated enough memory to store them,
  *  see 'Limits on Integer Constants', like INT_MAX [2147483647]
  *  automatic promotion follows the general progression:  char->short->int->long->float->double
- *
- *  CONVERTING TO 2s COMPLEMENT
- *  0000.0000   ->  2^8,  256 possible values
- *  [-128 to -1]  : 128 values		1000.0000 to 1111.1111
- *  [0 to 127]    : 128 values		0000.0000 to 0111.1111
- *  		In normal unsigned binary numbers 1000.0000 represents 128, but in 2's complement this represents -128
+ */
+
+/*  		In normal unsigned binary numbers 1000.0000 represents 128, but in 2's complement this represents -128
  *  		The normal behaviour of adding 1, 1000.0001 represents -127
- * Find negative of 75:
- *	1001011		Convert to Binary (unsigned)
- *	01001011	Pad out to required number of bits
- *	10110100	Invert the digits
- *	10110101	Add 1, and you are done :)
  *  		!!! to find the negative of an n-bit number -> subtract the number from 0 or 2^n (one bit followed by n zero bits)
  *		to find positive -> add negative to 2^n (positive is negative of negative)
  * Find negative of 75:
@@ -58,6 +50,9 @@ std::cout << sizeof(char) << std::endl;			// 1
 
 
  /* INTEGERS
+  *   Processors use 8, 16, 32, or 64 bits sizes to represent integers;
+  *   Integers may be represented using unsigned binary scheme or two's complement binary scheme;
+  *
   *   signed short     holds at least the values [-32,768 to 32,767] 
   *   unsigned short   holds at least the values [0 to 65,535]
   *   signed int       holds at least the values [-2,147,483,648 to 2,147,483,647] 
@@ -68,23 +63,43 @@ std::cout << sizeof(char) << std::endl;			// 1
   *	0 + 1 = 1;		0 x 1 = 0;
   *	1 + 0 = 1;		1 x 0 = 0;
   *	1 + 1 = 10;		1 x 1 = 1;
+  *     1 + 1 + 1 = 11;
   *
-  *     add 7 + 4 = 11
+  *  Add 7 + 4 = 11
   *	4       00000000 00000000 00000000 00000100
   *	7       00000000 00000000 00000000 00000111
   *	-------------------------------------------
-  *	        00000000 00000000 00000000 00001011
+  *	11      00000000 00000000 00000000 00001011
   *
-  *	subtract 7 - 6 = 1
-  *     First form the complement of 6  
-  *	  6 = 0000 0000 0000 0000 0000 0000 0000 0110
-  *	      1111 1111 1111 1111 1111 1111 1111 1001  invert bits
-  *           0000 0000 0000 0000 0000 0000 0000 0001  add one
-  *       -------------------------------------------
-  *           1111 1111 1111 1111 1111 1111 1111 1010  -6
-  *           0000 0000 0000 0000 0000 0000 0000 0111  add 7
-  *       -------------------------------------------
-  *          10000 0000 0000 0000 0000 0000 0000 0001  1       ignore the final carry as it is overflow
+  *  2s COMPLEMENT - one of many ways to represent negative integers with bit patterns
+  *  Explain the trick:
+  *    1. when each bit of a pattern is reflected then          2. adding 1 to this pattern creates a pattern of all zero's:
+  *       the two patterns added together make all 1's:
+  *    0110 1010   pattern					1111 1111   all columns filled									
+  *    1001 0101   add reflected				0000 0001   add one
+  *    -------------------------------				-------------------------------
+  *    1111 1111   all columns filled				0000 0000
+  *
+  *  Subtract 7 - 6 = 1 		-6 is such that -6 + 6 = 0
+  *	        00000000 00000000 00000000 00000110    6
+  *	   +    11111111 11111111 11111111 11111001    invert bits
+  *             00000000 00000000 00000000 00000001    add 1
+  *     -------------------------------------------
+  *             11111111 11111111 11111111 11111010    -6
+  *             00000000 00000000 00000000 00000111    add 7
+  *     -------------------------------------------
+  *            100000000 00000000 00000000 00000001    1       ignore the final carry as it is overflow
+  *
+  *   For 8 signed bits in 2s COMPLEMENT:
+  *   [0 to 127]    : 128 values		0000 0000 to 0111 1111
+  *   [-128 to -1]  : 128 values		1000 0000 to 1111 1111
+  *
+  *         127 =  0111 1111            
+  * 	reflect =  1000 0000              
+  *     add one =  1000 0001               
+  *     --------------------                                          
+  *        -127 =  1000 0001          1000 0000 was chosen to represent -128 (even though it represents 128 also, but not in 8 bit)
+  *
   *
   *  Literal suffixes:
   *	int	u or U						unsigned int
