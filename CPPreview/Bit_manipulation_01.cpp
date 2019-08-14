@@ -176,13 +176,12 @@ int x1 = 012; // 0 before the number means this is octal
  *	F	15		1111
  *	10	16
  *	11	17
- * Because there are 16 different values for a hexadecimal digit - a single hexadecimal digit encompasses 4 bits, 0000
- * A pair of hexadecimal digits can be used to exactly represent a full byte, 00000000
+ * A single hexadecimal digit encompasses 4 bits, 0000
+ * A pair of hexadecimal digits represents a full byte, 0000 0000
  */
 
-// Properties for numbers which are powers of 2, is that they have one and only one bit set in their binary representation
-
-int bin(0);
+// Powers of 2 have one and only one bit set in their binary representation
+int bin(0);			    //power of 2
 bin = 0x01;   // binary 0000 0001  	1
 bin = 0x02;   // binary 0000 0010  	2
 bin = 0x04;   // binary 0000 0100  	4
@@ -194,7 +193,7 @@ bin = 0x80;   // binary 1000 0000  	128
 bin = 0xFF;   // binary 1111 1111  	255
 
 // BINARY, C++14
-int bin;
+int bin;					   //power of 2
 bin = 0b1;		// binary 0000 0001		1	
 bin = 0b10;		// binary 0000 0010		2
 bin = 0b100;		// binary 0000 0100		4
@@ -203,6 +202,43 @@ bin = 0b10'000;		// binary 0001 0000		16
 bin = 0b100'000;	// binary 0010 0000		32
 bin = 0b1'000'000;  	// binary 0100 0000		64
 bin = 0b10'000'000;	// binary 1000 0000		128
+
+/* To compute the decimal equivalent of 00111111 like numbers, turn on leftmost bit: 01000000 - 1
+ *	Decimal		Binary
+ *	0		00000
+ *	1		00001
+ * 	3		00011		2^2 - 1
+ *	4		00100		2^2
+ *	7		00111		2^3 - 1
+ *	8		01000		2^3
+ *	15		01111		2^4 - 1
+ *	16		10000		2^4
+  
+ * Left shif multiplies by 2
+ *	Decimal		Binary
+ *	1		00000001
+ *	2		00000010	1 * 2
+ * 	4		00000100	2 * 2
+ *	8		00001000	4 * 2
+ *
+ *	3		00000011		
+ *	6		00000110	3 * 2
+ *	12		00001100	6 * 2
+ *	24		00011000	12 * 2
+ *
+ *	7		00000111		
+ *	14		00001110	7 * 2
+ *	28		00011100	14 * 2
+ *	56		00111000	28 * 2
+ 
+ XYZ -> XYZ0 represents that number times B (Base), in decimal:
+ 83  × 10 =  (  8 × 10^1 + 3 × 10^0 ) × 10
+         =      8 × 10^2 + 3 × 10^1
+         =      830
+ */
+
+
+
 
 
 // 1. Convert positive Decimal int to Binary
