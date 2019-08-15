@@ -22,8 +22,7 @@
  *  automatic promotion follows the general progression:  char->short->int->long->float->double
  */
 
-/*  		In normal unsigned binary numbers 1000.0000 represents 128, but in 2's complement this represents -128
- *  		The normal behaviour of adding 1, 1000.0001 represents -127
+/*
  *  		!!! to find the negative of an n-bit number -> subtract the number from 0 or 2^n (one bit followed by n zero bits)
  *		to find positive -> add negative to 2^n (positive is negative of negative)
  * Find negative of 75:
@@ -71,7 +70,13 @@ std::cout << sizeof(char) << std::endl;			// 1
   *	-------------------------------------------
   *	11      00000000 00000000 00000000 00001011
   *
+  *
   *  2s COMPLEMENT - one of many ways to represent negative integers with bit patterns
+  *  find -N from N:    0110 1101     reflect →  1001 0010     add one →  1001 0011
+  *  find N from -N:    1001 0011     reflect →  0110 1100     add one →  0110 1101
+  *       the high order bit is "0" for positive integers and "1" for negative integers; it is sometimes called the sign bit,
+  *       but it takes part in the "binary addition algorithm" just as any bit
+  *
   *  Explain the trick:
   *    1. when each bit of a pattern is reflected then          2. adding 1 to this pattern creates a pattern of all zero's:
   *       the two patterns added together make all 1's:
@@ -98,7 +103,7 @@ std::cout << sizeof(char) << std::endl;			// 1
   * 	reflect =  1000 0000              
   *     add one =  1000 0001               
   *     --------------------                                          
-  *        -127 =  1000 0001          1000 0000 was chosen to represent -128 (even though it represents 128 also, but not in 8 bit)
+  *        -127 =  1000 0001          1000 0000 was chosen to represent -128 (in normal unsigned binary 1000 0000 represents 128)
   *
   *
   *  Literal suffixes:
