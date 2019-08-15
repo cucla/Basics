@@ -1,5 +1,4 @@
-// book: http://sandbox.mc.edu/~bennet/cs110/index.html
-// https://www.cs.cornell.edu/~tomf/notes/cps104/
+// https://chortle.ccsu.edu/AssemblyTutorial/index.html#part1
 
 /*  1 byte = 8 bits
  *  1 byte is the smallest addressable unit of memory; bit does not get its own address
@@ -104,6 +103,18 @@ std::cout << sizeof(char) << std::endl;			// 1
   *     --------------------                                          
   *        -127 =  1000 0001          1000 0000 was chosen to represent -128 (in normal unsigned binary 1000 0000 represents 128)
   *
+  *   OVERFLOW:
+  *   1     -> carry
+  *    1100          If the operands are regarded as unsigned binary, then the result shows overflow
+  *    1010          If the operands are regarded as two's complement binary, then the result also shows overflow
+  *    ----
+  *    0110
+  *
+  *   1     -> carry
+  *    0100          If the operands are regarded as unsigned binary, then the result shows overflow
+  *    1110          If the operands are regarded as two's complement binary, then the result shows no overflow
+  *    ----
+  *    0010
   *
   *  Literal suffixes:
   *	int	u or U						unsigned int
