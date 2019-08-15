@@ -22,17 +22,6 @@
  *  automatic promotion follows the general progression:  char->short->int->long->float->double
  */
 
-/*
- *  		!!! to find the negative of an n-bit number -> subtract the number from 0 or 2^n (one bit followed by n zero bits)
- *		to find positive -> add negative to 2^n (positive is negative of negative)
- * Find negative of 75:
- *	   1111 111
- *	 1.0000.0000   // 256
- *	-  0100.1011   // 75
- *	------------
- *	 0.1011.0101
- */
- 
 
  /* CHARS
   * In ASCII - letters and numbers [0 - 127] codes, which can be represented using bits
@@ -95,6 +84,16 @@ std::cout << sizeof(char) << std::endl;			// 1
   *     -------------------------------------------
   *            100000000 00000000 00000000 00000001    1       ignore the final carry as it is overflow
   *
+  
+  *  		!!! to find the negative of an n-bit number -> subtract the number from 0 or 2^n (one bit followed by n zero bits)
+  *		to find positive -> add negative to 2^n (positive is negative of negative)
+  * Find negative of 75:
+  *	   1111 111
+  *	 1.0000.0000   // 256
+  *	-  0100.1011   // 75
+  *	------------
+  *	 0.1011.0101
+ 
   *   For 8 signed bits in 2s COMPLEMENT:
   *   [0 to 127]    : 128 values		0000 0000 to 0111 1111
   *   [-128 to -1]  : 128 values		1000 0000 to 1111 1111
