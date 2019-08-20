@@ -244,7 +244,7 @@ bin = 0b10'000'000;	// binary 1000 0000		128
  *	15		01111		2^4 - 1
  *	16		10000		2^4
   
- * Left shif multiplies by 2
+ * Left shif multiplies by 2 (right shift divides by 2)
  *	Decimal		Binary
  *	1		00000001
  *	2		00000010	1 * 2
