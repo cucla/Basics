@@ -27,6 +27,9 @@ char r = x << 4;  // 1011.0000
 char x = 75;      // 0100.1011
 char r = x >> 4;  // 0000.0100
  *
+ * /theory/ NOR
+ There is no immediate operand NOR instruction. NOR is equivalent to performing the OR operation, 
+ then complementing the bits (change 0 to 1 and 1 to 0): NOT X  =  X NOR 0
  */
  
 
