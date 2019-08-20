@@ -261,6 +261,10 @@ bin = 0b10'000'000;	// binary 1000 0000		128
  *	28		00011100	14 * 2
  *	56		00111000	28 * 2
  
+ However, if a 1-bit is shifted off the left side, then the number is ruined! 
+ 0110 0001 = 97
+ 1100 0010 = 194   (not ruined here)
+ 
  XYZ -> XYZ0 represents that number times B (Base), in decimal:
  83  × 10 =  (  8 × 10^1 + 3 × 10^0 ) × 10
          =      8 × 10^2 + 3 × 10^1
