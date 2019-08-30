@@ -52,11 +52,20 @@ std::cout << sizeof(char) << std::endl;			// 1
   *	1 + 1 = 10;		1 x 1 = 1;
   *     1 + 1 + 1 = 11;
   *
-  *  Add 7 + 4 = 11
-  *	4       00000000 00000000 00000000 00000100
-  *	7       00000000 00000000 00000000 00000111
-  *	-------------------------------------------
-  *	11      00000000 00000000 00000000 00001011
+  *  ADDITION
+  *  The Binary Addition Algorithm works for both unsigned binary / two's complement scheme. However, the overflow condition is 
+  *  different for each method:
+  *   1     -> carry
+  *    1100          If the operands are regarded as unsigned binary, then the result shows overflow
+  *    1010          If the operands are regarded as two's complement binary, then the result also shows overflow
+  *    ----
+  *    0110
+  *
+  *   1     -> carry
+  *    0100          If the operands are regarded as unsigned binary, then the result shows overflow
+  *    1110          If the operands are regarded as two's complement binary, then the result shows no overflow
+  *    ----
+  *    0010 
   *
   *
   *  2s COMPLEMENT - one of many ways to represent negative integers with bit patterns
@@ -103,18 +112,6 @@ std::cout << sizeof(char) << std::endl;			// 1
   *     --------------------                                          
   *        -127 =  1000 0001          1000 0000 was chosen to represent -128 (in normal unsigned binary 1000 0000 represents 128)
   *
-  *   OVERFLOW:
-  *   1     -> carry
-  *    1100          If the operands are regarded as unsigned binary, then the result shows overflow
-  *    1010          If the operands are regarded as two's complement binary, then the result also shows overflow
-  *    ----
-  *    0110
-  *
-  *   1     -> carry
-  *    0100          If the operands are regarded as unsigned binary, then the result shows overflow
-  *    1110          If the operands are regarded as two's complement binary, then the result shows no overflow
-  *    ----
-  *    0010
   *
   *  Literal suffixes:
   *	int	u or U						unsigned int
