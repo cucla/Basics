@@ -97,3 +97,46 @@ int main()
 
 	auto r = pathSum(root, 2);
 }
+
+
+// 473. Matchsticks to Square
+/* Find out a way you can make one square by using up all given matchsticks. 
+ * You should not break any stick, but you can link them up, and each matchstick must be used exactly one time.
+ */
+
+using namespace std;
+
+bool util(vector<int>& nums, vector<int>& sides, int i) {
+	if (i == -1)
+		return sides[0] == sides[1] && sides[1] == sides[2] && sides[2] == sides[3];
+
+	for (int k = sides.size() - 1; k >= 0; --k) {
+		if (sides[k] < nums[i]) continue;
+
+		// OPTIMIZATION:
+		// With 4 sides in a square, we can check if we have encountered the same length with the current match length before
+		int j = k;
+		while (++j < sides.size())
+			if (sides[k] == sides[j]) break;
+		if (j != sides.size()) continue;
+
+		sides[k] -= nums[i];
+		if (util(nums, sides, i - 1)) return true;
+		sides[k] += nums[i];
+
+	}
+	return false;
+}
+
+bool makesquare(vector<int>& nums) {
+	if (nums.size() < 4) return false;
+
+	int sum = accumulate(nums.begin(), nums.end(), 0);
+	if (sum % 4 != 0) return false;
+
+	sort(nums.begin(), nums.end());
+	int side = sum / 4;
+	vector<int> sides(4, side);
+
+	return util(nums, sides, nums.size() - 1);
+}
