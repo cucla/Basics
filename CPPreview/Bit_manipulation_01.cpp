@@ -122,6 +122,13 @@ std::cout << sizeof(char) << std::endl;			// 1
   *	double	f or F						float
   *	double	l or L						long double
   *
+  *
+  *  HEXADECIMAL ADDITION:
+  *     1     (carry)
+  *	6 A 2
+  *	4 9 A
+  * ----------
+  *	B 3 C        (A  9  decimal 19;  19 MOD 16 = 3, and carry 1 into the third digit position)
   */
 
  /* FLOAT
