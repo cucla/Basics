@@ -40,8 +40,8 @@ std::cout << sizeof(char) << std::endl;			// 1
   *   Processors use 8, 16, 32, or 64 bits sizes to represent integers;
   *   Integers may be represented using unsigned binary scheme or two's complement binary scheme;
   *
-  *   signed short     holds at least the values [-32,768 to 32,767] 
-  *   unsigned short   holds at least the values [0 to 65,535]
+  *   signed short     holds at least the values [-32,768 to 32,767]   -2^15 to 2^15 - 1
+  *   unsigned short   holds at least the values [0 to 65,535]         0 to 2^16 - 1
   *   signed int       holds at least the values [-2,147,483,648 to 2,147,483,647] 
   *   unsigned int     holds at least the values [0 to 4,294,967,295]
   *
