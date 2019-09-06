@@ -129,6 +129,15 @@ std::cout << sizeof(char) << std::endl;			// 1
   *	4 9 A
   * ----------
   *	B 3 C        (A  9  decimal 19;  19 MOD 16 = 3, and carry 1 into the third digit position)
+  *
+  *  HEXADECIMAL 2's COMPLEMENT
+  *   An easy way to reverse the bits of a hexadecimal digit is to subtract the digit from 15:
+  *   6A3D --> 95C2 + 1 --> 95C3
+  *   95C3 --> 6A3C + 1 --> 6A3D
+  *   
+  *  You can tell whether a hexadecimal integer is positive or negative by inspecting its most significant (highest) digit. 
+  *  If the digit is ≥ 8, the number is negative; if the digit is ≤ 7, the number is positive. For example, 
+  *  hexadecimal 8A20 is negative and 7FD9 is positive.
   */
 
  /* FLOAT
