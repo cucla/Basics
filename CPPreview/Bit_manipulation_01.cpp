@@ -1,4 +1,5 @@
-// https://chortle.ccsu.edu/AssemblyTutorial/index.html#part1
+// https://chortle.ccsu.edu/AssemblyTutorial/index.html#part1      - bits and bytes
+// https://www.tenouk.com/cncplusplusbufferoverflow.html           - buffer overflow + C/C++ code
 
 /*  1 byte = 8 bits
  *  1 byte is the smallest addressable unit of memory; bit does not get its own address
