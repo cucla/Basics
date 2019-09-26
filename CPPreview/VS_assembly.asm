@@ -28,3 +28,10 @@
 012718D2 B9 30 00 00 00       mov         ecx,30h                  ; 30h = 0C0h/4, ‘rep stos’ will be executed 48 times
 012718D7 B8 CC CC CC CC       mov         eax,0CCCCCCCCh           ; Set parameter of ‘rep stos’ instrument
 012718DC F3 AB                rep stos    dword ptr es:[edi]       ; Use the value of eax (0CCCCCCCCh) to initialize stack
+
+; ...
+0127191E 8B E5                mov         esp,ebp  
+01271920 5D                   pop         ebp                      ; Activate caller’s stack frame.
+01271921 C3                   ret                                  ; Return to the caller
+
+
