@@ -30,6 +30,19 @@
 012718DC F3 AB                rep stos    dword ptr es:[edi]       ; Use the value of eax (0CCCCCCCCh) to initialize stack
 
 ; ...
+0127190E 5F                   pop         edi  
+0127190F 5E                   pop         esi  
+01271910 5B                   pop         ebx  
+
+; Restore the values we shouldn't have altered
+
+01271911 81 C4 C0 00 00 00    add         esp,0C0h                 ; Destroy the stack frame
+01271917 3B EC                cmp         ebp,esp  
+01271919 E8 36 F8 FF FF       call        __RTC_CheckEsp (01271154h)  
+
+; More stack checking code - this sets the zero flag if the stack pointer is pointing
+; where we expect it to be pointing. 
+  
 0127191E 8B E5                mov         esp,ebp  
 01271920 5D                   pop         ebp                      ; Activate caller’s stack frame.
 01271921 C3                   ret                                  ; Return to the caller
