@@ -1,12 +1,19 @@
 // 1. Intro
-// 2. Static variable 
-// 3. Static method
-// 4. Non-member function in the same namespace
-// 5. Class as a template parameter
-// 6. 'Static constructor' in C++
+// 2. Static variable for a function call
+// 3. Static variable 
+// 4. Static method
+// 5. Non-member function in the same namespace
+// 6. Class as a template parameter
+// 7. 'Static constructor' in C++
 
 
 // 1. Intro ----------------------------------------------------------------------
+/* Statically allocated means that the variable is allocated at compile-time, not at run-time. 
+Once per program. In C, this can be a global variable at the file scope or a static variable in 
+a function. Space for them will be allocated when the binary is loaded into memory. Variables on 
+the stack (i.e., local variables in functions that do not have the static keyword) are allocated 
+when the function is called */
+
 static int x; //internal linkage
               //non-static storage - each translation unit will have its own copy of x
               //NOT A TRUE GLOBAL!
@@ -23,7 +30,28 @@ void foo() {
 }
 
 
-// 2. Static variable ------------------------------------------------------------
+// 2. Static variable for a function call ----------------------------------------
+void func() {
+    static int x = 0; 
+    /* x is initialized only once across five calls of func() and the variable will get incremented 
+       five times after these calls. The final value of x will be 5. */
+  
+    x++;
+    printf("%d\n", x); 
+}
+
+int main() 
+{ 
+    func(); // prints 1
+    func(); // prints 2
+    func(); // prints 3
+    func(); // prints 4
+    func(); // prints 5
+    
+    std::cin.get();
+}
+
+// 3. Static variable ------------------------------------------------------------
 class A {                                   // In a header file 
 private:      
   static const string RECTANGLE;
@@ -40,7 +68,7 @@ private:
 };
 
 
-// 3. Static method --------------------------------------------------------------
+// 4. Static method --------------------------------------------------------------
 // There is no "static class" in C++. The nearest concept would be a class with only static methods
 
 class BitParser {                                       // BitParser.h
@@ -57,7 +85,7 @@ bool BitParser::getBitAt(int buffer, int bitIndex) {    // BitParser.cpp
 }
 
 
-// 4. Non-member function in the same namespace ----------------------------------
+// 5. Non-member function in the same namespace ----------------------------------
 // When there's no need for an object don't use a class
 
 namespace BitParser {                                   // BitParser.h
@@ -71,7 +99,7 @@ namespace BitParser {                                   // BitParser.cpp
 }
 
 
-// 5. Class as a template parameter ----------------------------------------------
+// 6. Class as a template parameter ----------------------------------------------
 /* When are classes static methods are actually better than namespaces with non-member functions?
 When you need to group together functions and feed that group to a template:  */
 
@@ -98,7 +126,7 @@ Gamma<Beta> gb ;  // ok
 gb.foobar() ;     // ok !!!
 
 
-// 6. 'Static constructor' in C++ ------------------------------------------------
+// 7. 'Static constructor' in C++ ------------------------------------------------
 // WAY 1: write a separate ordinary class to hold the static data and then make a static instance of that ordinary class
 class StaticStuff {
      std::vector<char> letters_;
