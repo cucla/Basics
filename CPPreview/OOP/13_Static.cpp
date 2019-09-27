@@ -78,10 +78,6 @@ private:
 };
 
 // 4. Default array values -------------------------------------------------------
-#include "stdafx.h"
-#include "iostream"
-
-
 int arr1[5];    
 
 void func() {   
