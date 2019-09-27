@@ -1,10 +1,11 @@
 // 1. Intro
 // 2. Static variable for a function call
-// 3. Static variable 
-// 4. Static method
-// 5. Non-member function in the same namespace
-// 6. Class as a template parameter
-// 7. 'Static constructor' in C++
+// 3. Static variable for a class
+// 4. Default array values
+// 5. Static method
+// 6. Non-member function in the same namespace
+// 7. Class as a template parameter
+// 8. 'Static constructor' in C++
 
 
 // 1. Intro ----------------------------------------------------------------------
@@ -60,7 +61,7 @@ int main()
     std::cin.get();
 }
 
-// 3. Static variable ------------------------------------------------------------
+// 3. Static variable for a class ------------------------------------------------
 class A {                                   // In a header file 
 private:      
   static const string RECTANGLE;
@@ -76,8 +77,42 @@ private:
   inline static const string RECTANGLE = "rectangle";
 };
 
+// 4. Default array values -------------------------------------------------------
+#include "stdafx.h"
+#include "iostream"
 
-// 4. Static method --------------------------------------------------------------
+
+int arr1[5];    
+
+void func() {   
+	int arr2[5];		printf("%d\n", arr2[0]);          // -858993460
+	static int arr3[5]; printf("%d\n", arr3[0]);          // 0
+}
+
+class MyClass {
+public:
+	int arr4[5];
+	static int arr5[];      // declaration, incomplete type
+};
+
+int MyClass::arr5[5];       // definition (does not use 'static')
+
+
+int main() 
+{	
+	printf("%d\n", arr1[0]);                // 0
+
+	func();
+
+	MyClass obj;
+	printf("%d\n", obj.arr4[0]);            // -858993460
+	printf("%d\n", obj.arr5[0]);            // 0
+
+ 
+	std::cin.get();
+}
+
+// 5. Static method --------------------------------------------------------------
 // There is no "static class" in C++. The nearest concept would be a class with only static methods
 
 class BitParser {                                       // BitParser.h
@@ -94,7 +129,7 @@ bool BitParser::getBitAt(int buffer, int bitIndex) {    // BitParser.cpp
 }
 
 
-// 5. Non-member function in the same namespace ----------------------------------
+// 6. Non-member function in the same namespace ----------------------------------
 // When there's no need for an object don't use a class
 
 namespace BitParser {                                   // BitParser.h
@@ -108,7 +143,7 @@ namespace BitParser {                                   // BitParser.cpp
 }
 
 
-// 6. Class as a template parameter ----------------------------------------------
+// 7. Class as a template parameter ----------------------------------------------
 /* When are classes static methods are actually better than namespaces with non-member functions?
 When you need to group together functions and feed that group to a template:  */
 
@@ -135,7 +170,7 @@ Gamma<Beta> gb ;  // ok
 gb.foobar() ;     // ok !!!
 
 
-// 7. 'Static constructor' in C++ ------------------------------------------------
+// 8. 'Static constructor' in C++ ------------------------------------------------
 // WAY 1: write a separate ordinary class to hold the static data and then make a static instance of that ordinary class
 class StaticStuff {
      std::vector<char> letters_;
