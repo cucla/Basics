@@ -82,7 +82,7 @@ int arr1[5];
 
 void func() {   
 	int arr2[5];		printf("%d\n", arr2[0]);          // -858993460
-	static int arr3[5]; printf("%d\n", arr3[0]);          // 0
+	static int arr3[5];     printf("%d\n", arr3[0]);          // 0
 }
 
 class MyClass {
@@ -91,7 +91,7 @@ public:
 	static int arr5[];      // declaration, incomplete type
 };
 
-int MyClass::arr5[5];       // definition (does not use 'static')
+int MyClass::arr5[5];           // definition (does not use 'static')
 
 
 int main() 
