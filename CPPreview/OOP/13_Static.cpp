@@ -8,11 +8,20 @@
 
 
 // 1. Intro ----------------------------------------------------------------------
-/* Statically allocated means that the variable is allocated at compile-time, not at run-time. 
-Once per program. In C, this can be a global variable at the file scope or a static variable in 
-a function. Space for them will be allocated when the binary is loaded into memory. Variables on 
-the stack (i.e., local variables in functions that do not have the static keyword) are allocated 
-when the function is called */
+/* There are three types of allocation — static, automatic, and dynamic.
+
+Statically allocated can be a global variable at the file scope or a static variable in a function. 
+Space for them will be allocated when the binary is loaded into memory. 
+The lifetime of a variable in static memory is the lifetime of the program.
+When you define a static variable in some source file, the compiled code contains special instructions 
+for the linker to reserve space for that variable. The compiler also converts your C/C++ code to machine 
+code. The linker combines all of those different chunks of data and code and resolves addresses to form 
+the executable binary image. When you run your program, that binary image is loaded into (virtual) memory. 
+The memory for that static variable exists as soon as the program starts executing.
+
+Automatic memory allocation occurs for (non-static) variables defined inside functions.
+You have also limited control over the lifetime of this memory.
+*/
 
 static int x; //internal linkage
               //non-static storage - each translation unit will have its own copy of x
