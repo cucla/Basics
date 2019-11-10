@@ -16,7 +16,6 @@ std::vector<std::string> to_string(const T &... param) {
 	return { to_string_impl(param)... };
 }
 
-
 int main()
 {
 	const auto vect = to_string("hello", 1, 5.3);
