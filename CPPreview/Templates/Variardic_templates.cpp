@@ -2,6 +2,38 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <sstream>
+
+template<typename T>
+std::string to_string_impl(const T & t) {
+	std::stringstream ss;
+	ss << t;
+	return ss.str();
+}
+
+template<typename... T>
+std::vector<std::string> to_string(const T &... param) {
+	return { to_string_impl(param)... };
+}
+
+
+int main()
+{
+	const auto vect = to_string("hello", 1, 5.3);
+	for (const auto & o : vect)
+		std::cout << o << std::endl;
+
+	std::cin.get();
+}
+
+hello
+1
+5.3
+-------------------------------------------------------------------------------------------------------
+#include "stdafx.h"
+#include <iostream>
+#include <vector>
+#include <string>
 
 
 struct Boxed_value {
