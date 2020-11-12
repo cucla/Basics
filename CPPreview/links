@@ -7,9 +7,7 @@ std::size_t BoyerMoore(const std::string& text, const std::string& ptrn)
 	lastIdx.fill(-1);
 
 	for (std::size_t i = 0; i < ptrn.size(); ++i)
-	{
 		lastIdx[ptrn[i]] = i;
-	}
 
 	int i = ptrn.size() - 1;
 	int j = ptrn.size() - 1;
