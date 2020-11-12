@@ -1,3 +1,36 @@
 http://icarus.cs.weber.edu/~dab/cs1410/textbook/4.Pointers/dynamic.html
 http://personal.kent.edu/~rmuhamma/Algorithms/MyAlgorithms/StringMatch/boyerMoore.htm   // BOYER_MOORE ALGORITHM
+
+std::size_t BoyerMoore(const std::string& text, const std::string& ptrn)
+{
+	std::array<int, 128> lastIdx;
+	lastIdx.fill(-1);
+
+	for (std::size_t i = 0; i < ptrn.size(); ++i)
+	{
+		lastIdx[ptrn[i]] = i;
+	}
+
+	int i = ptrn.size() - 1;
+	int j = ptrn.size() - 1;
+	int orig_i = i;
+
+	while (i < text.size())
+	{
+		if (ptrn[j] == text[i])
+		{
+			if (j == 0) return i;
+			--i;
+			--j;
+		}
+		else
+		{
+			orig_i += abs(j - lastIdx[text[i]]);
+			j = ptrn.size() - 1;
+			i = orig_i;
+		}
+	}
+	return std::size_t(-1);
+}
+
 https://people.ok.ubc.ca/ylucet/DS/BoyerMoore.html
