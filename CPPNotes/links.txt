@@ -4,3 +4,6 @@ https://gist.github.com/philipheimboeck/099e540d800063e3e6ec
 
 BST iterators:
 https://leetcode.com/problems/two-sum-bsts/solutions/1855658/c-two-pointers-using-iterators/?orderBy=most_votes
+
+shared pointer:
+https://www.acodersjourney.com/implementing-smart-pointer-using-reference-counting/
